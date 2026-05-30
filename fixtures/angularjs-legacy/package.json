@@ -1,0 +1,13 @@
+{
+  "name": "@acme/fixture-angularjs-legacy",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "npx http-server -p 8081 -c-1",
+    "build": "echo 'No build step for static AngularJS app'",
+    "postinstall": "mkdir -p vendor && cp node_modules/angular/angular.min.js vendor/"
+  },
+  "dependencies": {
+    "angular": "^1.8.3"
+  }
+}

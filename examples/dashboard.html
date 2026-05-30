@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../tokens.css" />
+  <link rel="stylesheet" href="../themes/professional.css" id="theme-link" />
+  <link rel="stylesheet" href="../base.css" />
+  <link rel="stylesheet" href="../motion.css" />
+  <link rel="stylesheet" href="../primitives.css" />
+  <link rel="stylesheet" href="./shared/examples.css" />
+  <script src="./shared/nav.js" defer></script>
+</head>
+<body>
+
+  <main class="ex-page">
+
+    <header class="ex-section">
+      <div class="ds-caption" style="margin-bottom: var(--space-1);">Dashboard Overview</div>
+      <h1 class="ds-display" style="margin-bottom: var(--space-2);">Good morning, James</h1>
+      <p class="ds-body" style="color: var(--text-muted); max-width: 560px;">
+        Here's what's happening with your accounts today. You have <mark style="background: var(--accent-warning-bg); color: var(--accent-warning); padding: 0 var(--space-1); border-radius: var(--radius-sm);">3 pending transactions</mark> requiring review.
+      </p>
+    </header>
+
+    <!-- KPI Cards -->
+    <section class="ex-section" aria-label="Key performance indicators">
+      <div class="ex-grid ex-grid-4">
+        <article class="ds-card ds-hover-lift">
+          <div class="ds-caption" style="margin-bottom: var(--space-2);">Total Balance</div>
+          <div class="ds-mono ds-headline" style="margin-bottom: var(--space-2);">$2,847,291.00</div>
+          <div class="ex-trend up">
+            <span>+12.5%</span>
+            <span style="font-weight: var(--weight-normal); opacity: 0.7;">vs last month</span>
+          </div>
+        </article>
+
+        <article class="ds-card ds-hover-lift">
+          <div class="ds-caption" style="margin-bottom: var(--space-2);">Pending Settlements</div>
+          <div class="ds-mono ds-headline" style="margin-bottom: var(--space-2);">$124,500.00</div>
+          <div class="ex-trend down">
+            <span>-3.2%</span>
+            <span style="font-weight: var(--weight-normal); opacity: 0.7;">vs last month</span>
+          </div>
+        </article>
+
+        <article class="ds-card ds-hover-lift">
+          <div class="ds-caption" style="margin-bottom: var(--space-2);">Active Clients</div>
+          <div class="ds-mono ds-headline" style="margin-bottom: var(--space-2);">1,248</div>
+          <div class="ex-trend up">
+            <span>+24</span>
+            <span style="font-weight: var(--weight-normal); opacity: 0.7;">new this week</span>
+          </div>
+        </article>
+
+        <article class="ds-card ds-hover-lift">
+          <div class="ds-caption" style="margin-bottom: var(--space-2);">Avg. Deal Size</div>
+          <div class="ds-mono ds-headline" style="margin-bottom: var(--space-2);">$48,200</div>
+          <div class="ex-trend up">
+            <span>+8.1%</span>
+            <span style="font-weight: var(--weight-normal); opacity: 0.7;">vs last quarter</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Main Grid -->
+    <div class="ex-grid" style="grid-template-columns: 2fr 1fr;">
+
+      <!-- Transactions -->
+      <section class="ex-section" aria-labelledby="txns-heading">
+        <div class="ex-section-header">
+          <div>
+            <h2 id="txns-heading" class="ds-title">Recent Transactions</h2>
+            <p class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);">Last 30 days of account activity</p>
+          </div>
+          <button class="ds-button ds-button-secondary ds-button-sm">View All</button>
+        </div>
+
+        <figure class="ds-surface" style="overflow: hidden; margin: 0;">
+          <table class="ds-table">
+            <caption class="ex-hidden">Recent financial transactions</caption>
+            <thead>
+              <tr>
+                <th scope="col">Transaction</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="num">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="ex-flex" style="gap: var(--space-3);">
+                    <div style="width: 32px; height: 32px; border-radius: var(--radius-base); background: var(--surface-inset); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs);">🏢</div>
+                    <div>
+                      <div style="font-weight: var(--weight-medium); color: var(--text-primary);">Meridian Holdings Ltd</div>
+                      <div class="ds-body-sm" style="color: var(--text-muted);">Wire Transfer</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="ds-body-sm"><time datetime="2025-10-24">Oct 24, 2025</time></td>
+                <td><span class="ds-badge ds-badge-success">Completed</span></td>
+                <td class="num ds-mono" style="font-weight: var(--weight-semibold); color: var(--text-primary);">+$450,000.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="ex-flex" style="gap: var(--space-3);">
+                    <div style="width: 32px; height: 32px; border-radius: var(--radius-base); background: var(--surface-inset); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs);">🏗️</div>
+                    <div>
+                      <div style="font-weight: var(--weight-medium); color: var(--text-primary);">Apex Construction</div>
+                      <div class="ds-body-sm" style="color: var(--text-muted);">ACH Debit</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="ds-body-sm"><time datetime="2025-10-23">Oct 23, 2025</time></td>
+                <td><span class="ds-badge ds-badge-warning">Pending</span></td>
+                <td class="num ds-mono" style="font-weight: var(--weight-semibold); color: var(--text-danger);">-$82,500.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="ex-flex" style="gap: var(--space-3);">
+                    <div style="width: 32px; height: 32px; border-radius: var(--radius-base); background: var(--surface-inset); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs);">🔬</div>
+                    <div>
+                      <div style="font-weight: var(--weight-medium); color: var(--text-primary);">Nova Biotech</div>
+                      <div class="ds-body-sm" style="color: var(--text-muted);">Invoice #2841</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="ds-body-sm"><time datetime="2025-10-21">Oct 21, 2025</time></td>
+                <td><span class="ds-badge ds-badge-success">Completed</span></td>
+                <td class="num ds-mono" style="font-weight: var(--weight-semibold); color: var(--text-primary);">+$125,000.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="ex-flex" style="gap: var(--space-3);">
+                    <div style="width: 32px; height: 32px; border-radius: var(--radius-base); background: var(--surface-inset); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs);">⚡</div>
+                    <div>
+                      <div style="font-weight: var(--weight-medium); color: var(--text-primary);">Volt Energy Partners</div>
+                      <div class="ds-body-sm" style="color: var(--text-muted);">Wire Transfer</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="ds-body-sm"><time datetime="2025-10-20">Oct 20, 2025</time></td>
+                <td><span class="ds-badge ds-badge-default">Processing</span></td>
+                <td class="num ds-mono" style="font-weight: var(--weight-semibold); color: var(--text-primary);">+$890,000.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="ex-flex" style="gap: var(--space-3);">
+                    <div style="width: 32px; height: 32px; border-radius: var(--radius-base); background: var(--surface-inset); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs);">🏦</div>
+                    <div>
+                      <div style="font-weight: var(--weight-medium); color: var(--text-primary);">Metro Credit Union</div>
+                      <div class="ds-body-sm" style="color: var(--text-muted);">Loan Repayment</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="ds-body-sm"><time datetime="2025-10-18">Oct 18, 2025</time></td>
+                <td><span class="ds-badge ds-badge-danger">Failed</span></td>
+                <td class="num ds-mono" style="font-weight: var(--weight-semibold); color: var(--text-danger);">-$42,000.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </figure>
+      </section>
+
+      <!-- Sidebar -->
+      <aside class="ex-section" aria-label="Quick actions and activity">
+        <div class="ex-section-header">
+          <h2 class="ds-title">Quick Transfer</h2>
+        </div>
+
+        <form class="ds-card" onsubmit="event.preventDefault(); showToast();">
+          <div class="ex-stack" style="margin-bottom: var(--gap-md);">
+            <label for="recipient" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Recipient Account</label>
+            <input id="recipient" type="text" class="ds-input" placeholder="Search by name or account number..." value="Meridian Holdings Ltd" />
+          </div>
+
+          <div class="ex-stack" style="margin-bottom: var(--gap-md);">
+            <label for="amount" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Amount</label>
+            <input id="amount" type="text" class="ds-input ds-mono" placeholder="0.00" value="$125,000.00" />
+          </div>
+
+          <div class="ex-stack" style="margin-bottom: var(--gap-md);">
+            <label for="note" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Reference Note</label>
+            <input id="note" type="text" class="ds-input" placeholder="Invoice #, PO number, etc." value="Q4 Retainer Payment" />
+          </div>
+
+          <div class="ex-flex" style="justify-content: space-between; margin-bottom: var(--gap-md);">
+            <span class="ds-body-sm" style="color: var(--text-muted);">Fee: <span class="ds-mono">$12.50</span></span>
+            <span class="ds-body-sm" style="color: var(--text-muted);">Arrives: <strong>Same day</strong></span>
+          </div>
+
+          <button type="submit" class="ds-button ds-button-primary" style="width: 100%;">
+            Initiate Transfer
+          </button>
+        </form>
+
+        <section style="margin-top: var(--gap-lg);" aria-labelledby="activity-heading">
+          <div class="ex-section-header">
+            <h3 id="activity-heading" class="ds-subtitle">Activity</h3>
+          </div>
+          <div class="ds-card-flat">
+            <div class="ex-stack">
+              <article class="ex-flex" style="gap: var(--space-3); align-items: flex-start;">
+                <div class="ds-status ds-status-success" style="margin-top: var(--space-1);"></div>
+                <div>
+                  <div class="ds-body-sm" style="font-weight: var(--weight-medium); color: var(--text-primary);">KYC approved for Apex Construction</div>
+                  <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-0-5);"><time datetime="2025-10-24T10:00">2 hours ago</time></div>
+                </div>
+              </article>
+              <hr />
+              <article class="ex-flex" style="gap: var(--space-3); align-items: flex-start;">
+                <div class="ds-status ds-status-warning" style="margin-top: var(--space-1);"></div>
+                <div>
+                  <div class="ds-body-sm" style="font-weight: var(--weight-medium); color: var(--text-primary);">Compliance review required</div>
+                  <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-0-5);"><time datetime="2025-10-24T07:00">5 hours ago</time> · Volt Energy Partners</div>
+                </div>
+              </article>
+              <hr />
+              <article class="ex-flex" style="gap: var(--space-3); align-items: flex-start;">
+                <div class="ds-status ds-status-muted" style="margin-top: var(--space-1);"></div>
+                <div>
+                  <div class="ds-body-sm" style="font-weight: var(--weight-medium); color: var(--text-primary);">Document uploaded</div>
+                  <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-0-5);"><time datetime="2025-10-23">Yesterday</time> · Statement_0925.pdf</div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="ex-toast ex-hidden" role="status" aria-live="polite">
+    <div class="ds-status ds-status-success" style="margin-top: var(--space-0-5);"></div>
+    <div>
+      <div class="ds-body-sm" style="font-weight: var(--weight-semibold); color: var(--text-primary);">Transfer Initiated</div>
+      <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-0-5);">$125,000.00 to Meridian Holdings Ltd</div>
+    </div>
+    <button type="button" class="ds-button ds-button-ghost ds-button-sm" onclick="hideToast()" style="margin-left: auto;">Dismiss</button>
+  </div>
+
+  <script>
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.remove('ex-hidden');
+      setTimeout(() => { if (!toast.classList.contains('ex-hidden')) hideToast(); }, 4000);
+    }
+    function hideToast() {
+      document.getElementById('toast').classList.add('ex-hidden');
+    }
+  </script>
+
+</body>
+</html>

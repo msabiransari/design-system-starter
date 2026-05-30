@@ -1,0 +1,235 @@
+/* ============================================================
+   PRIMENG 7 ADAPTER
+   Maps legacy PrimeNG 7 ui-* component classes to ACME tokens.
+   Load this AFTER PrimeNG 7 theme.css and primeng.min.css.
+
+   PrimeNG 7 predates the p-* class names and CSS variable theme
+   contract used by modern PrimeNG. This file intentionally uses
+   class shims instead of @layer so it remains useful in older
+   Angular 7 browser targets.
+   ============================================================ */
+
+/* Buttons */
+.ui-button {
+  background: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-base);
+  color: var(--accent-primary-text);
+  font-weight: var(--weight-semibold);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.ui-button:enabled:hover,
+.ui-button:enabled:focus {
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+  color: var(--accent-primary-text);
+}
+
+.ui-button:enabled:active {
+  background: var(--accent-primary-active);
+  border-color: var(--accent-primary-active);
+}
+
+.ui-button.ui-button-secondary {
+  background: var(--accent-secondary);
+  border-color: var(--border-default);
+  color: var(--accent-secondary-text);
+}
+
+.ui-button.ui-button-secondary:enabled:hover,
+.ui-button.ui-button-secondary:enabled:focus {
+  background: var(--accent-secondary-hover);
+  border-color: var(--border-hover);
+  color: var(--accent-secondary-text);
+}
+
+.ui-button.ui-button-danger {
+  background: var(--accent-danger);
+  border-color: var(--accent-danger);
+  color: var(--accent-danger-text);
+}
+
+.ui-button.ui-button-danger:enabled:hover,
+.ui-button.ui-button-danger:enabled:focus {
+  background: var(--accent-danger-hover);
+  border-color: var(--accent-danger-hover);
+  color: var(--accent-danger-text);
+}
+
+.ui-button:disabled,
+.ui-button.ui-state-disabled {
+  cursor: var(--cursor-disabled);
+  opacity: var(--opacity-disabled);
+}
+
+/* Inputs and dropdowns */
+.ui-inputtext,
+.ui-dropdown,
+.ui-multiselect,
+.ui-calendar .ui-inputtext {
+  background: var(--surface-default);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+.ui-inputtext:hover,
+.ui-dropdown:hover,
+.ui-multiselect:hover {
+  border-color: var(--border-hover);
+}
+
+.ui-inputtext:enabled:focus,
+.ui-dropdown.ui-state-focus,
+.ui-multiselect.ui-state-focus {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 var(--space-0-5) color-mix(in srgb, var(--focus-ring) 15%, transparent);
+  outline: none;
+}
+
+.ui-inputtext::placeholder {
+  color: var(--text-muted);
+}
+
+/* Cards and panels */
+.ui-card,
+.ui-panel {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-primary);
+}
+
+.ui-card .ui-card-title,
+.ui-panel .ui-panel-title {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.ui-card .ui-card-subtitle {
+  color: var(--text-muted);
+}
+
+/* Tables */
+.ui-table,
+.ui-table .ui-table-wrapper,
+.ui-table .ui-table-scrollable-wrapper {
+  background: var(--surface-default);
+  color: var(--text-primary);
+}
+
+.ui-table .ui-table-thead > tr > th {
+  background: var(--surface-default);
+  border-bottom: 1px solid var(--border-default);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.ui-table .ui-table-tbody > tr {
+  background: var(--surface-default);
+  color: var(--text-secondary);
+}
+
+.ui-table .ui-table-tbody > tr > td {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ui-table .ui-table-tbody > tr:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+/* Menus and overlays */
+.ui-menu,
+.ui-dropdown-panel,
+.ui-multiselect-panel,
+.ui-overlaypanel {
+  background: var(--surface-overlay);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-primary);
+}
+
+.ui-menu .ui-menuitem-link,
+.ui-dropdown-items .ui-dropdown-item,
+.ui-multiselect-items .ui-multiselect-item {
+  color: var(--text-primary);
+}
+
+.ui-menu .ui-menuitem-link:hover,
+.ui-dropdown-items .ui-dropdown-item:hover,
+.ui-multiselect-items .ui-multiselect-item:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.ui-dropdown-items .ui-dropdown-item.ui-state-highlight,
+.ui-multiselect-items .ui-multiselect-item.ui-state-highlight {
+  background: var(--surface-selected);
+  color: var(--text-primary);
+}
+
+/* Messages */
+.ui-message-info,
+.ui-messages-info {
+  background: var(--accent-info-bg);
+  border-color: var(--accent-info);
+  color: var(--accent-info);
+}
+
+.ui-message-success,
+.ui-messages-success {
+  background: var(--accent-success-bg);
+  border-color: var(--accent-success);
+  color: var(--accent-success);
+}
+
+.ui-message-warn,
+.ui-messages-warn {
+  background: var(--accent-warning-bg);
+  border-color: var(--accent-warning);
+  color: var(--accent-warning);
+}
+
+.ui-message-error,
+.ui-messages-error {
+  background: color-mix(in srgb, var(--accent-danger) 10%, transparent);
+  border-color: var(--accent-danger);
+  color: var(--accent-danger);
+}
+
+/* Paginator */
+.ui-paginator {
+  background: var(--surface-default);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.ui-paginator .ui-paginator-page.ui-state-active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary-text);
+}
+
+/* Tabs */
+.ui-tabview .ui-tabview-nav {
+  background: transparent;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.ui-tabview .ui-tabview-nav li a {
+  color: var(--text-muted);
+}
+
+.ui-tabview .ui-tabview-nav li.ui-state-active a {
+  color: var(--text-primary);
+}

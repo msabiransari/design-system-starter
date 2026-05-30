@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide — Design System</title>
+  <link rel="stylesheet" href="../tokens.css" />
+  <link rel="stylesheet" href="../themes/professional.css" id="theme-link" />
+  <link rel="stylesheet" href="../base.css" />
+  <link rel="stylesheet" href="../motion.css" />
+  <link rel="stylesheet" href="../primitives.css" />
+  <link rel="stylesheet" href="./shared/examples.css" />
+  <script src="./shared/nav.js" defer></script>
+  <style>
+    .guide-toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+    }
+    .guide-toc ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .guide-toc a {
+      display: block;
+      padding: var(--space-1-5) var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+    .guide-toc a:hover {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+    }
+    .guide-toc a.active {
+      color: var(--text-primary);
+      background: var(--surface-active);
+      font-weight: var(--weight-semibold);
+    }
+    .guide-content h2 {
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-semibold);
+      margin-top: var(--space-12);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .guide-content h2:first-child {
+      margin-top: 0;
+    }
+    .guide-content h3 {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-semibold);
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-3);
+    }
+    .guide-content p {
+      margin-bottom: var(--space-4);
+      line-height: var(--leading-relaxed);
+      color: var(--text-secondary);
+    }
+    .guide-content ul, .guide-content ol {
+      margin-bottom: var(--space-4);
+      padding-left: var(--space-5);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+    .guide-content li {
+      margin-bottom: var(--space-2);
+    }
+    .guide-content strong {
+      color: var(--text-primary);
+      font-weight: var(--weight-semibold);
+    }
+    .guide-content code {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      background: var(--surface-inset);
+      padding: var(--space-0-5) var(--space-1-5);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+    }
+    .guide-content pre {
+      background: var(--surface-inset);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      overflow-x: auto;
+      margin-bottom: var(--space-4);
+    }
+    .guide-content pre code {
+      background: transparent;
+      padding: 0;
+      font-size: var(--text-sm);
+      line-height: var(--leading-normal);
+    }
+    .guide-content blockquote {
+      margin: 0 0 var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      border-left: 3px solid var(--accent-primary);
+      background: var(--surface-hover);
+      border-radius: 0 var(--radius-base) var(--radius-base) 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    .guide-content hr {
+      border: 0;
+      height: 1px;
+      background: var(--border-subtle);
+      margin: var(--space-10) 0;
+    }
+    .guide-content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-4);
+    }
+    .guide-content th {
+      text-align: left;
+      padding: var(--space-2) var(--space-3);
+      font-weight: var(--weight-semibold);
+      color: var(--text-muted);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      border-bottom: 1px solid var(--border-default);
+    }
+    .guide-content td {
+      padding: var(--space-2-5) var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    .guide-content tr:hover td {
+      background: var(--surface-hover);
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--gap-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--gap-lg) var(--gap-md);
+    }
+    @media (max-width: 768px) {
+      .guide-grid { grid-template-columns: 1fr; }
+      .guide-toc { position: static; margin-bottom: var(--gap-md); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="guide-grid">
+
+    <!-- Table of Contents -->
+    <nav class="guide-toc" aria-label="Documentation sections">
+      <div class="ds-caption" style="margin-bottom: var(--space-2); padding: 0 var(--space-3);">On this page</div>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#quickstart">Quick Start</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#adapters">Library Adapters</a></li>
+        <li><a href="#themes">Creating Themes</a></li>
+        <li><a href="#platform">Platform Teams</a></li>
+        <li><a href="#hybrid">Legacy &amp; Hybrid Apps</a></li>
+        <li><a href="#migration">Migration Strategy</a></li>
+        <li><a href="#loading">Loading Order</a></li>
+        <li><a href="#files">Source Files</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <article class="guide-content">
+
+      <h2 id="overview">Overview</h2>
+      <p>
+        This is a <strong>framework-agnostic, token-based design system</strong>. It is not a component library like Material or Bootstrap. Instead, it is a <strong>theming contract</strong>: a set of semantic CSS custom properties that any application, component library, or UI framework can reference.
+      </p>
+      <blockquote>
+        Apps reference <code>--surface-default</code>, not <code>#ffffff</code>. Swap one CSS file and the entire application re-skins.
+      </blockquote>
+      <p>
+        The system ships with 8 built-in themes, motion tokens, elevation shadows, and optional primitive CSS classes (buttons, cards, inputs, tables). You can use the primitives directly, or reference tokens in your own components.
+      </p>
+
+      <h2 id="quickstart">Quick Start</h2>
+      <p>Load these 3–5 CSS files in your app's entry point:</p>
+      <pre><code>&lt;!-- 1. The token contract --&gt;
+&lt;link rel="stylesheet" href="tokens.css" /&gt;
+
+&lt;!-- 2. A concrete theme (swappable at runtime) --&gt;
+&lt;link rel="stylesheet" href="themes/professional.css" id="theme-link" /&gt;
+
+&lt;!-- 3. Base reset + globals --&gt;
+&lt;!-- Use base.css for greenfield apps. Use base-scoped.css for legacy/hybrid apps. --&gt;
+&lt;link rel="stylesheet" href="base.css" /&gt;
+
+&lt;!-- 4. Motion / animations (optional) --&gt;
+&lt;link rel="stylesheet" href="motion.css" /&gt;
+
+&lt;!-- 5. Primitive classes (optional) --&gt;
+&lt;link rel="stylesheet" href="primitives.css" /&gt;</code></pre>
+      <p>Then build your UI using tokens or primitives:</p>
+      <pre><code>&lt;!-- Using primitives --&gt;
+&lt;button class="ds-button ds-button-primary"&gt;Save&lt;/button&gt;
+
+&lt;!-- Using tokens directly --&gt;
+&lt;div style="background: var(--surface-default); border: 1px solid var(--border-default);"&gt;
+  Custom component
+&lt;/div&gt;</code></pre>
+
+      <h2 id="architecture">Architecture</h2>
+      <p>The system has three layers:</p>
+      <ol>
+        <li><strong>Tokens</strong> — The semantic contract. Declares variables like <code>--text-primary</code> and <code>--shadow-md</code> but assigns no values.</li>
+        <li><strong>Themes</strong> — Concrete values. Each theme file defines what <code>--text-primary</code> actually is (e.g. <code>#0a0e1a</code> in Professional, <code>#f9fafb</code> in Dark).</li>
+        <li><strong>Primitives</strong> — Optional CSS classes that reference tokens. Drop-in buttons, cards, inputs, and tables.</li>
+      </ol>
+      <p>This separation means:</p>
+      <ul>
+        <li>Your app never touches hex codes.</li>
+        <li>You can add a new brand theme without changing a single line of markup.</li>
+        <li>Third-party libraries can be adapted to speak the same token language.</li>
+      </ul>
+
+      <h2 id="adapters">Library Adapters</h2>
+      <p>
+        If you use <strong>PrimeNG</strong>, <strong>Angular Material</strong>, or similar libraries, you do not need to fork them. Load an <strong>adapter CSS file</strong> after the library's theme. The adapter re-maps the library's internal CSS variables to your tokens.
+      </p>
+      <pre><code>&lt;!-- PrimeNG base theme --&gt;
+&lt;link rel="stylesheet" href="primeng-theme.css" /&gt;
+
+&lt;!-- Adapter: bridges PrimeNG → your tokens --&gt;
+&lt;link rel="stylesheet" href="adapters/primeng-adapter.css" /&gt;</code></pre>
+      <p>Available adapters:</p>
+      <table>
+        <thead>
+          <tr><th>Library</th><th>Adapter</th><th>How it works</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PrimeNG (v17+)</td><td><code>primeng-adapter.css</code></td><td>Overrides <code>--p-primary-color</code>, <code>--p-surface-*</code>, <code>--p-content-*</code>, and component classes.</td></tr>
+          <tr><td>Angular Material</td><td><code>material-adapter.css</code></td><td>Overrides MDC token variables and component shim classes.</td></tr>
+        </tbody>
+      </table>
+      <p>
+        When you switch themes, PrimeNG buttons, tables, dialogs, and menus update automatically because they now reference your CSS custom properties.
+      </p>
+
+      <h2 id="themes">Creating a New Theme</h2>
+      <p>Copy any existing theme file and redefine the <code>--_*</code> variables inside <code>:root</code>:</p>
+      <pre><code>/* themes/mybrand.css */
+:root {
+  --_surface-page:  #fafafa;
+  --_surface-default: #ffffff;
+  --_accent-primary: #d946ef;
+  --_accent-primary-hover: #c026d3;
+  /* ... */
+}</code></pre>
+      <p>You only need to redefine variables you want to change. Everything else inherits from the token contract.</p>
+
+      <h2 id="platform">For Platform Teams</h2>
+      <p>
+        If you build components consumed by other teams, treat tokens as your <strong>only source of truth</strong>:
+      </p>
+      <ul>
+        <li>New components reference tokens directly (e.g. <code>background: var(--accent-primary)</code>).</li>
+        <li>Old components get a shim CSS file that overrides their hardcoded values with tokens.</li>
+        <li>Add a <code>stylelint</code> rule banning hex colors in new files.</li>
+        <li>Publish tokens as an npm package (<code>@acme/design-tokens</code>) so apps import rather than copy.</li>
+      </ul>
+      <p>
+        The token system becomes the <strong>lingua franca</strong> of your organization. PrimeNG speaks it through an adapter. Your old libs speak it through a shim. Your new components speak it natively.
+      </p>
+
+      <h2 id="hybrid">Legacy &amp; Hybrid Apps</h2>
+      <p>
+        <strong>AngularJS + Angular 7 hybrid. Scattered CSS. Inline styles everywhere.</strong> Can this system actually help? Yes. But let’s be honest about the limits.
+      </p>
+
+      <h3>The Honest Assessment</h3>
+      <table>
+        <thead>
+          <tr><th>Problem</th><th>Severity</th><th>Fixable?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Scattered CSS files</td><td>Medium</td><td><strong>Yes</strong> — shim layer</td></tr>
+          <tr><td>AngularJS + Angular 7 mix</td><td>Low</td><td><strong>Yes</strong> — tokens are global CSS</td></tr>
+          <tr><td>Inline styles (<code>style="color: #333"</code>)</td><td>High</td><td><strong>Partially</strong> — must refactor</td></tr>
+          <tr><td>Inline styles with <code>!important</code></td><td>Critical</td><td><strong>No</strong> — must refactor</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Why It Works Despite the Mess</h3>
+      <p>
+        CSS custom properties are <strong>global and framework-agnostic</strong>. Load them in your <code>index.html</code> <em>before</em> any framework boots, and both AngularJS directives and Angular 7 components inherit the same variables.
+      </p>
+      <pre><code>&lt;!-- index.html --&gt;
+&lt;head&gt;
+  &lt;!-- 1. Tokens (both frameworks inherit these) --&gt;
+  &lt;link rel="stylesheet" href="tokens.css" /&gt;
+  &lt;link rel="stylesheet" href="themes/professional.css" id="theme-link" /&gt;
+
+  &lt;!-- 2. Your scattered legacy CSS --&gt;
+  &lt;link rel="stylesheet" href="legacy-app.css" /&gt;
+
+  &lt;!-- 3. AngularJS + Angular 7 bootstrap here --&gt;
+
+  &lt;!-- 4. SHIM: overrides scattered legacy CSS --&gt;
+  &lt;link rel="stylesheet" href="hybrid-shim.css" /&gt;
+&lt;/head&gt;</code></pre>
+
+      <h3>The Shim Layer</h3>
+      <p>
+        <code>hybrid-shim.css</code> is a tactical override file that targets known legacy classes and forces them to use tokens. Load it <strong>last</strong> so it wins the cascade.
+      </p>
+      <pre><code>/* hybrid-shim.css */
+
+/* Old AngularJS classes */
+.legacy-btn,
+.angularjs-button,
+.btn-primary {
+  background-color: var(--accent-primary) !important;
+  color: var(--accent-primary-text) !important;
+  border-radius: var(--radius-base) !important;
+}
+
+/* Old Angular 7 component classes */
+.app-old-card,
+.legacy-panel {
+  background: var(--surface-raised) !important;
+  border: 1px solid var(--border-default) !important;
+  box-shadow: var(--shadow-sm) !important;
+}</code></pre>
+      <blockquote>
+        Yes, we use <code>!important</code> here. The shim is a demolition tool, not a sculpture. It is temporary. Its only job is to make old UI look themed while you refactor.
+      </blockquote>
+
+      <h3>Inline Styles: The Hard Boundary</h3>
+      <p>
+        If you have <code>style="color: #333"</code> or <code>[ngStyle]="{'color': '#333'}"</code> in templates, <strong>CSS cannot override that from the outside</strong>. Do not try to <code>!important</code> every possible inline property — it is madness.
+      </p>
+      <p><strong>Strategy for inline styles:</strong></p>
+      <ol>
+        <li><strong>Don't theme them from the outside.</strong> Accept they will look wrong until refactored.</li>
+        <li><strong>Use a Style Guard in CI.</strong> Fail the build if new/modified files contain inline colors:
+          <pre><code>// style-guard.js
+const forbidden = /style=["'][^"']*(#[0-9a-f]|rgb\(|hsl\()/i;
+// Reject commit if match found</code></pre>
+        </li>
+        <li><strong>Migrate the top 20 offenders.</strong> Find the components users see most (nav, buttons, cards, tables). Refactor only those to token-based CSS classes. Leave obscure admin screens for later.</li>
+        <li><strong>Runtime helper (dev only).</strong> If you must prove the concept without touching code:
+          <pre><code>// DO NOT SHIP TO PRODUCTION
+function themeInlineStyles() {
+  document.querySelectorAll('[style*="rgb"], [style*="#"]').forEach(el => {
+    const map = {
+      'rgb(51, 51, 51)': 'var(--text-secondary)',
+      '#ffffff': 'var(--surface-default)',
+      // ... add your audit results
+    };
+    if (map[el.style.color]) el.style.color = map[el.style.color];
+  });
+}</code></pre>
+        </li>
+      </ol>
+
+      <h3>Using Tokens in Both Frameworks</h3>
+      <p><strong>AngularJS (1.x):</strong></p>
+      <pre><code>angular.module('legacyApp').component('legacyCard', {
+  template: `
+    &lt;div class="legacy-card"
+         ng-style="{'background-color': 'var(--surface-default)'}"&gt;
+      &lt;h3 style="color: var(--text-primary)"&gt;{{ $ctrl.title }}&lt;/h3&gt;
+    &lt;/div&gt;
+  `
+});</code></pre>
+      <p><strong>Angular 7:</strong></p>
+      <pre><code>@Component({
+  selector: 'app-modern-card',
+  template: `&lt;div class="modern-card"&gt;{{ title }}&lt;/div&gt;`,
+  styles: [`
+    .modern-card {
+      background: var(--surface-raised);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      padding: var(--gap-md);
+      color: var(--text-primary);
+    }
+  `]
+})
+export class ModernCardComponent {}</code></pre>
+      <p>Both frameworks read the same values because the CSS is global. Your hybrid is actually an <strong>advantage</strong> here — one token file themes both simultaneously.</p>
+
+      <h3>Battle Plan for Your Mess</h3>
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>Action</th><th>Goal</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Week 1</strong></td><td>Inject tokens + theme into <code>index.html</code>. Do nothing else.</td><td>Verify both frameworks see the variables.</td></tr>
+          <tr><td><strong>Week 2</strong></td><td>Create <code>hybrid-shim.css</code> with <code>!important</code> overrides for your 10 most common legacy classes. Load it last.</td><td>App looks 70% themed immediately.</td></tr>
+          <tr><td><strong>Week 3–4</strong></td><td>Add CI lint rule banning inline colors. Refactor top 20 visible components (nav, buttons, cards).</td><td>Stop the bleeding. Users see the new theme.</td></tr>
+          <tr><td><strong>Month 2–3</strong></td><td>As you touch files for feature work, replace hardcoded values with tokens.</td><td>Strangler fig migration. No big bang.</td></tr>
+          <tr><td><strong>Month 6+</strong></td><td>Remove shim rules as components are rebuilt. Eventually delete <code>hybrid-shim.css</code>.</td><td>Clean system.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>The Bottom Line</h3>
+      <blockquote>
+        You don't need a clean codebase to use a design system. You need a clean boundary. The boundary is: <strong>from today forward, all new CSS uses tokens. Old CSS gets shimmed. Inline styles get refactored when touched.</strong>
+      </blockquote>
+
+      <hr />
+
+      <h2 id="migration">Migration Strategy</h2>
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>Action</th><th>Timeline</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1. Stop the bleeding</td><td>Add stylelint ban on hex colors for new files.</td><td>Week 1</td></tr>
+          <tr><td>2. Shim legacy</td><td>Create <code>legacy-shim.css</code> mapping old component classes to tokens.</td><td>Week 2–4</td></tr>
+          <tr><td>3. Codemod</td><td>Run a script replacing common hardcoded values with token refs.</td><td>Month 2–3</td></tr>
+          <tr><td>4. Deprecate</td><td>Remove shim rules as old components are rebuilt or retired.</td><td>Month 6+</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="loading">Recommended Loading Order</h2>
+      <pre><code>1. tokens.css              ← semantic variables
+2. themes/{name}.css       ← concrete values (swappable)
+3. base.css                ← reset + global typography
+   base-scoped.css         ← scoped reset for legacy/hybrid apps
+4. motion.css              ← animations
+5. primitives.css          ← optional utility classes
+6. [library theme].css     ← PrimeNG / Material base
+7. adapters/{lib}.css      ← bridges library → tokens
+8. [app-specific CSS]      ← app pages + components
+9. legacy-shim.css         ← old component overrides (temporary)</code></pre>
+
+      <h2 id="files">Source Files</h2>
+      <p>All documentation lives alongside the code:</p>
+      <table>
+        <thead>
+          <tr><th>File</th><th>What it covers</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>README.md</code></td><td>System overview, quick start, token categories.</td></tr>
+          <tr><td><code>PLATFORM-GUIDE.md</code></td><td>Full platform team architecture, npm packaging, adapters, migration.</td></tr>
+          <tr><td><code>adapters/README.md</code></td><td>How adapters work and how to write new ones.</td></tr>
+          <tr><td><code>adapters/primeng-adapter.css</code></td><td>PrimeNG → token bridge.</td></tr>
+          <tr><td><code>adapters/material-adapter.css</code></td><td>Angular Material → token bridge.</td></tr>
+        </tbody>
+      </table>
+
+      <hr />
+
+      <p class="ds-body-sm" style="color: var(--text-muted);">
+        This page is rendered with the design system itself — every heading, table, code block, and link uses the token system. Switch themes in the nav to see it adapt.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    // Highlight TOC on scroll
+    const sections = document.querySelectorAll('.guide-content h2[id]');
+    const tocLinks = document.querySelectorAll('.guide-toc a');
+
+    function onScroll() {
+      let current = '';
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100) current = section.id;
+      });
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  </script>
+
+</body>
+</html>

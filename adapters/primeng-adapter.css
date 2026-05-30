@@ -1,0 +1,277 @@
+/* ============================================================
+   PRIMENG ADAPTER
+   Maps PrimeNG design tokens to our semantic token system.
+   Load this AFTER primeng theme CSS and AFTER tokens/theme.
+   Targets PrimeNG v17+ (CSS variable based theming).
+   ============================================================ */
+
+:root {
+  /* Primary action colors */
+  --p-primary-color:                    var(--accent-primary);
+  --p-primary-hover-color:              var(--accent-primary-hover);
+  --p-primary-active-color:             var(--accent-primary-active);
+  --p-primary-inverse-color:            var(--accent-primary-text);
+  --p-primary-emphasis-color:           color-mix(in srgb, var(--accent-primary) 15%, transparent);
+
+  /* Surfaces (PrimeNG uses 0-900 scale, we map to semantic) */
+  --p-surface-0:                        var(--surface-default);
+  --p-surface-50:                       var(--surface-hover);
+  --p-surface-100:                      var(--surface-active);
+  --p-surface-200:                      var(--border-subtle);
+  --p-surface-300:                      var(--border-default);
+  --p-surface-400:                      var(--border-hover);
+  --p-surface-500:                      var(--border-focus);
+  --p-surface-600:                      var(--text-muted);
+  --p-surface-700:                      var(--text-secondary);
+  --p-surface-800:                      var(--text-primary);
+  --p-surface-900:                      var(--text-primary);
+  --p-surface-950:                      var(--text-primary);
+
+  /* Content (cards, panels, dialogs) */
+  --p-content-background:               var(--surface-default);
+  --p-content-hover-background:         var(--surface-hover);
+  --p-content-border-color:             var(--border-default);
+  --p-content-color:                    var(--text-primary);
+
+  /* Overlays (menus, dropdowns, popovers) */
+  --p-overlay-background:               var(--surface-overlay);
+  --p-overlay-hover-background:         var(--surface-hover);
+  --p-overlay-border-color:             var(--border-default);
+  --p-overlay-color:                    var(--text-primary);
+
+  /* Text */
+  --p-text-color:                       var(--text-primary);
+  --p-text-hover-color:                 var(--text-secondary);
+  --p-text-muted-color:                 var(--text-muted);
+  --p-text-inverse-color:               var(--text-inverted);
+
+  /* Mask (modal backdrop) */
+  --p-mask-background:                  color-mix(in srgb, var(--surface-page) 60%, black 20%);
+
+  /* Form fields */
+  --p-form-field-background:            var(--surface-default);
+  --p-form-field-border-color:          var(--border-default);
+  --p-form-field-hover-border-color:    var(--border-hover);
+  --p-form-field-focus-border-color:    var(--focus-ring);
+  --p-form-field-invalid-border-color:  var(--border-danger);
+  --p-form-field-color:                 var(--text-primary);
+  --p-form-field-placeholder-color:     var(--text-muted);
+  --p-form-field-focus-ring-color:      color-mix(in srgb, var(--focus-ring) 15%, transparent);
+
+  /* Borders & Radius */
+  --p-border-radius-none:               var(--radius-none);
+  --p-border-radius-xs:                 var(--radius-sm);
+  --p-border-radius-sm:                 var(--radius-base);
+  --p-border-radius-md:                 var(--radius-md);
+  --p-border-radius-lg:                 var(--radius-lg);
+  --p-border-radius-xl:                 var(--radius-xl);
+
+  /* Shadows */
+  --p-focus-ring-color:                 var(--focus-ring);
+  --p-focus-ring-offset:                var(--focus-ring-offset);
+
+  /* Lists (menus, picklist) */
+  --p-list-padding:                     var(--space-1);
+  --p-list-gap:                         var(--space-0);
+  --p-list-item-padding:                var(--space-2) var(--space-3);
+  --p-list-item-border-radius:          var(--radius-base);
+  --p-list-item-color:                  var(--text-primary);
+  --p-list-item-hover-color:            var(--text-primary);
+  --p-list-item-hover-background:       var(--surface-hover);
+  --p-list-item-selected-color:         var(--text-primary);
+  --p-list-item-selected-background:    var(--surface-selected);
+
+  /* Navigation */
+  --p-navigation-item-padding:          var(--space-2) var(--space-3);
+  --p-navigation-item-border-radius:    var(--radius-base);
+  --p-navigation-item-color:            var(--text-secondary);
+  --p-navigation-item-hover-color:      var(--text-primary);
+  --p-navigation-item-hover-background: var(--surface-hover);
+  --p-navigation-item-active-color:     var(--text-primary);
+  --p-navigation-item-active-background: var(--surface-active);
+
+  /* Messages (toast, alert) */
+  --p-message-info-background:          var(--accent-info-bg);
+  --p-message-info-color:               var(--accent-info);
+  --p-message-info-border-color:        var(--accent-info);
+  --p-message-success-background:       var(--accent-success-bg);
+  --p-message-success-color:            var(--accent-success);
+  --p-message-success-border-color:     var(--accent-success);
+  --p-message-warning-background:       var(--accent-warning-bg);
+  --p-message-warning-color:            var(--accent-warning);
+  --p-message-warning-border-color:     var(--accent-warning);
+  --p-message-error-background:         color-mix(in srgb, var(--accent-danger) 10%, transparent);
+  --p-message-error-color:              var(--accent-danger);
+  --p-message-error-border-color:       var(--accent-danger);
+
+  /* Links */
+  --p-link-color:                       var(--text-link);
+  --p-link-hover-color:                 var(--text-link-hover);
+}
+
+/* ============================================================
+   Component-specific overrides (fallbacks for older PrimeNG)
+   ============================================================ */
+
+@layer ds-primeng-shim {
+  /* Buttons */
+  .p-button {
+    border-radius: var(--radius-base);
+    font-weight: var(--weight-semibold);
+  }
+  .p-button:not(.p-button-outlined):not(.p-button-text) {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary-text);
+  }
+  .p-button:not(.p-button-outlined):not(.p-button-text):hover {
+    background: var(--accent-primary-hover);
+    border-color: var(--accent-primary-hover);
+  }
+  .p-button.p-button-secondary {
+    background: var(--accent-secondary);
+    border-color: var(--border-default);
+    color: var(--accent-secondary-text);
+  }
+  .p-button.p-button-secondary:hover {
+    background: var(--accent-secondary-hover);
+    border-color: var(--border-hover);
+  }
+  .p-button.p-button-danger {
+    background: var(--accent-danger);
+    border-color: var(--accent-danger);
+    color: var(--accent-danger-text);
+  }
+  .p-button.p-button-danger:hover {
+    background: var(--accent-danger-hover);
+    border-color: var(--accent-danger-hover);
+  }
+
+  /* Inputs */
+  .p-inputtext,
+  .p-dropdown,
+  .p-multiselect,
+  .p-calendar .p-inputtext {
+    border-color: var(--border-default);
+    color: var(--text-primary);
+    background: var(--surface-default);
+    border-radius: var(--radius-base);
+  }
+  .p-inputtext:hover,
+  .p-dropdown:hover,
+  .p-multiselect:hover {
+    border-color: var(--border-hover);
+  }
+  .p-inputtext:focus,
+  .p-dropdown:focus-within,
+  .p-multiselect:focus-within {
+    border-color: var(--focus-ring);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 15%, transparent);
+  }
+
+  /* Tables */
+  .p-datatable .p-datatable-thead > tr > th {
+    background: var(--surface-default);
+    color: var(--text-muted);
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .p-datatable .p-datatable-tbody > tr {
+    background: var(--surface-default);
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .p-datatable .p-datatable-tbody > tr:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+  }
+
+  /* Cards / Panels */
+  .p-card,
+  .p-panel {
+    background: var(--surface-raised);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    color: var(--text-primary);
+  }
+  .p-card .p-card-title {
+    color: var(--text-primary);
+    font-weight: var(--weight-semibold);
+  }
+  .p-card .p-card-subtitle {
+    color: var(--text-muted);
+  }
+
+  /* Dialog */
+  .p-dialog {
+    background: var(--surface-overlay);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    color: var(--text-primary);
+  }
+  .p-dialog .p-dialog-header {
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+  }
+
+  /* Menu / OverlayPanel */
+  .p-menu,
+  .p-overlaypanel,
+  .p-dropdown-panel,
+  .p-multiselect-panel {
+    background: var(--surface-overlay);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+  }
+  .p-menu .p-menuitem-link {
+    color: var(--text-primary);
+    border-radius: var(--radius-base);
+  }
+  .p-menu .p-menuitem-link:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+  }
+
+  /* Paginator */
+  .p-paginator {
+    background: transparent;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .p-paginator .p-paginator-page.p-highlight {
+    background: var(--accent-primary);
+    color: var(--accent-primary-text);
+    border-color: var(--accent-primary);
+  }
+
+  /* Tabs */
+  .p-tabview .p-tabview-nav {
+    background: transparent;
+    border-bottom: 1px solid var(--border-default);
+  }
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    color: var(--text-muted);
+    border-radius: var(--radius-base) var(--radius-base) 0 0;
+  }
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    background: var(--surface-default);
+  }
+  .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+  }
+
+  /* Chips / Tags */
+  .p-chip {
+    background: var(--surface-hover);
+    color: var(--text-secondary);
+    border-radius: var(--radius-pill);
+  }
+}

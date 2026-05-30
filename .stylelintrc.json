@@ -1,0 +1,50 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-no-hex": true,
+    "color-named": "never",
+    "declaration-property-value-disallowed-list": {
+      "background-color": ["/^rgb\\(/", "/^hsl\\(/"],
+      "color": ["/^rgb\\(/", "/^hsl\\(/"]
+    },
+    "custom-property-pattern": "^(_)?[a-z][a-z0-9-]*$",
+    "selector-class-pattern": null,
+    "comment-empty-line-before": null,
+    "custom-property-empty-line-before": null,
+    "declaration-block-single-line-max-declarations": null,
+    "value-keyword-case": ["lower", { "ignoreKeywords": ["BlinkMacSystemFont", "Roboto", "Arial", "Georgia", "Cambria", "Times", "Times New Roman", "SFMono-Regular", "SF Mono", "Menlo", "Consolas", "Liberation Mono", "Inter", "JetBrains Mono", "optimizeLegibility"] }],
+    "property-no-vendor-prefix": [true, { "ignoreProperties": ["text-size-adjust", "tab-size", "appearance"] }],
+    "color-hex-length": null,
+    "alpha-value-notation": null,
+    "rule-empty-line-before": null,
+    "selector-not-notation": null,
+    "no-descending-specificity": null,
+    "media-feature-range-notation": null
+  },
+  "ignoreFiles": [
+    "node_modules/**",
+    "dist/**",
+    "fixtures/**/node_modules/**",
+    "fixtures/**/dist/**",
+    "fixtures/**/.angular/**"
+  ],
+  "overrides": [
+    {
+      "files": ["themes/**/*.css"],
+      "rules": {
+        "color-no-hex": null,
+        "color-named": null,
+        "declaration-property-value-disallowed-list": null
+      }
+    },
+    {
+      "files": ["examples/**/*.css", "adapters/**/*.css", "fixtures/**/*.css"],
+      "rules": {
+        "color-no-hex": null,
+        "color-named": null,
+        "color-function-notation": null,
+        "declaration-property-value-disallowed-list": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+/* ============================================================
+   ANGULAR MATERIAL ADAPTER
+   Maps Angular Material (MDC-based) CSS variables to our tokens.
+   Load this AFTER Angular Material theme CSS and AFTER tokens/theme.
+   ============================================================ */
+
+:root {
+  /* Primary palette */
+  --mat-primary-color:                          var(--accent-primary);
+  --mat-primary-text-color:                     var(--accent-primary-text);
+  --mat-primary-state-layer-color:              var(--accent-primary);
+  --mat-primary-state-layer-opacity:            0.12;
+
+  /* Secondary palette */
+  --mat-secondary-color:                        var(--accent-secondary);
+  --mat-secondary-text-color:                   var(--accent-secondary-text);
+
+  /* Surface / Background */
+  --mat-app-background-color:                   var(--surface-page);
+  --mat-surface-color:                          var(--surface-default);
+  --mat-card-background-color:                  var(--surface-raised);
+  --mat-dialog-background-color:                var(--surface-overlay);
+  --mat-menu-background-color:                  var(--surface-overlay);
+  --mat-bottom-sheet-background-color:          var(--surface-overlay);
+
+  /* Text */
+  --mat-app-text-color:                         var(--text-primary);
+  --mat-card-subtitle-text-color:               var(--text-muted);
+  --mat-option-selected-state-label-text-color: var(--text-primary);
+  --mat-option-hover-state-label-text-color:    var(--text-primary);
+  --mat-option-label-text-color:                var(--text-secondary);
+
+  /* Form fields */
+  --mat-form-field-background-color:            var(--surface-default);
+  --mat-form-field-subscript-text-color:        var(--text-muted);
+  --mat-form-field-focus-select-arrow-color:    var(--focus-ring);
+  --mat-form-field-error-focus-trailing-icon-color: var(--accent-danger);
+  --mat-form-field-error-focus-label-text-color:    var(--accent-danger);
+  --mat-form-field-error-text-color:            var(--accent-danger);
+  --mat-form-field-error-label-text-color:      var(--accent-danger);
+
+  /* Divider */
+  --mat-divider-color:                          var(--border-subtle);
+
+  /* Ripple */
+  --mat-ripple-color:                           var(--text-primary);
+
+  /* Tab */
+  --mat-tab-header-active-focus-label-text-color: var(--accent-primary);
+  --mat-tab-header-active-hover-label-text-color: var(--accent-primary);
+  --mat-tab-header-active-label-text-color:     var(--accent-primary);
+  --mat-tab-header-label-text-color:            var(--text-muted);
+
+  /* Stepper */
+  --mat-stepper-header-selected-state-icon-background-color: var(--accent-primary);
+  --mat-stepper-header-selected-state-icon-foreground-color: var(--accent-primary-text);
+  --mat-stepper-header-edit-state-icon-background-color: var(--accent-primary);
+  --mat-stepper-header-edit-state-icon-foreground-color: var(--accent-primary-text);
+
+  /* Checkbox / Radio / Slide-toggle */
+  --mat-checkbox-selected-icon-color:           var(--accent-primary);
+  --mat-checkbox-selected-hover-icon-color:     var(--accent-primary-hover);
+  --mat-checkbox-selected-focus-icon-color:     var(--accent-primary-hover);
+  --mat-radio-selected-icon-color:              var(--accent-primary);
+  --mat-radio-selected-hover-icon-color:        var(--accent-primary-hover);
+  --mat-slide-toggle-selected-icon-color:       var(--accent-primary);
+  --mat-slide-toggle-selected-handle-color:     var(--accent-primary);
+  --mat-slide-toggle-selected-track-color:      color-mix(in srgb, var(--accent-primary) 50%, transparent);
+
+  /* Progress / Slider */
+  --mat-progress-bar-track-color:               var(--surface-inset);
+  --mat-progress-bar-active-indicator-color:    var(--accent-primary);
+  --mat-slider-track-color:                     var(--surface-inset);
+  --mat-slider-active-track-color:              var(--accent-primary);
+  --mat-slider-handle-color:                    var(--accent-primary);
+
+  /* Button ripple & state */
+  --mat-text-button-state-layer-color:          var(--accent-primary);
+  --mat-protected-button-state-layer-color:     var(--accent-primary);
+  --mat-filled-button-state-layer-color:        var(--accent-primary-text);
+}
+
+/* ============================================================
+   Component-specific shim overrides
+   ============================================================ */
+
+@layer ds-material-shim {
+  /* Cards */
+  .mat-mdc-card {
+    background-color: var(--surface-raised) !important;
+    border: 1px solid var(--border-default) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+  .mat-mdc-card-subtitle {
+    color: var(--text-muted) !important;
+  }
+
+  /* Buttons */
+  .mat-mdc-raised-button.mat-primary {
+    background-color: var(--accent-primary) !important;
+    color: var(--accent-primary-text) !important;
+  }
+  .mat-mdc-raised-button.mat-primary:hover {
+    background-color: var(--accent-primary-hover) !important;
+  }
+  .mat-mdc-button.mat-primary {
+    color: var(--accent-primary) !important;
+  }
+  .mat-mdc-outlined-button {
+    border-color: var(--border-default) !important;
+    color: var(--text-primary) !important;
+  }
+
+  /* Form fields */
+  .mat-mdc-form-field-focus-overlay {
+    background-color: color-mix(in srgb, var(--focus-ring) 8%, transparent) !important;
+  }
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-color: var(--border-default) !important;
+  }
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
+    border-color: var(--focus-ring) !important;
+  }
+  .mdc-text-field--invalid .mdc-notched-outline__leading,
+  .mdc-text-field--invalid .mdc-notched-outline__notch,
+  .mdc-text-field--invalid .mdc-notched-outline__trailing {
+    border-color: var(--accent-danger) !important;
+  }
+
+  /* Dialog */
+  .mat-mdc-dialog-surface {
+    background-color: var(--surface-overlay) !important;
+    border: 1px solid var(--border-default) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-xl) !important;
+  }
+
+  /* Menu */
+  .mat-mdc-menu-panel {
+    background-color: var(--surface-overlay) !important;
+    border: 1px solid var(--border-default) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-lg) !important;
+  }
+  .mat-mdc-menu-item:hover {
+    background-color: var(--surface-hover) !important;
+  }
+
+  /* Table */
+  .mat-mdc-table {
+    background: var(--surface-default) !important;
+  }
+  .mat-mdc-header-cell {
+    color: var(--text-muted) !important;
+    font-weight: var(--weight-semibold) !important;
+    font-size: var(--text-xs) !important;
+    text-transform: uppercase !important;
+    letter-spacing: var(--tracking-wide) !important;
+  }
+  .mat-mdc-row:hover .mat-mdc-cell {
+    background-color: var(--surface-hover) !important;
+  }
+  .mat-mdc-cell {
+    color: var(--text-secondary) !important;
+    border-bottom-color: var(--border-subtle) !important;
+  }
+
+  /* Tabs */
+  .mat-mdc-tab .mdc-tab__text-label {
+    color: var(--text-muted) !important;
+  }
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: var(--accent-primary) !important;
+  }
+  .mat-mdc-tab-group .mat-mdc-tab-header {
+    border-bottom: 1px solid var(--border-default) !important;
+  }
+}

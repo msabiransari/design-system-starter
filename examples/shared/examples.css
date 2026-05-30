@@ -1,0 +1,287 @@
+/* ============================================================
+   SHARED EXAMPLE LAYOUT STYLES
+   These are demo scaffolding, not part of the design system.
+   ============================================================ */
+
+.ex-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+  padding: var(--space-2) var(--space-6);
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+}
+
+.ex-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.ex-nav-logo {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-primary);
+  color: var(--accent-primary-text);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-base);
+}
+
+.ex-nav-title {
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+}
+
+.ex-nav-links {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.ex-nav-links::-webkit-scrollbar { display: none; }
+
+.ex-nav-link {
+  padding: var(--space-1-5) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.ex-nav-link:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover);
+  text-decoration: none;
+}
+
+.ex-nav-link.active {
+  color: var(--text-primary);
+  background: var(--surface-active);
+  font-weight: var(--weight-semibold);
+}
+
+.ex-nav-theme {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.ex-nav-theme-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.ex-nav-select {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  background: var(--surface-default);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.ex-nav-select:focus {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 15%, transparent);
+}
+
+/* Page layout */
+.ex-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--gap-lg) var(--gap-md);
+}
+
+.ex-section {
+  margin-bottom: var(--space-12);
+}
+
+.ex-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--gap-md);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ex-grid {
+  display: grid;
+  gap: var(--gap-md);
+}
+
+.ex-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.ex-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.ex-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.ex-grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+@media (max-width: 768px) {
+  .ex-grid-2,
+  .ex-grid-3,
+  .ex-grid-4,
+  .ex-grid-5 { grid-template-columns: 1fr; }
+  .ex-nav { padding: var(--space-2) var(--space-3); flex-wrap: wrap; }
+  .ex-nav-title { display: none; }
+}
+
+.ex-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  align-items: center;
+}
+
+.ex-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.ex-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--surface-default);
+}
+
+.ex-swatch-color {
+  height: 48px;
+  border-radius: var(--radius-base);
+  border: 1px solid var(--border-default);
+}
+
+.ex-swatch-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+}
+
+/* Hero */
+.ex-hero {
+  padding: var(--space-16) var(--gap-md);
+  text-align: center;
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: var(--gap-lg);
+}
+
+.ex-hero-title {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+  color: var(--text-primary);
+}
+
+.ex-hero-subtitle {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin: 0 auto var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+
+.ex-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--gap-md);
+}
+
+/* Toast */
+.ex-toast {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-overlay);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 60;
+  max-width: 360px;
+  animation: ds-slide-up var(--duration-normal) var(--ease-out);
+}
+
+.ex-hidden { display: none !important; }
+
+/* Progress */
+.ex-progress-bar {
+  height: 6px;
+  background: var(--surface-inset);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.ex-progress-fill {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: var(--radius-pill);
+  transition: width var(--duration-slow) var(--ease-out);
+}
+
+/* Avatar */
+.ex-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--accent-primary);
+  color: var(--accent-primary-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  flex-shrink: 0;
+}
+
+/* Trend badge */
+.ex-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-5);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  padding: var(--space-0-5) var(--space-1-5);
+  border-radius: var(--radius-pill);
+}
+
+.ex-trend.up {
+  color: var(--accent-success);
+  background: var(--accent-success-bg);
+}
+
+.ex-trend.down {
+  color: var(--accent-danger);
+  background: color-mix(in srgb, var(--accent-danger) 10%, transparent);
+}

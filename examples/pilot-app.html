@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilot App — Before &amp; After</title>
+
+  <!-- ==============================================================
+       LEGACY MODE (default)
+       This CSS simulates a typical 2015-era AngularJS/PrimeNG app:
+       scattered colors, no token system, inconsistent spacing.
+       ============================================================== -->
+  <style id="legacy-css">
+    /* Reset-ish */
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #f0f0f0; color: #333; }
+
+    /* Legacy nav */
+    .legacy-nav {
+      background: #1a237e;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .legacy-nav a {
+      color: #bbdefb;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+    .legacy-nav a:hover { color: white; }
+
+    /* Legacy layout */
+    .legacy-layout { display: flex; }
+    .legacy-sidebar {
+      width: 220px;
+      background: #e8eaf6;
+      border-right: 1px solid #c5cae9;
+      min-height: calc(100vh - 48px);
+      padding: 16px;
+    }
+    .legacy-sidebar a {
+      display: block;
+      padding: 8px 12px;
+      color: #3949ab;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    .legacy-sidebar a:hover { background: #c5cae9; }
+    .legacy-main { flex: 1; padding: 20px; }
+
+    /* Legacy cards */
+    .legacy-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .legacy-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #1a237e;
+    }
+    .legacy-card p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    .legacy-stat {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2e7d32;
+      margin: 8px 0;
+    }
+    .legacy-stat.down { color: #c62828; }
+
+    /* Legacy buttons */
+    .legacy-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      font-size: 14px;
+      border: 1px solid #3949ab;
+      border-radius: 4px;
+      background: #3949ab;
+      color: white;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    .legacy-btn:hover { background: #283593; }
+    .legacy-btn-secondary {
+      background: white;
+      color: #3949ab;
+    }
+    .legacy-btn-secondary:hover { background: #e8eaf6; }
+    .legacy-btn-danger {
+      background: #c62828;
+      border-color: #c62828;
+    }
+    .legacy-btn-danger:hover { background: #b71c1c; }
+
+    /* Legacy table */
+    .legacy-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: white;
+      border: 1px solid #ddd;
+    }
+    .legacy-table th {
+      background: #e8eaf6;
+      color: #1a237e;
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #c5cae9;
+      font-weight: bold;
+    }
+    .legacy-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #eee;
+      color: #555;
+    }
+    .legacy-table tr:hover { background: #f5f5f5; }
+
+    /* Legacy badges */
+    .legacy-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 12px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+    .legacy-badge-success { background: #c8e6c9; color: #2e7d32; }
+    .legacy-badge-warning { background: #fff9c4; color: #f57f17; }
+    .legacy-badge-danger { background: #ffcdd2; color: #c62828; }
+
+    /* Legacy form */
+    .legacy-input {
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+    .legacy-input:focus {
+      outline: none;
+      border-color: #3949ab;
+    }
+
+    /* Legacy grid */
+    .legacy-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+    .legacy-grid-4 > * { flex: 1; min-width: 200px; }
+
+    /* Toggle UI */
+    .mode-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1000;
+      background: white;
+      border: 2px solid #3949ab;
+      border-radius: 24px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .mode-toggle button {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #3949ab;
+    }
+    .mode-toggle button.active {
+      background: #3949ab;
+      color: white;
+    }
+  </style>
+
+  <!-- Token system links (disabled by default, enabled by toggle) -->
+  <link rel="stylesheet" href="../tokens.css" id="token-css" disabled />
+  <link rel="stylesheet" href="../themes/professional.css" id="theme-css" disabled />
+  <link rel="stylesheet" href="../base.css" id="base-css" disabled />
+  <link rel="stylesheet" href="../primitives.css" id="primitives-css" disabled />
+
+  <!-- Adapter + Shim (disabled by default) -->
+  <style id="adapter-css" disabled>
+    /* PrimeNG-like adapter shim for legacy classes */
+    .legacy-nav {
+      background: var(--accent-primary) !important;
+      color: var(--text-inverted) !important;
+      border-bottom: 1px solid var(--border-default) !important;
+      box-shadow: var(--shadow-sm) !important;
+    }
+    .legacy-nav a {
+      color: var(--text-inverted) !important;
+      font-size: var(--text-sm) !important;
+      font-weight: var(--weight-medium) !important;
+    }
+    .legacy-nav a:hover {
+      color: var(--text-inverted) !important;
+      background: var(--surface-hover) !important;
+      border-radius: var(--radius-base) !important;
+      text-decoration: none !important;
+    }
+
+    .legacy-sidebar {
+      background: var(--surface-raised) !important;
+      border-right: 1px solid var(--border-default) !important;
+    }
+    .legacy-sidebar a {
+      color: var(--text-secondary) !important;
+      font-size: var(--text-sm) !important;
+      font-weight: var(--weight-medium) !important;
+      border-radius: var(--radius-base) !important;
+    }
+    .legacy-sidebar a:hover {
+      background: var(--surface-hover) !important;
+      color: var(--text-primary) !important;
+    }
+
+    .legacy-card {
+      background: var(--surface-raised) !important;
+      border: 1px solid var(--border-default) !important;
+      border-radius: var(--radius-md) !important;
+      box-shadow: var(--shadow-sm) !important;
+    }
+    .legacy-card h3 {
+      color: var(--text-primary) !important;
+      font-size: var(--text-lg) !important;
+      font-weight: var(--weight-semibold) !important;
+    }
+    .legacy-card p {
+      color: var(--text-muted) !important;
+      font-size: var(--text-sm) !important;
+    }
+    .legacy-stat {
+      color: var(--accent-success) !important;
+      font-family: var(--font-mono) !important;
+      font-size: var(--text-2xl) !important;
+      font-weight: var(--weight-bold) !important;
+    }
+    .legacy-stat.down {
+      color: var(--accent-danger) !important;
+    }
+
+    .legacy-btn {
+      border-radius: var(--radius-base) !important;
+      font-size: var(--text-sm) !important;
+      font-weight: var(--weight-semibold) !important;
+      padding: var(--space-2) var(--space-4) !important;
+      cursor: pointer !important;
+      transition: all var(--duration-fast) var(--ease-out) !important;
+    }
+    .legacy-btn {
+      background: var(--accent-primary) !important;
+      border-color: var(--accent-primary) !important;
+      color: var(--accent-primary-text) !important;
+    }
+    .legacy-btn:hover {
+      background: var(--accent-primary-hover) !important;
+      border-color: var(--accent-primary-hover) !important;
+    }
+    .legacy-btn-secondary {
+      background: var(--accent-secondary) !important;
+      border-color: var(--border-default) !important;
+      color: var(--accent-secondary-text) !important;
+    }
+    .legacy-btn-secondary:hover {
+      background: var(--accent-secondary-hover) !important;
+    }
+    .legacy-btn-danger {
+      background: var(--accent-danger) !important;
+      border-color: var(--accent-danger) !important;
+      color: var(--accent-danger-text) !important;
+    }
+    .legacy-btn-danger:hover {
+      background: var(--accent-danger-hover) !important;
+      border-color: var(--accent-danger-hover) !important;
+    }
+
+    .legacy-table {
+      background: var(--surface-default) !important;
+      border: 1px solid var(--border-default) !important;
+      border-radius: var(--radius-base) !important;
+      overflow: hidden !important;
+      font-size: var(--text-sm) !important;
+    }
+    .legacy-table th {
+      background: var(--surface-default) !important;
+      color: var(--text-muted) !important;
+      font-weight: var(--weight-semibold) !important;
+      font-size: var(--text-xs) !important;
+      text-transform: uppercase !important;
+      letter-spacing: var(--tracking-wide) !important;
+      border-bottom: 1px solid var(--border-default) !important;
+    }
+    .legacy-table td {
+      color: var(--text-secondary) !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+    }
+    .legacy-table tr:hover td {
+      background: var(--surface-hover) !important;
+      color: var(--text-primary) !important;
+    }
+
+    .legacy-badge-success {
+      background: var(--accent-success-bg) !important;
+      color: var(--accent-success) !important;
+      border-radius: var(--radius-pill) !important;
+      font-weight: var(--weight-semibold) !important;
+    }
+    .legacy-badge-warning {
+      background: var(--accent-warning-bg) !important;
+      color: var(--accent-warning) !important;
+      border-radius: var(--radius-pill) !important;
+      font-weight: var(--weight-semibold) !important;
+    }
+    .legacy-badge-danger {
+      background: color-mix(in srgb, var(--accent-danger) 12%, transparent) !important;
+      color: var(--accent-danger) !important;
+      border-radius: var(--radius-pill) !important;
+      font-weight: var(--weight-semibold) !important;
+    }
+
+    .legacy-input {
+      background: var(--surface-default) !important;
+      border-color: var(--border-default) !important;
+      color: var(--text-primary) !important;
+      border-radius: var(--radius-base) !important;
+      font-size: var(--text-sm) !important;
+    }
+    .legacy-input:focus {
+      border-color: var(--focus-ring) !important;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 15%, transparent) !important;
+    }
+
+    .mode-toggle {
+      border-color: var(--border-default) !important;
+      box-shadow: var(--shadow-md) !important;
+    }
+    .mode-toggle button {
+      color: var(--text-secondary) !important;
+    }
+    .mode-toggle button.active {
+      background: var(--accent-primary) !important;
+      color: var(--accent-primary-text) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mode Toggle -->
+  <div class="mode-toggle" id="mode-toggle">
+    <button class="active" onclick="setMode('legacy')">Legacy (Before)</button>
+    <button onclick="setMode('modern')">Tokens (After)</button>
+  </div>
+
+  <!-- App Shell -->
+  <nav class="legacy-nav">
+    <div style="font-weight: bold; font-size: 18px;">Acme Capital</div>
+    <div>
+      <a href="#">Dashboard</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Reports</a>
+      <a href="#">Settings</a>
+    </div>
+  </nav>
+
+  <div class="legacy-layout">
+    <aside class="legacy-sidebar">
+      <a href="#" style="font-weight: bold; color: #1a237e;">Overview</a>
+      <a href="#">Transactions</a>
+      <a href="#">Clients</a>
+      <a href="#">Compliance</a>
+      <a href="#">Documents</a>
+    </aside>
+
+    <main class="legacy-main">
+
+      <h2 style="margin-top: 0; font-size: 22px; color: #1a237e;">Dashboard</h2>
+      <p style="color: #666; margin-bottom: 20px;">Welcome back. You have 3 pending transactions requiring review.</p>
+
+      <!-- Stats -->
+      <div class="legacy-grid legacy-grid-4">
+        <div class="legacy-card">
+          <p>Total Balance</p>
+          <div class="legacy-stat">$2,847,291</div>
+          <span class="legacy-badge legacy-badge-success">+12.5%</span>
+        </div>
+        <div class="legacy-card">
+          <p>Pending Settlements</p>
+          <div class="legacy-stat down">$124,500</div>
+          <span class="legacy-badge legacy-badge-warning">-3.2%</span>
+        </div>
+        <div class="legacy-card">
+          <p>Active Clients</p>
+          <div class="legacy-stat">1,248</div>
+          <span class="legacy-badge legacy-badge-success">+24 new</span>
+        </div>
+        <div class="legacy-card">
+          <p>Avg. Deal Size</p>
+          <div class="legacy-stat">$48,200</div>
+          <span class="legacy-badge legacy-badge-success">+8.1%</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="legacy-card">
+        <h3>Quick Actions</h3>
+        <div style="margin-top: 12px;">
+          <button class="legacy-btn">New Transfer</button>
+          <button class="legacy-btn legacy-btn-secondary">Export Report</button>
+          <button class="legacy-btn legacy-btn-danger">Flag Review</button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="legacy-card">
+        <h3>Recent Transactions</h3>
+        <table class="legacy-table" style="margin-top: 12px;">
+          <thead>
+            <tr>
+              <th>Transaction</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th style="text-align: right;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Meridian Holdings</strong><br><span style="font-size: 12px; color: #888;">Wire Transfer</span></td>
+              <td>Oct 24, 2025</td>
+              <td><span class="legacy-badge legacy-badge-success">Completed</span></td>
+              <td style="text-align: right; font-weight: bold;">+$450,000</td>
+            </tr>
+            <tr>
+              <td><strong>Apex Construction</strong><br><span style="font-size: 12px; color: #888;">ACH Debit</span></td>
+              <td>Oct 23, 2025</td>
+              <td><span class="legacy-badge legacy-badge-warning">Pending</span></td>
+              <td style="text-align: right; font-weight: bold; color: #c62828;">-$82,500</td>
+            </tr>
+            <tr>
+              <td><strong>Nova Biotech</strong><br><span style="font-size: 12px; color: #888;">Invoice #2841</span></td>
+              <td>Oct 21, 2025</td>
+              <td><span class="legacy-badge legacy-badge-success">Completed</span></td>
+              <td style="text-align: right; font-weight: bold;">+$125,000</td>
+            </tr>
+            <tr>
+              <td><strong>Metro Credit Union</strong><br><span style="font-size: 12px; color: #888;">Loan Repayment</span></td>
+              <td>Oct 18, 2025</td>
+              <td><span class="legacy-badge legacy-badge-danger">Failed</span></td>
+              <td style="text-align: right; font-weight: bold; color: #c62828;">-$42,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Form -->
+      <div class="legacy-card">
+        <h3>Quick Transfer</h3>
+        <div style="display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px;">
+            <label style="font-size: 12px; font-weight: bold; color: #666; display: block; margin-bottom: 4px;">Recipient</label>
+            <input class="legacy-input" value="Meridian Holdings Ltd" />
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <label style="font-size: 12px; font-weight: bold; color: #666; display: block; margin-bottom: 4px;">Amount</label>
+            <input class="legacy-input" value="$125,000.00" />
+          </div>
+        </div>
+        <button class="legacy-btn" style="margin-top: 8px;">Initiate Transfer</button>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    function setMode(mode) {
+      const links = ['token-css', 'theme-css', 'base-css', 'primitives-css'];
+      const shim = document.getElementById('adapter-css');
+      const buttons = document.querySelectorAll('.mode-toggle button');
+
+      if (mode === 'modern') {
+        links.forEach(id => { document.getElementById(id).disabled = false; });
+        shim.disabled = false;
+        buttons[0].classList.remove('active');
+        buttons[1].classList.add('active');
+      } else {
+        links.forEach(id => { document.getElementById(id).disabled = true; });
+        shim.disabled = true;
+        buttons[0].classList.add('active');
+        buttons[1].classList.remove('active');
+      }
+    }
+  </script>
+
+</body>
+</html>

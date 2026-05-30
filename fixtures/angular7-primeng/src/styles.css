@@ -1,0 +1,15 @@
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+}
+
+.legacy-shell {
+  min-height: 100vh;
+  background: var(--surface-page);
+  color: var(--text-primary);
+}

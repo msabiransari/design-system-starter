@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Tables — Design System</title>
+  <link rel="stylesheet" href="../tokens.css" />
+  <link rel="stylesheet" href="../themes/professional.css" id="theme-link" />
+  <link rel="stylesheet" href="../base.css" />
+  <link rel="stylesheet" href="../motion.css" />
+  <link rel="stylesheet" href="../primitives.css" />
+  <link rel="stylesheet" href="./shared/examples.css" />
+  <script src="./shared/nav.js" defer></script>
+  <style>
+    .data-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap-sm);
+      align-items: flex-end;
+      padding: var(--space-3);
+      background: var(--surface-raised);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-base);
+      margin-bottom: var(--gap-md);
+    }
+    .data-filters .ds-input,
+    .data-filters select {
+      width: auto;
+      min-width: 160px;
+    }
+    .data-bar {
+      height: 20px;
+      background: var(--accent-primary);
+      border-radius: var(--radius-sm);
+      min-width: 4px;
+      transition: width var(--duration-slow) var(--ease-out);
+    }
+    .data-pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3);
+      border-top: 1px solid var(--border-subtle);
+    }
+    .data-page-btns {
+      display: flex;
+      gap: var(--space-1);
+    }
+    .data-page-btn {
+      min-width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--space-2);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--text-secondary);
+      background: var(--surface-default);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-base);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+    .data-page-btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+    }
+    .data-page-btn.active {
+      background: var(--accent-primary);
+      color: var(--accent-primary-text);
+      border-color: var(--accent-primary);
+      font-weight: var(--weight-semibold);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="ex-page">
+
+    <header class="ex-section">
+      <div class="ex-flex" style="justify-content: space-between; flex-wrap: wrap; gap: var(--gap-md);">
+        <div>
+          <div class="ds-caption" style="margin-bottom: var(--space-1);">Operations</div>
+          <h1 class="ds-display">Transaction Ledger</h1>
+        </div>
+        <div class="ex-flex">
+          <button class="ds-button ds-button-secondary ds-button-sm">Export CSV</button>
+          <button class="ds-button ds-button-primary ds-button-sm">+ New Entry</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Filters -->
+    <section aria-label="Data filters">
+      <form class="data-filters" onsubmit="event.preventDefault();">
+        <div class="ex-stack" style="gap: var(--space-1);">
+          <label for="filter-search" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Search</label>
+          <input id="filter-search" type="search" class="ds-input" placeholder="ID, name, reference..." />
+        </div>
+        <div class="ex-stack" style="gap: var(--space-1);">
+          <label for="filter-status" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Status</label>
+          <select id="filter-status" class="ds-input">
+            <option>All Statuses</option>
+            <option>Completed</option>
+            <option>Pending</option>
+            <option>Failed</option>
+            <option>Processing</option>
+          </select>
+        </div>
+        <div class="ex-stack" style="gap: var(--space-1);">
+          <label for="filter-type" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Type</label>
+          <select id="filter-type" class="ds-input">
+            <option>All Types</option>
+            <option>Wire</option>
+            <option>ACH</option>
+            <option>Invoice</option>
+            <option>Loan</option>
+          </select>
+        </div>
+        <div class="ex-stack" style="gap: var(--space-1);">
+          <label for="filter-from" class="ds-caption" style="text-transform: none; letter-spacing: normal;">From</label>
+          <input id="filter-from" type="date" class="ds-input" value="2025-10-01" />
+        </div>
+        <div class="ex-stack" style="gap: var(--space-1);">
+          <label for="filter-to" class="ds-caption" style="text-transform: none; letter-spacing: normal;">To</label>
+          <input id="filter-to" type="date" class="ds-input" value="2025-10-31" />
+        </div>
+        <button type="submit" class="ds-button ds-button-primary ds-button-sm" style="margin-bottom: 1px;">Apply Filters</button>
+      </form>
+    </section>
+
+    <!-- Summary Stats -->
+    <section class="ex-section" aria-label="Summary statistics">
+      <div class="ex-grid ex-grid-4">
+        <div class="ds-card-flat">
+          <div class="ds-caption">Total Volume</div>
+          <div class="ds-mono ds-title" style="margin-top: var(--space-1);">$18,420,500</div>
+        </div>
+        <div class="ds-card-flat">
+          <div class="ds-caption">Count</div>
+          <div class="ds-mono ds-title" style="margin-top: var(--space-1);">1,247</div>
+        </div>
+        <div class="ds-card-flat">
+          <div class="ds-caption">Success Rate</div>
+          <div class="ex-flex" style="gap: var(--space-2); margin-top: var(--space-1);">
+            <meter min="0" max="100" value="97.2" style="flex: 1; height: 8px;"></meter>
+            <span class="ds-mono ds-body-sm" style="font-weight: var(--weight-semibold);">97.2%</span>
+          </div>
+        </div>
+        <div class="ds-card-flat">
+          <div class="ds-caption">Avg. Processing</div>
+          <div class="ds-mono ds-title" style="margin-top: var(--space-1);">4.2h</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Table -->
+    <section class="ex-section" aria-labelledby="ledger-heading">
+      <figure class="ds-surface" style="overflow: hidden; margin: 0;">
+        <table class="ds-table">
+          <caption id="ledger-heading" class="ex-hidden">Transaction ledger with filters applied</caption>
+          <colgroup>
+            <col style="width: 40px;" />
+            <col />
+            <col style="width: 120px;" />
+            <col style="width: 120px;" />
+            <col style="width: 100px;" />
+            <col style="width: 140px;" />
+            <col style="width: 100px;" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col"><input type="checkbox" aria-label="Select all" /></th>
+              <th scope="col">Transaction</th>
+              <th scope="col">Type</th>
+              <th scope="col">Date</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="num">Amount</th>
+              <th scope="col">Risk</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" aria-label="Select row" /></td>
+              <td>
+                <div class="ds-body-sm" style="font-weight: var(--weight-medium);">TXN-2025-8842</div>
+                <div class="ds-body-sm" style="color: var(--text-muted);">Meridian Holdings Ltd</div>
+              </td>
+              <td class="ds-body-sm">Wire</td>
+              <td class="ds-body-sm"><time datetime="2025-10-24">Oct 24</time></td>
+              <td><span class="ds-badge ds-badge-success">Completed</span></td>
+              <td class="num ds-mono">+$450,000</td>
+              <td><span class="ds-badge ds-badge-default">Low</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select row" /></td>
+              <td>
+                <div class="ds-body-sm" style="font-weight: var(--weight-medium);">TXN-2025-8841</div>
+                <div class="ds-body-sm" style="color: var(--text-muted);">Apex Construction</div>
+              </td>
+              <td class="ds-body-sm">ACH</td>
+              <td class="ds-body-sm"><time datetime="2025-10-23">Oct 23</time></td>
+              <td><span class="ds-badge ds-badge-warning">Pending</span></td>
+              <td class="num ds-mono" style="color: var(--text-danger);">-$82,500</td>
+              <td><span class="ds-badge ds-badge-warning">Med</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select row" /></td>
+              <td>
+                <div class="ds-body-sm" style="font-weight: var(--weight-medium);">TXN-2025-8839</div>
+                <div class="ds-body-sm" style="color: var(--text-muted);">Nova Biotech</div>
+              </td>
+              <td class="ds-body-sm">Invoice</td>
+              <td class="ds-body-sm"><time datetime="2025-10-21">Oct 21</time></td>
+              <td><span class="ds-badge ds-badge-success">Completed</span></td>
+              <td class="num ds-mono">+$125,000</td>
+              <td><span class="ds-badge ds-badge-default">Low</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select row" /></td>
+              <td>
+                <div class="ds-body-sm" style="font-weight: var(--weight-medium);">TXN-2025-8838</div>
+                <div class="ds-body-sm" style="color: var(--text-muted);">Volt Energy Partners</div>
+              </td>
+              <td class="ds-body-sm">Wire</td>
+              <td class="ds-body-sm"><time datetime="2025-10-20">Oct 20</time></td>
+              <td><span class="ds-badge ds-badge-default">Processing</span></td>
+              <td class="num ds-mono">+$890,000</td>
+              <td><span class="ds-badge ds-badge-warning">Med</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select row" /></td>
+              <td>
+                <div class="ds-body-sm" style="font-weight: var(--weight-medium);">TXN-2025-8835</div>
+                <div class="ds-body-sm" style="color: var(--text-muted);">Metro Credit Union</div>
+              </td>
+              <td class="ds-body-sm">Loan</td>
+              <td class="ds-body-sm"><time datetime="2025-10-18">Oct 18</time></td>
+              <td><span class="ds-badge ds-badge-danger">Failed</span></td>
+              <td class="num ds-mono" style="color: var(--text-danger);">-$42,000</td>
+              <td><span class="ds-badge ds-badge-danger">High</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select row" /></td>
+              <td>
+                <div class="ds-body-sm" style="font-weight: var(--weight-medium);">TXN-2025-8832</div>
+                <div class="ds-body-sm" style="color: var(--text-muted);">Global Shipping Co</div>
+              </td>
+              <td class="ds-body-sm">Wire</td>
+              <td class="ds-body-sm"><time datetime="2025-10-15">Oct 15</time></td>
+              <td><span class="ds-badge ds-badge-success">Completed</span></td>
+              <td class="num ds-mono">+$320,000</td>
+              <td><span class="ds-badge ds-badge-default">Low</span></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select row" /></td>
+              <td>
+                <div class="ds-body-sm" style="font-weight: var(--weight-medium);">TXN-2025-8828</div>
+                <div class="ds-body-sm" style="color: var(--text-muted);">Summit Realty</div>
+              </td>
+              <td class="ds-body-sm">ACH</td>
+              <td class="ds-body-sm"><time datetime="2025-10-12">Oct 12</time></td>
+              <td><span class="ds-badge ds-badge-success">Completed</span></td>
+              <td class="num ds-mono">+$180,000</td>
+              <td><span class="ds-badge ds-badge-default">Low</span></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="ds-body-sm" style="color: var(--text-muted);">Showing 1–7 of 1,247</td>
+              <td class="num ds-mono" style="font-weight: var(--weight-bold);">+$1,840,500</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- Pagination -->
+        <div class="data-pagination">
+          <div class="ds-body-sm" style="color: var(--text-muted);">Page 1 of 179</div>
+          <div class="data-page-bts">
+            <button class="data-page-btn" disabled>←</button>
+            <button class="data-page-btn active">1</button>
+            <button class="data-page-btn">2</button>
+            <button class="data-page-btn">3</button>
+            <span class="ds-body-sm" style="color: var(--text-muted); padding: 0 var(--space-2);">...</span>
+            <button class="data-page-btn">179</button>
+            <button class="data-page-btn">→</button>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <!-- Charts / Bars -->
+    <section class="ex-section" aria-labelledby="charts-heading">
+      <div class="ex-section-header">
+        <h2 id="charts-heading" class="ds-title">Volume by Day</h2>
+        <span class="ds-body-sm" style="color: var(--text-muted);">October 2025</span>
+      </div>
+      <div class="ex-grid ex-grid-2">
+        <div class="ds-card-flat">
+          <div class="ex-stack">
+            <div class="ex-flex" style="justify-content: space-between; align-items: center;">
+              <span class="ds-body-sm" style="font-weight: var(--weight-medium);">Mon, Oct 20</span>
+              <span class="ds-mono ds-body-sm">$1,240,000</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+          <div class="ex-stack" style="margin-top: var(--gap-sm);">
+            <div class="ex-flex" style="justify-content: space-between; align-items: center;">
+              <span class="ds-body-sm" style="font-weight: var(--weight-medium);">Tue, Oct 21</span>
+              <span class="ds-mono ds-body-sm">$980,000</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 67%;"></div>
+            </div>
+          </div>
+          <div class="ex-stack" style="margin-top: var(--gap-sm);">
+            <div class="ex-flex" style="justify-content: space-between; align-items: center;">
+              <span class="ds-body-sm" style="font-weight: var(--weight-medium);">Wed, Oct 22</span>
+              <span class="ds-mono ds-body-sm">$1,450,000</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 100%;"></div>
+            </div>
+          </div>
+          <div class="ex-stack" style="margin-top: var(--gap-sm);">
+            <div class="ex-flex" style="justify-content: space-between; align-items: center;">
+              <span class="ds-body-sm" style="font-weight: var(--weight-medium);">Thu, Oct 23</span>
+              <span class="ds-mono ds-body-sm">$620,000</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 43%;"></div>
+            </div>
+          </div>
+          <div class="ex-stack" style="margin-top: var(--gap-sm);">
+            <div class="ex-flex" style="justify-content: space-between; align-items: center;">
+              <span class="ds-body-sm" style="font-weight: var(--weight-medium);">Fri, Oct 24</span>
+              <span class="ds-mono ds-body-sm">$890,000</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 61%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-card-flat">
+          <div class="ds-caption" style="margin-bottom: var(--gap-sm);">Status Distribution</div>
+          <div class="ex-stack">
+            <div class="ex-flex" style="justify-content: space-between;">
+              <span class="ds-body-sm">Completed</span>
+              <span class="ds-mono ds-body-sm">1,212</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 97%; background: var(--accent-success);"></div>
+            </div>
+          </div>
+          <div class="ex-stack" style="margin-top: var(--gap-sm);">
+            <div class="ex-flex" style="justify-content: space-between;">
+              <span class="ds-body-sm">Pending</span>
+              <span class="ds-mono ds-body-sm">18</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 8%; background: var(--accent-warning);"></div>
+            </div>
+          </div>
+          <div class="ex-stack" style="margin-top: var(--gap-sm);">
+            <div class="ex-flex" style="justify-content: space-between;">
+              <span class="ds-body-sm">Processing</span>
+              <span class="ds-mono ds-body-sm">12</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 5%; background: var(--accent-info);"></div>
+            </div>
+          </div>
+          <div class="ex-stack" style="margin-top: var(--gap-sm);">
+            <div class="ex-flex" style="justify-content: space-between;">
+              <span class="ds-body-sm">Failed</span>
+              <span class="ds-mono ds-body-sm">5</span>
+            </div>
+            <div class="ex-progress-bar">
+              <div class="ex-progress-fill" style="width: 2%; background: var(--accent-danger);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

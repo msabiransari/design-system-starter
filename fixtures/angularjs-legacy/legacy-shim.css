@@ -1,0 +1,87 @@
+/* ACME Legacy Shim — maps old classes to design tokens */
+/* Load this AFTER legacy-styles.css */
+
+@layer acme-legacy {
+  .legacy-btn {
+    background: var(--accent-primary) !important;
+    color: var(--accent-primary-text) !important;
+    border-color: var(--accent-primary) !important;
+    border-radius: var(--radius-base) !important;
+  }
+
+  .legacy-btn-secondary {
+    background: var(--surface-default) !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--border-default) !important;
+  }
+
+  .legacy-btn-danger {
+    background: var(--accent-danger) !important;
+    border-color: var(--accent-danger) !important;
+    color: var(--accent-danger-text) !important;
+  }
+
+  .legacy-card {
+    background: var(--surface-raised) !important;
+    border-color: var(--border-default) !important;
+    box-shadow: var(--shadow-sm) !important;
+    border-radius: var(--radius-lg) !important;
+  }
+
+  .legacy-card-title {
+    color: var(--text-primary) !important;
+  }
+
+  .legacy-card-subtitle {
+    color: var(--text-muted) !important;
+  }
+
+  .legacy-table th {
+    background: var(--surface-default) !important;
+    color: var(--text-secondary) !important;
+    border-bottom-color: var(--border-default) !important;
+  }
+
+  .legacy-table td {
+    color: var(--text-secondary) !important;
+    border-bottom-color: var(--border-subtle) !important;
+  }
+
+  .legacy-table tr:hover {
+    background: var(--surface-hover) !important;
+  }
+
+  .legacy-badge-success {
+    background: var(--accent-success-bg) !important;
+    color: var(--accent-success) !important;
+  }
+
+  .legacy-badge-warning {
+    background: var(--accent-warning-bg) !important;
+    color: var(--accent-warning) !important;
+  }
+
+  .legacy-input {
+    background: var(--surface-default) !important;
+    border-color: var(--border-default) !important;
+    color: var(--text-primary) !important;
+    border-radius: var(--radius-base) !important;
+  }
+
+  .legacy-shell {
+    background: var(--surface-page) !important;
+  }
+
+  .legacy-header {
+    background: var(--surface-raised) !important;
+    border-bottom-color: var(--border-default) !important;
+  }
+
+  .legacy-header h1 {
+    color: var(--text-primary) !important;
+  }
+
+  .legacy-nav a {
+    color: var(--text-link) !important;
+  }
+}

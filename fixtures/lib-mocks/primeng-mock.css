@@ -1,0 +1,190 @@
+/* ============================================================
+   PRIMENG LIBRARY MOCK
+   Minimal base styling that mimics PrimeNG's default theme.
+   Load this BEFORE primeng-adapter.css so the adapter can
+   override it with tokens.
+   ============================================================ */
+
+/* Buttons */
+.p-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: #64748b;
+  color: #ffffff;
+}
+.p-button:hover {
+  background: #475569;
+}
+.p-button-primary {
+  background: #3b82f6;
+}
+.p-button-primary:hover {
+  background: #2563eb;
+}
+.p-button-secondary {
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+.p-button-secondary:hover {
+  background: #e2e8f0;
+}
+.p-button-danger {
+  background: #ef4444;
+}
+.p-button-danger:hover {
+  background: #dc2626;
+}
+
+/* Inputs */
+.p-inputtext {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #1e293b;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+.p-inputtext:hover {
+  border-color: #94a3b8;
+}
+.p-inputtext:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 15%);
+}
+
+/* Card */
+.p-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+}
+.p-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+.p-card-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Table */
+.p-datatable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  text-align: left;
+}
+.p-datatable-thead {
+  border-bottom: 1px solid #e2e8f0;
+}
+.p-datatable-thead th {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  background: #f8fafc;
+}
+.p-datatable-tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+.p-datatable-tbody tr:hover td {
+  background: #f8fafc;
+}
+
+/* Chips */
+.p-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #475569;
+  border-radius: 9999px;
+}
+
+/* Tabs */
+.p-tabview-nav {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.p-tabview-nav li {
+  margin-bottom: -1px;
+}
+.p-tabview-nav-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+.p-tabview-nav li:not(.p-highlight):hover .p-tabview-nav-link {
+  color: #334155;
+  background: #f8fafc;
+}
+
+/* Paginator */
+.p-paginator {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid #f1f5f9;
+}
+.p-paginator-page {
+  min-width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.p-paginator-page:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+.p-paginator-page.p-highlight {
+  background: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
+}

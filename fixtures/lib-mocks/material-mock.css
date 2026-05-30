@@ -1,0 +1,202 @@
+/* ============================================================
+   MATERIAL LIBRARY MOCK
+   Minimal base styling that mimics Angular Material's default
+   MDC theme. Load this BEFORE material-adapter.css.
+   ============================================================ */
+
+/* Buttons */
+.mat-mdc-raised-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 1.25rem;
+  height: 2.25rem;
+  font-family: Roboto, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  background: #e0e0e0;
+  color: #000000;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+}
+.mat-mdc-raised-button.mat-primary {
+  background: #6750a4;
+  color: #ffffff;
+}
+.mat-mdc-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  height: 2.25rem;
+  font-family: Roboto, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  background: transparent;
+  color: #6750a4;
+}
+.mat-mdc-outlined-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  height: 2.25rem;
+  font-family: Roboto, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  border: 1px solid #79747e;
+  border-radius: 9999px;
+  cursor: pointer;
+  background: transparent;
+  color: #6750a4;
+}
+
+/* Card */
+.mat-mdc-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+  overflow: hidden;
+}
+.mat-mdc-card-title {
+  font-family: Roboto, system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #1d1b20;
+  line-height: 1.5;
+}
+.mat-mdc-card-subtitle {
+  font-family: Roboto, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #49454f;
+  line-height: 1.25;
+}
+
+/* Form field */
+.mat-mdc-form-field {
+  display: block;
+  font-family: Roboto, system-ui, sans-serif;
+}
+.mdc-text-field--outlined {
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+  padding: 0 1rem;
+  background: transparent;
+  border: 1px solid #79747e;
+  border-radius: 4px;
+}
+.mdc-text-field--outlined input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #1d1b20;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.mdc-text-field--outlined:hover {
+  border-color: #1d1b20;
+}
+.mdc-text-field--outlined:focus-within {
+  border-color: #6750a4;
+  border-width: 2px;
+}
+.mdc-text-field--invalid {
+  border-color: #b3261e;
+}
+
+/* Table */
+.mat-mdc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Roboto, system-ui, sans-serif;
+  font-size: 0.875rem;
+  text-align: left;
+}
+.mat-mdc-header-cell {
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #49454f;
+  border-bottom: 1px solid #cac4d0;
+}
+.mat-mdc-row {
+  border-bottom: 1px solid #e8e0eb;
+}
+.mat-mdc-row:hover .mat-mdc-cell {
+  background: #f7f2fa;
+}
+.mat-mdc-cell {
+  padding: 1rem;
+  color: #49454f;
+}
+
+/* Tabs */
+.mat-mdc-tab-group {
+  font-family: Roboto, system-ui, sans-serif;
+}
+.mat-mdc-tab-header {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid #e8e0eb;
+}
+.mat-mdc-tab {
+  position: relative;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #49454f;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.mat-mdc-tab.mdc-tab--active {
+  color: #6750a4;
+}
+.mat-mdc-tab.mdc-tab--active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #6750a4;
+}
+
+/* Menu */
+.mat-mdc-menu-panel {
+  min-width: 180px;
+  padding: 0.5rem 0;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+  font-family: Roboto, system-ui, sans-serif;
+}
+.mat-mdc-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #1d1b20;
+  cursor: pointer;
+  transition: background 150ms;
+}
+.mat-mdc-menu-item:hover {
+  background: #f7f2fa;
+}

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM — Design System</title>
+  <link rel="stylesheet" href="../tokens.css" />
+  <link rel="stylesheet" href="../themes/professional.css" id="theme-link" />
+  <link rel="stylesheet" href="../base.css" />
+  <link rel="stylesheet" href="../motion.css" />
+  <link rel="stylesheet" href="../primitives.css" />
+  <link rel="stylesheet" href="./shared/examples.css" />
+  <script src="./shared/nav.js" defer></script>
+  <style>
+    .crm-contact {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-base);
+      border: 1px solid var(--border-default);
+      background: var(--surface-default);
+      transition: background var(--duration-fast) var(--ease-out);
+    }
+    .crm-contact:hover {
+      background: var(--surface-hover);
+    }
+    .crm-contact-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .crm-contact-name {
+      font-weight: var(--weight-semibold);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .crm-contact-meta {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: var(--space-0-5);
+    }
+    .crm-pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--gap-md);
+    }
+    @media (max-width: 768px) {
+      .crm-pipeline { grid-template-columns: 1fr; }
+    }
+    .crm-stage {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-sm);
+    }
+    .crm-stage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: var(--space-2);
+      border-bottom: 2px solid var(--border-subtle);
+    }
+    .crm-deal-card {
+      padding: var(--space-3);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-base);
+      background: var(--surface-default);
+      cursor: grab;
+    }
+    .crm-deal-amount {
+      font-family: var(--font-mono);
+      font-weight: var(--weight-semibold);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="ex-page">
+
+    <header class="ex-section">
+      <div class="ex-flex" style="justify-content: space-between; flex-wrap: wrap; gap: var(--gap-md);">
+        <div>
+          <div class="ds-caption" style="margin-bottom: var(--space-1);">CRM</div>
+          <h1 class="ds-display">Contacts &amp; Deals</h1>
+        </div>
+        <div class="ex-flex">
+          <input type="search" class="ds-input" placeholder="Search contacts..." style="width: 240px;" />
+          <button class="ds-button ds-button-primary">+ Add Contact</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Contacts -->
+    <section class="ex-section" aria-labelledby="contacts-heading">
+      <div class="ex-section-header">
+        <h2 id="contacts-heading" class="ds-title">Recent Contacts</h2>
+        <a href="#" class="ds-body-sm" style="color: var(--text-link);">View directory →</a>
+      </div>
+      <div class="ex-grid ex-grid-3">
+        <article class="crm-contact">
+          <div class="ex-avatar">SK</div>
+          <div class="crm-contact-info">
+            <div class="crm-contact-name">Sarah Kensington</div>
+            <address class="crm-contact-meta" style="font-style: normal;">VP Finance · Meridian Holdings</address>
+          </div>
+          <span class="ds-badge ds-badge-success">Client</span>
+        </article>
+
+        <article class="crm-contact">
+          <div class="ex-avatar" style="background: var(--accent-danger);">DR</div>
+          <div class="crm-contact-info">
+            <div class="crm-contact-name">David Rutherford</div>
+            <address class="crm-contact-meta" style="font-style: normal;">Director · Apex Construction</address>
+          </div>
+          <span class="ds-badge ds-badge-warning">Lead</span>
+        </article>
+
+        <article class="crm-contact">
+          <div class="ex-avatar" style="background: var(--accent-success);">EL</div>
+          <div class="crm-contact-info">
+            <div class="crm-contact-name">Dr. Elena Lopez</div>
+            <address class="crm-contact-meta" style="font-style: normal;">CEO · Nova Biotech</address>
+          </div>
+          <span class="ds-badge ds-badge-success">Client</span>
+        </article>
+
+        <article class="crm-contact">
+          <div class="ex-avatar" style="background: var(--text-muted);">JT</div>
+          <div class="crm-contact-info">
+            <div class="crm-contact-name">James Teller</div>
+            <address class="crm-contact-meta" style="font-style: normal;">Partner · Volt Energy</address>
+          </div>
+          <span class="ds-badge ds-badge-default">Prospect</span>
+        </article>
+
+        <article class="crm-contact">
+          <div class="ex-avatar" style="background: var(--accent-warning);">MC</div>
+          <div class="crm-contact-info">
+            <div class="crm-contact-name">Maria Chen</div>
+            <address class="crm-contact-meta" style="font-style: normal;">CFO · Metro Credit Union</address>
+          </div>
+          <span class="ds-badge ds-badge-danger">At Risk</span>
+        </article>
+
+        <article class="crm-contact">
+          <div class="ex-avatar" style="background: var(--accent-info);">RP</div>
+          <div class="crm-contact-info">
+            <div class="crm-contact-name">Robert Park</div>
+            <address class="crm-contact-meta" style="font-style: normal;">Founder · Atlas Ventures</address>
+          </div>
+          <span class="ds-badge ds-badge-primary">New</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- Deal Pipeline -->
+    <section class="ex-section" aria-labelledby="pipeline-heading">
+      <div class="ex-section-header">
+        <h2 id="pipeline-heading" class="ds-title">Deal Pipeline</h2>
+        <div class="ex-flex">
+          <span class="ds-body-sm" style="color: var(--text-muted);">Total pipeline: <strong class="ds-mono">$4.2M</strong></span>
+        </div>
+      </div>
+
+      <div class="crm-pipeline">
+        <section class="crm-stage" aria-label="Prospecting stage">
+          <div class="crm-stage-header">
+            <span class="ds-body-sm" style="font-weight: var(--weight-semibold);">Prospecting</span>
+            <span class="ds-badge ds-badge-default">3</span>
+          </div>
+          <article class="crm-deal-card">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Atlas Ventures</div>
+            <div class="crm-deal-amount">$250,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-11-15">Nov 15</time></div>
+          </article>
+          <article class="crm-deal-card">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Summit Realty</div>
+            <div class="crm-deal-amount">$180,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-11-20">Nov 20</time></div>
+          </article>
+          <article class="crm-deal-card">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Pacific Logistics</div>
+            <div class="crm-deal-amount">$95,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-11-22">Nov 22</time></div>
+          </article>
+        </section>
+
+        <section class="crm-stage" aria-label="Negotiation stage">
+          <div class="crm-stage-header">
+            <span class="ds-body-sm" style="font-weight: var(--weight-semibold);">Negotiation</span>
+            <span class="ds-badge ds-badge-warning">2</span>
+          </div>
+          <article class="crm-deal-card">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Volt Energy Partners</div>
+            <div class="crm-deal-amount">$890,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-10-30">Oct 30</time></div>
+          </article>
+          <article class="crm-deal-card">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Metro Credit Union</div>
+            <div class="crm-deal-amount">$420,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-11-05">Nov 5</time></div>
+          </article>
+        </section>
+
+        <section class="crm-stage" aria-label="Closing stage">
+          <div class="crm-stage-header">
+            <span class="ds-body-sm" style="font-weight: var(--weight-semibold);">Closing</span>
+            <span class="ds-badge ds-badge-success">2</span>
+          </div>
+          <article class="crm-deal-card">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Meridian Holdings</div>
+            <div class="crm-deal-amount">$1,200,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-10-28">Oct 28</time></div>
+          </article>
+          <article class="crm-deal-card">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Nova Biotech</div>
+            <div class="crm-deal-amount">$650,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-10-25">Oct 25</time></div>
+          </article>
+        </section>
+
+        <section class="crm-stage" aria-label="Closed won stage">
+          <div class="crm-stage-header">
+            <span class="ds-body-sm" style="font-weight: var(--weight-semibold);">Closed Won</span>
+            <span class="ds-badge ds-badge-primary">4</span>
+          </div>
+          <article class="crm-deal-card" style="opacity: 0.7;">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Apex Construction</div>
+            <div class="crm-deal-amount">$540,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-10-15">Oct 15</time></div>
+          </article>
+          <article class="crm-deal-card" style="opacity: 0.7;">
+            <div class="ds-body-sm" style="font-weight: var(--weight-medium); margin-bottom: var(--space-1);">Global Shipping Co</div>
+            <div class="crm-deal-amount">$320,000</div>
+            <div class="ds-body-sm" style="color: var(--text-muted); margin-top: var(--space-1);"><time datetime="2025-10-10">Oct 10</time></div>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <!-- Details / Expandable -->
+    <section class="ex-section" aria-labelledby="details-heading">
+      <div class="ex-section-header">
+        <h2 id="details-heading" class="ds-title">Account Details</h2>
+      </div>
+      <div class="ex-stack">
+        <details class="ds-surface">
+          <summary style="padding: var(--space-3); font-weight: var(--weight-semibold); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            <span>Meridian Holdings Ltd — Full Profile</span>
+            <span class="ds-body-sm" style="color: var(--text-muted); font-weight: var(--weight-normal);">Click to expand</span>
+          </summary>
+          <div style="padding: 0 var(--space-3) var(--space-3);">
+            <dl class="ex-grid ex-grid-2" style="gap: var(--space-3);">
+              <div>
+                <dt class="ds-caption" style="text-transform: none; letter-spacing: normal; margin-bottom: var(--space-0-5);">Account Manager</dt>
+                <dd class="ds-body-sm">Jessica Wright</dd>
+              </div>
+              <div>
+                <dt class="ds-caption" style="text-transform: none; letter-spacing: normal; margin-bottom: var(--space-0-5);">Annual Revenue</dt>
+                <dd class="ds-mono ds-body-sm">$42,000,000</dd>
+              </div>
+              <div>
+                <dt class="ds-caption" style="text-transform: none; letter-spacing: normal; margin-bottom: var(--space-0-5);">Industry</dt>
+                <dd class="ds-body-sm">Real Estate Investment</dd>
+              </div>
+              <div>
+                <dt class="ds-caption" style="text-transform: none; letter-spacing: normal; margin-bottom: var(--space-0-5);">Credit Limit</dt>
+                <dd class="ds-mono ds-body-sm">$5,000,000</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+
+        <details class="ds-surface">
+          <summary style="padding: var(--space-3); font-weight: var(--weight-semibold); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+            <span>Volt Energy Partners — Full Profile</span>
+            <span class="ds-body-sm" style="color: var(--text-muted); font-weight: var(--weight-normal);">Click to expand</span>
+          </summary>
+          <div style="padding: 0 var(--space-3) var(--space-3);">
+            <dl class="ex-grid ex-grid-2" style="gap: var(--space-3);">
+              <div>
+                <dt class="ds-caption" style="text-transform: none; letter-spacing: normal; margin-bottom: var(--space-0-5);">Account Manager</dt>
+                <dd class="ds-body-sm">Marcus Johnson</dd>
+              </div>
+              <div>
+                <dt class="ds-caption" style="text-transform: none; letter-spacing: normal; margin-bottom: var(--space-0-5);">Annual Revenue</dt>
+                <dd class="ds-mono ds-body-sm">$128,000,000</dd>
+              </div>
+              <div>
+                <dt class="ds-caption" style="text-transform: none; letter-spacing: normal; margin-bottom: var(--space-0-5);">Industry</dt>
+                <dd class="ds-body-sm">Renewable Energy</dd>
+              </div>
+              <div>
+                <dt class="ds-caption" style="text-transform: none; letter-spacing: normal; margin-bottom: var(--space-0-5);">Credit Limit</dt>
+                <dd class="ds-mono ds-body-sm">$12,000,000</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

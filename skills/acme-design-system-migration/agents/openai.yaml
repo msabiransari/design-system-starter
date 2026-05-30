@@ -1,0 +1,4 @@
+interface:
+  display_name: "ACME Design Migration"
+  short_description: "Migrate legacy apps onto the ACME design token system."
+  default_prompt: "Use this skill to assess a legacy app and migrate it incrementally to @acme/design-tokens with tokens, scoped reset, adapters, shims, and safe refactors."

@@ -1,0 +1,100 @@
+/* ============================================================
+   BASE STYLES — SCOPED RESET (Legacy-safe)
+   Use this instead of base.css if you are dropping the token
+   system into an existing AngularJS/Angular hybrid or any app
+   where a global * reset would break legacy layout assumptions.
+   ============================================================
+   Usage:
+   <body class="ds-base">
+     ...your app...
+   </body>
+   ============================================================ */
+
+.ds-base,
+.ds-base *,
+.ds-base *::before,
+.ds-base *::after {
+  box-sizing: border-box;
+}
+
+.ds-base {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+}
+
+.ds-base img,
+.ds-base picture,
+.ds-base video,
+.ds-base canvas,
+.ds-base svg {
+  display: block;
+  max-width: 100%;
+}
+
+.ds-base input,
+.ds-base button,
+.ds-base textarea,
+.ds-base select {
+  font: inherit;
+  color: inherit;
+}
+
+.ds-base p,
+.ds-base h1,
+.ds-base h2,
+.ds-base h3,
+.ds-base h4,
+.ds-base h5,
+.ds-base h6 {
+  overflow-wrap: break-word;
+}
+
+/* Focus styles scoped to .ds-base */
+.ds-base :focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--surface-default),
+              0 0 0 calc(var(--focus-ring-offset) + 2px) var(--focus-ring);
+  border-radius: var(--radius-base);
+}
+
+.ds-base a {
+  color: var(--text-link);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.ds-base a:hover {
+  color: var(--text-link-hover);
+  text-decoration: underline;
+}
+
+/* Selection scoped */
+.ds-base ::selection {
+  background: var(--accent-primary);
+  color: var(--accent-primary-text);
+}
+
+/* Scrollbar (WebKit) scoped */
+.ds-base ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.ds-base ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ds-base ::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: var(--radius-pill);
+}
+.ds-base ::-webkit-scrollbar-thumb:hover {
+  background: var(--border-focus);
+}

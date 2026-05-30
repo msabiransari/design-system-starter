@@ -1,0 +1,62 @@
+{
+  "name": "@acme/design-tokens",
+  "version": "0.2.0",
+  "description": "Framework-agnostic semantic design tokens for theming systems",
+  "main": "dist/tokens.css",
+  "style": "dist/tokens.css",
+  "exports": {
+    ".": "./dist/tokens.css",
+    "./tokens": "./dist/tokens.css",
+    "./base": "./dist/base.css",
+    "./base-scoped": "./dist/base-scoped.css",
+    "./motion": "./dist/motion.css",
+    "./primitives": "./dist/primitives.css",
+    "./themes/*": "./dist/themes/*",
+    "./adapters/*": "./dist/adapters/*",
+    "./icons": "./dist/icons.css",
+    "./icons/sprite.svg": "./dist/icons/sprite.svg",
+    "./icons/*": "./dist/icons/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "tokens.css",
+    "base.css",
+    "base-scoped.css",
+    "motion.css",
+    "primitives.css",
+    "themes/",
+    "adapters/",
+    "scripts/",
+    "icons/",
+    "icons.css"
+  ],
+  "scripts": {
+    "build": "mkdir -p dist && cp tokens.css base.css base-scoped.css motion.css primitives.css icons.css dist/ && cp -r themes dist/ && cp -r adapters dist/ && cp -r icons dist/",
+    "docs:generate": "node scripts/generate-token-docs.js",
+    "audit:contrast": "node scripts/audit-contrast.js",
+    "lint:css": "stylelint '**/*.css'",
+    "serve": "python3 -m http.server 8080",
+    "serve:angular7": "python3 -m http.server 8083 --directory fixtures/angular7-primeng/dist/angular7-primeng",
+    "serve:primeng": "python3 -m http.server 8082 --directory fixtures/primeng-modern/dist/primeng-modern/browser",
+    "test:e2e": "playwright test",
+    "test:e2e:angular7": "playwright test -c playwright.angular7.config.js",
+    "test:e2e:update": "playwright test --update-snapshots",
+    "build:angular7:docker": "docker run --rm -v \"$PWD:/repo\" -w /repo/fixtures/angular7-primeng node:12-buster bash -lc \"npm ci && npm run build\"",
+    "verify": "npm run lint:css && npm run audit:contrast && npm run build && npm run test:e2e",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "design-system",
+    "tokens",
+    "css-variables",
+    "theming",
+    "accessibility"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^36.0.0"
+  }
+}

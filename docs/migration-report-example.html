@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Migration Report</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f6f8; color: #0a0e1a; line-height: 1.5; }
+    .page { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
+    .header { margin-bottom: 32px; }
+    h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.02em; }
+    .subtitle { color: #5e6578; font-size: 15px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .stat { background: #fff; border: 1px solid #dadee6; border-radius: 8px; padding: 16px; }
+    .stat-value { font-size: 24px; font-weight: 700; color: #0f1d40; }
+    .stat-label { font-size: 12px; font-weight: 600; color: #5e6578; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+    .risk { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; margin-bottom: 32px; }
+    .risk-low { background: #dcfce7; color: #14532d; }
+    .risk-medium { background: #fef9c3; color: #854d0e; }
+    .risk-high { background: #fee2e2; color: #7f1d1d; }
+    section { margin-bottom: 40px; }
+    h2 { font-size: 18px; font-weight: 600; margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid #eceef2; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border: 1px solid #dadee6; border-radius: 8px; overflow: hidden; }
+    th { text-align: left; padding: 10px 12px; background: #f4f6f8; font-size: 11px; font-weight: 600; color: #5e6578; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #dadee6; }
+    td { padding: 10px 12px; border-bottom: 1px solid #eceef2; vertical-align: top; }
+    tr:hover td { background: #f9fafb; }
+    .color-swatch { display: inline-block; width: 16px; height: 16px; border-radius: 3px; border: 1px solid #dadee6; vertical-align: middle; margin-right: 6px; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; background: #f4f6f8; padding: 2px 5px; border-radius: 3px; }
+    .confidence { font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 10px; }
+    .conf-high { background: #dcfce7; color: #14532d; }
+    .conf-medium { background: #dbeafe; color: #1e3a8a; }
+    .conf-low { background: #f3f4f6; color: #374151; }
+    .file-group { margin-bottom: 24px; }
+    .file-name { font-size: 13px; font-weight: 600; color: #0f1d40; margin-bottom: 8px; }
+    .example { font-family: ui-monospace, monospace; font-size: 12px; color: #374151; background: #f4f6f8; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+    .shim-box { background: #fff; border: 1px solid #dadee6; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    .shim-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #5e6578; margin-bottom: 8px; }
+    .shim-code { font-family: ui-monospace, monospace; font-size: 12px; line-height: 1.6; color: #374151; white-space: pre; overflow-x: auto; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+    .badge-info { background: #dbeafe; color: #1e3a8a; }
+    footer { text-align: center; padding: 32px 0; color: #9ca3af; font-size: 12px; border-top: 1px solid #eceef2; margin-top: 32px; }
+    @media (max-width: 640px) { .page { padding: 24px 16px; } .stats { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <h1>Migration Report</h1>
+      <div class="subtitle">/Users/msabir/development/projects/design-system-starter/fixtures/angularjs-legacy · 4 files scanned</div>
+    </div>
+    <div class="risk risk-high">
+      <span>Recommended strategy: Rewrite</span>
+      <span style="font-weight:400;opacity:0.8;">Rebuild component from primitives. Use only for small, isolated components.</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-value">4</div><div class="stat-label">Files</div></div>
+      <div class="stat"><div class="stat-value">123</div><div class="stat-label">Findings</div></div>
+      <div class="stat"><div class="stat-value">17</div><div class="stat-label">Unique Colors</div></div>
+      <div class="stat"><div class="stat-value">1</div><div class="stat-label">Adapter Candidates</div></div>
+    </div>
+    <section>
+      <h2>Adapter Candidates</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span class="badge badge-info">Bootstrap</span>
+      </div>
+    </section>
+    <section>
+      <h2>Color Mapping Suggestions</h2>
+      <table>
+        <thead><tr><th>Color</th><th>Occurrences</th><th>Suggested Token</th><th>Context</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td><span class="color-swatch" style="background:#ffffff;"></span><code>#ffffff</code></td><td>5</td><td><code>--surface-default</code></td><td>background</td><td><span class="confidence conf-high">90%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#e5e7eb;"></span><code>#e5e7eb</code></td><td>4</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#2563eb;"></span><code>#2563eb</code></td><td>3</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#374151;"></span><code>#374151</code></td><td>3</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#111827;"></span><code>#111827</code></td><td>3</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#d1d5db;"></span><code>#d1d5db</code></td><td>2</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#dc2626;"></span><code>#dc2626</code></td><td>2</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#f3f4f6;"></span><code>#f3f4f6</code></td><td>2</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:gray;"></span><code>gray</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:blue;"></span><code>blue</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#6b7280;"></span><code>#6b7280</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#f9fafb;"></span><code>#f9fafb</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#dcfce7;"></span><code>#dcfce7</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#166534;"></span><code>#166534</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#fef3c7;"></span><code>#fef3c7</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:#92400e;"></span><code>#92400e</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+          <tr><td><span class="color-swatch" style="background:rgba(0,0,0,0.1);"></span><code>rgba(0,0,0,0.1)</code></td><td>1</td><td><code>--surface-default</code></td><td>unknown</td><td><span class="confidence conf-low">30%</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Colors by File</h2>
+      <div class="file-group">
+        <div class="file-name">legacy-styles.css</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;"><span class="color-swatch" style="background:#6b7280;"></span><code>#6b7280</code> → <code>--surface-default</code></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;"><span class="color-swatch" style="background:#ffffff;"></span><code>#ffffff</code> → <code>--surface-default</code></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;"><span class="color-swatch" style="background:#166534;"></span><code>#166534</code> → <code>--surface-default</code></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;"><span class="color-swatch" style="background:#92400e;"></span><code>#92400e</code> → <code>--surface-default</code></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;"><span class="color-swatch" style="background:#f9fafb;"></span><code>#f9fafb</code> → <code>--surface-default</code></div>
+      </div>
+      <div class="file-group">
+        <div class="file-name">index.html</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;"><span class="color-swatch" style="background:blue;"></span><code>blue</code> → <code>--surface-default</code></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;"><span class="color-swatch" style="background:gray;"></span><code>gray</code> → <code>--surface-default</code></div>
+      </div>
+    </section>
+    <section>
+      <h2>Shim Example</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="shim-box">
+          <div class="shim-label" style="color:#b91c1c;">Before (Legacy)</div>
+          <div class="shim-code">.nav {
+  background: #1a237e;
+  color: white;
+  padding: 12px;
+}</div>
+        </div>
+        <div class="shim-box">
+          <div class="shim-label" style="color:#15803d;">After (Token Shim)</div>
+          <div class="shim-code">.nav {
+  background: var(--accent-primary);
+  color: var(--text-inverted);
+  padding: var(--space-3);
+}</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Examples</h2>
+      <h3 style="font-size:14px;font-weight:600;margin:16px 0 8px;">bootstrap_class</h3>
+      <div class="example">index.html:48: &lt;button class=&quot;legacy-btn&quot;&gt;Primary&lt;/button&gt;</div>
+      <div class="example">index.html:49: &lt;button class=&quot;legacy-btn legacy-btn-secondary&quot;&gt;Secondary&lt;/button&gt;</div>
+      <div class="example">index.html:49: &lt;button class=&quot;legacy-btn legacy-btn-secondary&quot;&gt;Secondary&lt;/button&gt;</div>
+      <div class="example">legacy-shim.css:5: .legacy-btn {</div>
+      <div class="example">legacy-shim.css:12: .legacy-btn-secondary {</div>
+      <div class="example">legacy-shim.css:18: .legacy-btn-danger {</div>
+      <h3 style="font-size:14px;font-weight:600;margin:16px 0 8px;">hex_color</h3>
+      <div class="example">legacy-styles.css:8: border: 1px solid #2563eb;</div>
+      <div class="example">legacy-styles.css:10: background: #2563eb;</div>
+      <div class="example">legacy-styles.css:11: color: #ffffff;</div>
+      <h3 style="font-size:14px;font-weight:600;margin:16px 0 8px;">important</h3>
+      <div class="example">legacy-shim.css:6: background: var(--accent-primary) !important;</div>
+      <div class="example">legacy-shim.css:7: color: var(--accent-primary-text) !important;</div>
+      <div class="example">legacy-shim.css:8: border-color: var(--accent-primary) !important;</div>
+      <h3 style="font-size:14px;font-weight:600;margin:16px 0 8px;">inline_style</h3>
+      <div class="example">index.html:45: &lt;section style=&quot;margin-bottom: 24px;&quot;&gt;</div>
+      <div class="example">index.html:46: &lt;h2 style=&quot;font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;&quot;&gt;Buttons&lt;/h2&gt;</div>
+      <div class="example">index.html:47: &lt;div style=&quot;display: flex; gap: 12px; flex-wrap: wrap;&quot;&gt;</div>
+      <h3 style="font-size:14px;font-weight:600;margin:16px 0 8px;">named_color</h3>
+      <div class="example">index.html:61: If the shim is removed, hardcoded gray/blue colors return.</div>
+      <div class="example">index.html:61: If the shim is removed, hardcoded gray/blue colors return.</div>
+      <h3 style="font-size:14px;font-weight:600;margin:16px 0 8px;">rgb_hsl_color</h3>
+      <div class="example">legacy-styles.css:30: box-shadow: 0 1px 3px rgba(0,0,0,0.1);</div>
+    </section>
+    <footer>
+      Generated by ACME Design System Migration Scanner
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Tokens Reference</title>
+  <link rel="stylesheet" href="../tokens.css" />
+  <link rel="stylesheet" href="../themes/professional.css" id="theme-link" />
+  <link rel="stylesheet" href="../base.css" />
+  <link rel="stylesheet" href="../primitives.css" />
+  <style>
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--surface-page);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--gap-md);
+    }
+
+    .page-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .page-title {
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: var(--space-2);
+    }
+
+    .page-desc {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: var(--leading-relaxed);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap-md);
+      align-items: center;
+      margin-bottom: var(--space-8);
+      padding: var(--space-4);
+      background: var(--surface-raised);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+    }
+
+    .search {
+      flex: 1;
+      min-width: 240px;
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-sm);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-base);
+      background: var(--surface-default);
+      color: var(--text-primary);
+    }
+
+    .search:focus {
+      outline: none;
+      border-color: var(--focus-ring);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 15%, transparent);
+    }
+
+    .theme-select {
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-sm);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-base);
+      background: var(--surface-default);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .token-category {
+      margin-bottom: var(--space-10);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .category-title {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-semibold);
+      margin: 0;
+    }
+
+    .category-count {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+    }
+
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+      min-width: 640px;
+    }
+
+    .token-table th {
+      text-align: left;
+      padding: var(--space-2) var(--space-3);
+      font-weight: var(--weight-semibold);
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-default);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      background: var(--surface-raised);
+      white-space: nowrap;
+    }
+
+    .token-table td {
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .token-table tr:hover td {
+      background: var(--surface-hover);
+    }
+
+    .token-name {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-link);
+    }
+
+    .token-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+    }
+
+    .token-concrete {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+
+    .token-swatch {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-default);
+      vertical-align: middle;
+    }
+
+    .token-copy {
+      padding: var(--space-1) var(--space-2);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+      color: var(--text-muted);
+      background: var(--surface-default);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .token-copy:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    .token-copy.copied {
+      color: var(--accent-success);
+      border-color: var(--accent-success);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: var(--space-12) var(--gap-md);
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .page { padding: var(--gap-md); }
+      .page-title { font-size: var(--text-2xl); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <h1 class="page-title">Design Tokens Reference</h1>
+      <p class="page-desc">Searchable catalog of every semantic token in the system. Values update when you switch themes. Click Copy to grab <code>var(--token)</code> for your stylesheet.</p>
+    </header>
+
+    <div class="controls">
+      <input type="search" id="token-search" class="search" placeholder="Search tokens (e.g. surface, primary, duration)..." />
+      <select id="theme-select" class="theme-select" aria-label="Select theme">
+        <option value="auto">Auto</option>
+<option value="dark">Dark</option>
+<option value="forest">Forest</option>
+<option value="healthcare">Healthcare</option>
+<option value="light">Light</option>
+<option value="minimal">Minimal</option>
+<option value="ocean">Ocean</option>
+<option value="professional">Professional</option>
+<option value="saas">Saas</option>
+      </select>
+    </div>
+
+    <main id="token-content">
+      
+      <section class="token-category" data-category="surface-backgrounds-">
+        <div class="category-header">
+          <h2 class="category-title">Surface (backgrounds)</h2>
+          <span class="category-count">8 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--surface-page">
+            <td><code class="token-name">--surface-page</code></td>
+            <td><span class="token-swatch" data-token="--surface-page"></span></td>
+            <td><code class="token-value">var(--_surface-page)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#f4f6f8</code></td><td data-theme="auto-dark"><code class="token-concrete">#0b0f19</code></td><td data-theme="dark"><code class="token-concrete">#0b0f19</code></td><td data-theme="forest"><code class="token-concrete">#f5f3ee</code></td><td data-theme="healthcare"><code class="token-concrete">#f5f7f4</code></td><td data-theme="light"><code class="token-concrete">#f8f9fb</code></td><td data-theme="minimal"><code class="token-concrete">#ffffff</code></td><td data-theme="ocean"><code class="token-concrete">#f0f9ff</code></td><td data-theme="professional"><code class="token-concrete">#f4f6f8</code></td><td data-theme="saas"><code class="token-concrete">#fafafa</code></td>
+            <td><button class="token-copy" onclick="copyToken('--surface-page')">Copy</button></td>
+          </tr>
+<tr data-token="--surface-default">
+            <td><code class="token-name">--surface-default</code></td>
+            <td><span class="token-swatch" data-token="--surface-default"></span></td>
+            <td><code class="token-value">var(--_surface-default)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#ffffff</code></td><td data-theme="auto-dark"><code class="token-concrete">#111827</code></td><td data-theme="dark"><code class="token-concrete">#111827</code></td><td data-theme="forest"><code class="token-concrete">#faf8f3</code></td><td data-theme="healthcare"><code class="token-concrete">#ffffff</code></td><td data-theme="light"><code class="token-concrete">#ffffff</code></td><td data-theme="minimal"><code class="token-concrete">#ffffff</code></td><td data-theme="ocean"><code class="token-concrete">#ffffff</code></td><td data-theme="professional"><code class="token-concrete">#ffffff</code></td><td data-theme="saas"><code class="token-concrete">#ffffff</code></td>
+            <td><button class="token-copy" onclick="copyToken('--surface-default')">Copy</button></td>
+          </tr>
+<tr data-token="--surface-raised">
+            <td><code class="token-name">--surface-raised</code></td>
+            <td><span class="token-swatch" data-token="--surface-raised"></span></td>
+            <td><code class="token-value">var(--_surface-raised)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#ffffff</code></td><td data-theme="auto-dark"><code class="token-concrete">#1f2937</code></td><td data-theme="dark"><code class="token-concrete">#1f2937</code></td><td data-theme="forest"><code class="token-concrete">#ffffff</code></td><td data-theme="healthcare"><code class="token-concrete">#ffffff</code></td><td data-theme="light"><code class="token-concrete">#ffffff</code></td><td data-theme="minimal"><code class="token-concrete">#ffffff</code></td><td data-theme="ocean"><code class="token-concrete">#ffffff</code></td><td data-theme="professional"><code class="token-concrete">#ffffff</code></td><td data-theme="saas"><code class="token-concrete">#ffffff</code></td>
+            <td><button class="token-copy" onclick="copyToken('--surface-raised')">Copy</button></td>
+          </tr>
+<tr data-token="--surface-overlay">
+            <td><code class="token-name">--surface-overlay</code></td>
+            <td><span class="token-swatch" data-token="--surface-overlay"></span></td>
+            <td><code class="token-value">var(--_surface-overlay)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#ffffff</code></td><td data-theme="auto-dark"><code class="token-concrete">#1f2937</code></td><td data-theme="dark"><code class="token-concrete">#1f2937</code></td><td data-theme="forest"><code class="token-concrete">#ffffff</code></td><td data-theme="healthcare"><code class="token-concrete">#ffffff</code></td><td data-theme="light"><code class="token-concrete">#ffffff</code></td><td data-theme="minimal"><code class="token-concrete">#ffffff</code></td><td data-theme="ocean"><code class="token-concrete">#ffffff</code></td><td data-theme="professional"><code class="token-concrete">#ffffff</code></td><td data-theme="saas"><code class="token-concrete">#ffffff</code></td>
+            <td><button class="token-copy" onclick="copyToken('--surface-overlay')">Copy</button></td>
+          </tr>
+<tr data-token="--surface-inset">
+            <td><code class="token-name">--surface-inset</code></td>
+            <td><span class="token-swatch" data-token="--surface-inset"></span></td>
+            <td><code class="token-value">var(--_surface-inset)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#eef0f3</code></td><td data-theme="auto-dark"><code class="token-concrete">#030712</code></td><td data-theme="dark"><code class="token-concrete">#030712</code></td><td data-theme="forest"><code class="token-concrete">#edeae2</code></td><td data-theme="healthcare"><code class="token-concrete">#eef1ec</code></td><td data-theme="light"><code class="token-concrete">#f1f3f6</code></td><td data-theme="minimal"><code class="token-concrete">#f5f5f5</code></td><td data-theme="ocean"><code class="token-concrete">#e0f2fe</code></td><td data-theme="professional"><code class="token-concrete">#eef0f3</code></td><td data-theme="saas"><code class="token-concrete">#f4f4f5</code></td>
+            <td><button class="token-copy" onclick="copyToken('--surface-inset')">Copy</button></td>
+          </tr>
+<tr data-token="--surface-hover">
+            <td><code class="token-name">--surface-hover</code></td>
+            <td><span class="token-swatch" data-token="--surface-hover"></span></td>
+            <td><code class="token-value">var(--_surface-hover)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#eef0f3</code></td><td data-theme="auto-dark"><code class="token-concrete">#1f2937</code></td><td data-theme="dark"><code class="token-concrete">#1f2937</code></td><td data-theme="forest"><code class="token-concrete">#e8e4da</code></td><td data-theme="healthcare"><code class="token-concrete">#e8ece6</code></td><td data-theme="light"><code class="token-concrete">#f1f3f6</code></td><td data-theme="minimal"><code class="token-concrete">#f5f5f5</code></td><td data-theme="ocean"><code class="token-concrete">#e0f2fe</code></td><td data-theme="professional"><code class="token-concrete">#eef0f3</code></td><td data-theme="saas"><code class="token-concrete">#f4f4f5</code></td>
+            <td><button class="token-copy" onclick="copyToken('--surface-hover')">Copy</button></td>
+          </tr>
+<tr data-token="--surface-active">
+            <td><code class="token-name">--surface-active</code></td>
+            <td><span class="token-swatch" data-token="--surface-active"></span></td>
+            <td><code class="token-value">var(--_surface-active)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#e4e7ec</code></td><td data-theme="auto-dark"><code class="token-concrete">#374151</code></td><td data-theme="dark"><code class="token-concrete">#374151</code></td><td data-theme="forest"><code class="token-concrete">#ddd8cc</code></td><td data-theme="healthcare"><code class="token-concrete">#dce2d8</code></td><td data-theme="light"><code class="token-concrete">#e8ecf1</code></td><td data-theme="minimal"><code class="token-concrete">#ebebeb</code></td><td data-theme="ocean"><code class="token-concrete">#bae6fd</code></td><td data-theme="professional"><code class="token-concrete">#e4e7ec</code></td><td data-theme="saas"><code class="token-concrete">#e4e4e7</code></td>
+            <td><button class="token-copy" onclick="copyToken('--surface-active')">Copy</button></td>
+          </tr>
+<tr data-token="--surface-selected">
+            <td><code class="token-name">--surface-selected</code></td>
+            <td><span class="token-swatch" data-token="--surface-selected"></span></td>
+            <td><code class="token-value">var(--_surface-selected)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#e0e7ff</code></td><td data-theme="auto-dark"><code class="token-concrete">#1e3a8a</code></td><td data-theme="dark"><code class="token-concrete">#1e3a8a</code></td><td data-theme="forest"><code class="token-concrete">#d4e8d4</code></td><td data-theme="healthcare"><code class="token-concrete">#d4e8d4</code></td><td data-theme="light"><code class="token-concrete">#e8f0fe</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#bae6fd</code></td><td data-theme="professional"><code class="token-concrete">#e0e7ff</code></td><td data-theme="saas"><code class="token-concrete">#e0e7ff</code></td>
+            <td><button class="token-copy" onclick="copyToken('--surface-selected')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="text">
+        <div class="category-header">
+          <h2 class="category-title">Text</h2>
+          <span class="category-count">9 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--text-primary">
+            <td><code class="token-name">--text-primary</code></td>
+            <td><span class="token-swatch" data-token="--text-primary"></span></td>
+            <td><code class="token-value">var(--_text-primary)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#0a0e1a</code></td><td data-theme="auto-dark"><code class="token-concrete">#f9fafb</code></td><td data-theme="dark"><code class="token-concrete">#f9fafb</code></td><td data-theme="forest"><code class="token-concrete">#1c1917</code></td><td data-theme="healthcare"><code class="token-concrete">#1a1f1c</code></td><td data-theme="light"><code class="token-concrete">#0f172a</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#0c4a6e</code></td><td data-theme="professional"><code class="token-concrete">#0a0e1a</code></td><td data-theme="saas"><code class="token-concrete">#18181b</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-primary')">Copy</button></td>
+          </tr>
+<tr data-token="--text-secondary">
+            <td><code class="token-name">--text-secondary</code></td>
+            <td><span class="token-swatch" data-token="--text-secondary"></span></td>
+            <td><code class="token-value">var(--_text-secondary)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#2d3448</code></td><td data-theme="auto-dark"><code class="token-concrete">#d1d5db</code></td><td data-theme="dark"><code class="token-concrete">#d1d5db</code></td><td data-theme="forest"><code class="token-concrete">#44403c</code></td><td data-theme="healthcare"><code class="token-concrete">#3d4a42</code></td><td data-theme="light"><code class="token-concrete">#334155</code></td><td data-theme="minimal"><code class="token-concrete">#333333</code></td><td data-theme="ocean"><code class="token-concrete">#075985</code></td><td data-theme="professional"><code class="token-concrete">#2d3448</code></td><td data-theme="saas"><code class="token-concrete">#3f3f46</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-secondary')">Copy</button></td>
+          </tr>
+<tr data-token="--text-muted">
+            <td><code class="token-name">--text-muted</code></td>
+            <td><span class="token-swatch" data-token="--text-muted"></span></td>
+            <td><code class="token-value">var(--_text-muted)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#5e6578</code></td><td data-theme="auto-dark"><code class="token-concrete">#9ca3af</code></td><td data-theme="dark"><code class="token-concrete">#9ca3af</code></td><td data-theme="forest"><code class="token-concrete">#78716c</code></td><td data-theme="healthcare"><code class="token-concrete">#6b7a6e</code></td><td data-theme="light"><code class="token-concrete">#64748b</code></td><td data-theme="minimal"><code class="token-concrete">#666666</code></td><td data-theme="ocean"><code class="token-concrete">#3d6f8c</code></td><td data-theme="professional"><code class="token-concrete">#5e6578</code></td><td data-theme="saas"><code class="token-concrete">#71717a</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-muted')">Copy</button></td>
+          </tr>
+<tr data-token="--text-inverted">
+            <td><code class="token-name">--text-inverted</code></td>
+            <td><span class="token-swatch" data-token="--text-inverted"></span></td>
+            <td><code class="token-value">var(--_text-inverted)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#ffffff</code></td><td data-theme="auto-dark"><code class="token-concrete">#111827</code></td><td data-theme="dark"><code class="token-concrete">#111827</code></td><td data-theme="forest"><code class="token-concrete">#faf8f3</code></td><td data-theme="healthcare"><code class="token-concrete">#ffffff</code></td><td data-theme="light"><code class="token-concrete">#ffffff</code></td><td data-theme="minimal"><code class="token-concrete">#ffffff</code></td><td data-theme="ocean"><code class="token-concrete">#ffffff</code></td><td data-theme="professional"><code class="token-concrete">#ffffff</code></td><td data-theme="saas"><code class="token-concrete">#ffffff</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-inverted')">Copy</button></td>
+          </tr>
+<tr data-token="--text-link">
+            <td><code class="token-name">--text-link</code></td>
+            <td><span class="token-swatch" data-token="--text-link"></span></td>
+            <td><code class="token-value">var(--_text-link)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#1e40af</code></td><td data-theme="auto-dark"><code class="token-concrete">#60a5fa</code></td><td data-theme="dark"><code class="token-concrete">#60a5fa</code></td><td data-theme="forest"><code class="token-concrete">#2d4a22</code></td><td data-theme="healthcare"><code class="token-concrete">#1a6b4a</code></td><td data-theme="light"><code class="token-concrete">#2563eb</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#0369a1</code></td><td data-theme="professional"><code class="token-concrete">#1e40af</code></td><td data-theme="saas"><code class="token-concrete">#4f46e5</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-link')">Copy</button></td>
+          </tr>
+<tr data-token="--text-link-hover">
+            <td><code class="token-name">--text-link-hover</code></td>
+            <td><span class="token-swatch" data-token="--text-link-hover"></span></td>
+            <td><code class="token-value">var(--_text-link-hover)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#172554</code></td><td data-theme="auto-dark"><code class="token-concrete">#93c5fd</code></td><td data-theme="dark"><code class="token-concrete">#93c5fd</code></td><td data-theme="forest"><code class="token-concrete">#1a2e14</code></td><td data-theme="healthcare"><code class="token-concrete">#124d34</code></td><td data-theme="light"><code class="token-concrete">#1d4ed8</code></td><td data-theme="minimal"><code class="token-concrete">#333333</code></td><td data-theme="ocean"><code class="token-concrete">#075985</code></td><td data-theme="professional"><code class="token-concrete">#172554</code></td><td data-theme="saas"><code class="token-concrete">#4338ca</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-link-hover')">Copy</button></td>
+          </tr>
+<tr data-token="--text-danger">
+            <td><code class="token-name">--text-danger</code></td>
+            <td><span class="token-swatch" data-token="--text-danger"></span></td>
+            <td><code class="token-value">var(--_text-danger)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#b91c1c</code></td><td data-theme="auto-dark"><code class="token-concrete">#fca5a5</code></td><td data-theme="dark"><code class="token-concrete">#fca5a5</code></td><td data-theme="forest"><code class="token-concrete">#991b1b</code></td><td data-theme="healthcare"><code class="token-concrete">#b42318</code></td><td data-theme="light"><code class="token-concrete">#dc2626</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#e11d48</code></td><td data-theme="professional"><code class="token-concrete">#b91c1c</code></td><td data-theme="saas"><code class="token-concrete">#dc2626</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-danger')">Copy</button></td>
+          </tr>
+<tr data-token="--text-success">
+            <td><code class="token-name">--text-success</code></td>
+            <td><span class="token-swatch" data-token="--text-success"></span></td>
+            <td><code class="token-value">var(--_text-success)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#14532d</code></td><td data-theme="auto-dark"><code class="token-concrete">#86efac</code></td><td data-theme="dark"><code class="token-concrete">#86efac</code></td><td data-theme="forest"><code class="token-concrete">#3d5f2f</code></td><td data-theme="healthcare"><code class="token-concrete">#166c3b</code></td><td data-theme="light"><code class="token-concrete">#15803d</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#047857</code></td><td data-theme="professional"><code class="token-concrete">#14532d</code></td><td data-theme="saas"><code class="token-concrete">#047857</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-success')">Copy</button></td>
+          </tr>
+<tr data-token="--text-warning">
+            <td><code class="token-name">--text-warning</code></td>
+            <td><span class="token-swatch" data-token="--text-warning"></span></td>
+            <td><code class="token-value">var(--_text-warning)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#854d0e</code></td><td data-theme="auto-dark"><code class="token-concrete">#fde047</code></td><td data-theme="dark"><code class="token-concrete">#fde047</code></td><td data-theme="forest"><code class="token-concrete">#854d0e</code></td><td data-theme="healthcare"><code class="token-concrete">#a15f00</code></td><td data-theme="light"><code class="token-concrete">#a16207</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#92400e</code></td><td data-theme="professional"><code class="token-concrete">#854d0e</code></td><td data-theme="saas"><code class="token-concrete">#92400e</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-warning')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="border">
+        <div class="category-header">
+          <h2 class="category-title">Border</h2>
+          <span class="category-count">21 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--border-default">
+            <td><code class="token-name">--border-default</code></td>
+            <td><span class="token-swatch" data-token="--border-default"></span></td>
+            <td><code class="token-value">var(--_border-default)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#dadee6</code></td><td data-theme="auto-dark"><code class="token-concrete">#374151</code></td><td data-theme="dark"><code class="token-concrete">#374151</code></td><td data-theme="forest"><code class="token-concrete">#d6d0c4</code></td><td data-theme="healthcare"><code class="token-concrete">#d8dfd6</code></td><td data-theme="light"><code class="token-concrete">#e2e8f0</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#bae6fd</code></td><td data-theme="professional"><code class="token-concrete">#dadee6</code></td><td data-theme="saas"><code class="token-concrete">#e4e4e7</code></td>
+            <td><button class="token-copy" onclick="copyToken('--border-default')">Copy</button></td>
+          </tr>
+<tr data-token="--border-hover">
+            <td><code class="token-name">--border-hover</code></td>
+            <td><span class="token-swatch" data-token="--border-hover"></span></td>
+            <td><code class="token-value">var(--_border-hover)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#c2c8d4</code></td><td data-theme="auto-dark"><code class="token-concrete">#4b5563</code></td><td data-theme="dark"><code class="token-concrete">#4b5563</code></td><td data-theme="forest"><code class="token-concrete">#b8b0a0</code></td><td data-theme="healthcare"><code class="token-concrete">#b8c4b2</code></td><td data-theme="light"><code class="token-concrete">#cbd5e1</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#7dd3fc</code></td><td data-theme="professional"><code class="token-concrete">#c2c8d4</code></td><td data-theme="saas"><code class="token-concrete">#d4d4d8</code></td>
+            <td><button class="token-copy" onclick="copyToken('--border-hover')">Copy</button></td>
+          </tr>
+<tr data-token="--border-focus">
+            <td><code class="token-name">--border-focus</code></td>
+            <td><span class="token-swatch" data-token="--border-focus"></span></td>
+            <td><code class="token-value">var(--_border-focus)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#9aa3b5</code></td><td data-theme="auto-dark"><code class="token-concrete">#6b7280</code></td><td data-theme="dark"><code class="token-concrete">#6b7280</code></td><td data-theme="forest"><code class="token-concrete">#9a9080</code></td><td data-theme="healthcare"><code class="token-concrete">#8a9a82</code></td><td data-theme="light"><code class="token-concrete">#94a3b8</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#38bdf8</code></td><td data-theme="professional"><code class="token-concrete">#9aa3b5</code></td><td data-theme="saas"><code class="token-concrete">#a1a1aa</code></td>
+            <td><button class="token-copy" onclick="copyToken('--border-focus')">Copy</button></td>
+          </tr>
+<tr data-token="--border-subtle">
+            <td><code class="token-name">--border-subtle</code></td>
+            <td><span class="token-swatch" data-token="--border-subtle"></span></td>
+            <td><code class="token-value">var(--_border-subtle)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#eceef2</code></td><td data-theme="auto-dark"><code class="token-concrete">#1f2937</code></td><td data-theme="dark"><code class="token-concrete">#1f2937</code></td><td data-theme="forest"><code class="token-concrete">#e8e4da</code></td><td data-theme="healthcare"><code class="token-concrete">#e8ede5</code></td><td data-theme="light"><code class="token-concrete">#f1f5f9</code></td><td data-theme="minimal"><code class="token-concrete">#e5e5e5</code></td><td data-theme="ocean"><code class="token-concrete">#e0f2fe</code></td><td data-theme="professional"><code class="token-concrete">#eceef2</code></td><td data-theme="saas"><code class="token-concrete">#f4f4f5</code></td>
+            <td><button class="token-copy" onclick="copyToken('--border-subtle')">Copy</button></td>
+          </tr>
+<tr data-token="--border-danger">
+            <td><code class="token-name">--border-danger</code></td>
+            <td><span class="token-swatch" data-token="--border-danger"></span></td>
+            <td><code class="token-value">var(--_border-danger)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#fecaca</code></td><td data-theme="auto-dark"><code class="token-concrete">#7f1d1d</code></td><td data-theme="dark"><code class="token-concrete">#7f1d1d</code></td><td data-theme="forest"><code class="token-concrete">#fca5a5</code></td><td data-theme="healthcare"><code class="token-concrete">#fecaca</code></td><td data-theme="light"><code class="token-concrete">#fca5a5</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#fecdd3</code></td><td data-theme="professional"><code class="token-concrete">#fecaca</code></td><td data-theme="saas"><code class="token-concrete">#fecaca</code></td>
+            <td><button class="token-copy" onclick="copyToken('--border-danger')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-primary">
+            <td><code class="token-name">--accent-primary</code></td>
+            <td><span class="token-swatch" data-token="--accent-primary"></span></td>
+            <td><code class="token-value">var(--_accent-primary)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#0f1d40</code></td><td data-theme="auto-dark"><code class="token-concrete">#f9fafb</code></td><td data-theme="dark"><code class="token-concrete">#f9fafb</code></td><td data-theme="forest"><code class="token-concrete">#2d4a22</code></td><td data-theme="healthcare"><code class="token-concrete">#1a6b4a</code></td><td data-theme="light"><code class="token-concrete">#0f172a</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#0369a1</code></td><td data-theme="professional"><code class="token-concrete">#0f1d40</code></td><td data-theme="saas"><code class="token-concrete">#4f46e5</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-primary')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-primary-hover">
+            <td><code class="token-name">--accent-primary-hover</code></td>
+            <td><span class="token-swatch" data-token="--accent-primary-hover"></span></td>
+            <td><code class="token-value">var(--_accent-primary-hover)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#1a2e5e</code></td><td data-theme="auto-dark"><code class="token-concrete">#e5e7eb</code></td><td data-theme="dark"><code class="token-concrete">#e5e7eb</code></td><td data-theme="forest"><code class="token-concrete">#3d5f2f</code></td><td data-theme="healthcare"><code class="token-concrete">#124d34</code></td><td data-theme="light"><code class="token-concrete">#1e293b</code></td><td data-theme="minimal"><code class="token-concrete">#333333</code></td><td data-theme="ocean"><code class="token-concrete">#075985</code></td><td data-theme="professional"><code class="token-concrete">#1a2e5e</code></td><td data-theme="saas"><code class="token-concrete">#4338ca</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-primary-hover')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-primary-active">
+            <td><code class="token-name">--accent-primary-active</code></td>
+            <td><span class="token-swatch" data-token="--accent-primary-active"></span></td>
+            <td><code class="token-value">var(--_accent-primary-active)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#253d7a</code></td><td data-theme="auto-dark"><code class="token-concrete">#d1d5db</code></td><td data-theme="dark"><code class="token-concrete">#d1d5db</code></td><td data-theme="forest"><code class="token-concrete">#1a2e14</code></td><td data-theme="healthcare"><code class="token-concrete">#0d3d28</code></td><td data-theme="light"><code class="token-concrete">#334155</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#0c4a6e</code></td><td data-theme="professional"><code class="token-concrete">#253d7a</code></td><td data-theme="saas"><code class="token-concrete">#3730a3</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-primary-active')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-primary-text">
+            <td><code class="token-name">--accent-primary-text</code></td>
+            <td><span class="token-swatch" data-token="--accent-primary-text"></span></td>
+            <td><code class="token-value">var(--_accent-primary-text)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#ffffff</code></td><td data-theme="auto-dark"><code class="token-concrete">#111827</code></td><td data-theme="dark"><code class="token-concrete">#111827</code></td><td data-theme="forest"><code class="token-concrete">#faf8f3</code></td><td data-theme="healthcare"><code class="token-concrete">#ffffff</code></td><td data-theme="light"><code class="token-concrete">#ffffff</code></td><td data-theme="minimal"><code class="token-concrete">#ffffff</code></td><td data-theme="ocean"><code class="token-concrete">#ffffff</code></td><td data-theme="professional"><code class="token-concrete">#ffffff</code></td><td data-theme="saas"><code class="token-concrete">#ffffff</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-primary-text')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-secondary">
+            <td><code class="token-name">--accent-secondary</code></td>
+            <td><span class="token-swatch" data-token="--accent-secondary"></span></td>
+            <td><code class="token-value">var(--_accent-secondary)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#eef0f5</code></td><td data-theme="auto-dark"><code class="token-concrete">#1f2937</code></td><td data-theme="dark"><code class="token-concrete">#1f2937</code></td><td data-theme="forest"><code class="token-concrete">#e8e4da</code></td><td data-theme="healthcare"><code class="token-concrete">#e8ede5</code></td><td data-theme="light"><code class="token-concrete">#f1f5f9</code></td><td data-theme="minimal"><code class="token-concrete">#ffffff</code></td><td data-theme="ocean"><code class="token-concrete">#e0f2fe</code></td><td data-theme="professional"><code class="token-concrete">#eef0f5</code></td><td data-theme="saas"><code class="token-concrete">#f4f4f5</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-secondary')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-secondary-hover">
+            <td><code class="token-name">--accent-secondary-hover</code></td>
+            <td><span class="token-swatch" data-token="--accent-secondary-hover"></span></td>
+            <td><code class="token-value">var(--_accent-secondary-hover)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#dfe3ec</code></td><td data-theme="auto-dark"><code class="token-concrete">#374151</code></td><td data-theme="dark"><code class="token-concrete">#374151</code></td><td data-theme="forest"><code class="token-concrete">#d6d0c4</code></td><td data-theme="healthcare"><code class="token-concrete">#d8dfd6</code></td><td data-theme="light"><code class="token-concrete">#e2e8f0</code></td><td data-theme="minimal"><code class="token-concrete">#f5f5f5</code></td><td data-theme="ocean"><code class="token-concrete">#bae6fd</code></td><td data-theme="professional"><code class="token-concrete">#dfe3ec</code></td><td data-theme="saas"><code class="token-concrete">#e4e4e7</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-secondary-hover')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-secondary-text">
+            <td><code class="token-name">--accent-secondary-text</code></td>
+            <td><span class="token-swatch" data-token="--accent-secondary-text"></span></td>
+            <td><code class="token-value">var(--_accent-secondary-text)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#0f1d40</code></td><td data-theme="auto-dark"><code class="token-concrete">#f9fafb</code></td><td data-theme="dark"><code class="token-concrete">#f9fafb</code></td><td data-theme="forest"><code class="token-concrete">#1c1917</code></td><td data-theme="healthcare"><code class="token-concrete">#1a1f1c</code></td><td data-theme="light"><code class="token-concrete">#0f172a</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#0c4a6e</code></td><td data-theme="professional"><code class="token-concrete">#0f1d40</code></td><td data-theme="saas"><code class="token-concrete">#18181b</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-secondary-text')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-danger">
+            <td><code class="token-name">--accent-danger</code></td>
+            <td><span class="token-swatch" data-token="--accent-danger"></span></td>
+            <td><code class="token-value">var(--_accent-danger)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#b91c1c</code></td><td data-theme="auto-dark"><code class="token-concrete">#dc2626</code></td><td data-theme="dark"><code class="token-concrete">#dc2626</code></td><td data-theme="forest"><code class="token-concrete">#991b1b</code></td><td data-theme="healthcare"><code class="token-concrete">#b42318</code></td><td data-theme="light"><code class="token-concrete">#dc2626</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#e11d48</code></td><td data-theme="professional"><code class="token-concrete">#b91c1c</code></td><td data-theme="saas"><code class="token-concrete">#dc2626</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-danger')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-danger-hover">
+            <td><code class="token-name">--accent-danger-hover</code></td>
+            <td><span class="token-swatch" data-token="--accent-danger-hover"></span></td>
+            <td><code class="token-value">var(--_accent-danger-hover)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#991b1b</code></td><td data-theme="auto-dark"><code class="token-concrete">#b91c1c</code></td><td data-theme="dark"><code class="token-concrete">#b91c1c</code></td><td data-theme="forest"><code class="token-concrete">#7f1d1d</code></td><td data-theme="healthcare"><code class="token-concrete">#991b1b</code></td><td data-theme="light"><code class="token-concrete">#b91c1c</code></td><td data-theme="minimal"><code class="token-concrete">#333333</code></td><td data-theme="ocean"><code class="token-concrete">#be123c</code></td><td data-theme="professional"><code class="token-concrete">#991b1b</code></td><td data-theme="saas"><code class="token-concrete">#b91c1c</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-danger-hover')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-danger-text">
+            <td><code class="token-name">--accent-danger-text</code></td>
+            <td><span class="token-swatch" data-token="--accent-danger-text"></span></td>
+            <td><code class="token-value">var(--_accent-danger-text)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#ffffff</code></td><td data-theme="auto-dark"><code class="token-concrete">#ffffff</code></td><td data-theme="dark"><code class="token-concrete">#ffffff</code></td><td data-theme="forest"><code class="token-concrete">#ffffff</code></td><td data-theme="healthcare"><code class="token-concrete">#ffffff</code></td><td data-theme="light"><code class="token-concrete">#ffffff</code></td><td data-theme="minimal"><code class="token-concrete">#ffffff</code></td><td data-theme="ocean"><code class="token-concrete">#ffffff</code></td><td data-theme="professional"><code class="token-concrete">#ffffff</code></td><td data-theme="saas"><code class="token-concrete">#ffffff</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-danger-text')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-success">
+            <td><code class="token-name">--accent-success</code></td>
+            <td><span class="token-swatch" data-token="--accent-success"></span></td>
+            <td><code class="token-value">var(--_accent-success)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#15803d</code></td><td data-theme="auto-dark"><code class="token-concrete">#4ade80</code></td><td data-theme="dark"><code class="token-concrete">#4ade80</code></td><td data-theme="forest"><code class="token-concrete">#3d5f2f</code></td><td data-theme="healthcare"><code class="token-concrete">#166c3b</code></td><td data-theme="light"><code class="token-concrete">#15803d</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#14532d</code></td><td data-theme="professional"><code class="token-concrete">#15803d</code></td><td data-theme="saas"><code class="token-concrete">#14532d</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-success')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-success-bg">
+            <td><code class="token-name">--accent-success-bg</code></td>
+            <td><span class="token-swatch" data-token="--accent-success-bg"></span></td>
+            <td><code class="token-value">var(--_accent-success-bg)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#dcfce7</code></td><td data-theme="auto-dark"><code class="token-concrete">#064e3b</code></td><td data-theme="dark"><code class="token-concrete">#064e3b</code></td><td data-theme="forest"><code class="token-concrete">#d4e8d4</code></td><td data-theme="healthcare"><code class="token-concrete">#d4e8d4</code></td><td data-theme="light"><code class="token-concrete">#dcfce7</code></td><td data-theme="minimal"><code class="token-concrete">#f5f5f5</code></td><td data-theme="ocean"><code class="token-concrete">#d1fae5</code></td><td data-theme="professional"><code class="token-concrete">#dcfce7</code></td><td data-theme="saas"><code class="token-concrete">#d1fae5</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-success-bg')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-warning">
+            <td><code class="token-name">--accent-warning</code></td>
+            <td><span class="token-swatch" data-token="--accent-warning"></span></td>
+            <td><code class="token-value">var(--_accent-warning)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#a16207</code></td><td data-theme="auto-dark"><code class="token-concrete">#eab308</code></td><td data-theme="dark"><code class="token-concrete">#eab308</code></td><td data-theme="forest"><code class="token-concrete">#a16207</code></td><td data-theme="healthcare"><code class="token-concrete">#a15f00</code></td><td data-theme="light"><code class="token-concrete">#a16207</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#92400e</code></td><td data-theme="professional"><code class="token-concrete">#a16207</code></td><td data-theme="saas"><code class="token-concrete">#92400e</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-warning')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-warning-bg">
+            <td><code class="token-name">--accent-warning-bg</code></td>
+            <td><span class="token-swatch" data-token="--accent-warning-bg"></span></td>
+            <td><code class="token-value">var(--_accent-warning-bg)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#fef9c3</code></td><td data-theme="auto-dark"><code class="token-concrete">#713f12</code></td><td data-theme="dark"><code class="token-concrete">#713f12</code></td><td data-theme="forest"><code class="token-concrete">#fef9c3</code></td><td data-theme="healthcare"><code class="token-concrete">#fef3c7</code></td><td data-theme="light"><code class="token-concrete">#fef9c3</code></td><td data-theme="minimal"><code class="token-concrete">#f5f5f5</code></td><td data-theme="ocean"><code class="token-concrete">#fef3c7</code></td><td data-theme="professional"><code class="token-concrete">#fef9c3</code></td><td data-theme="saas"><code class="token-concrete">#fef3c7</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-warning-bg')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-info">
+            <td><code class="token-name">--accent-info</code></td>
+            <td><span class="token-swatch" data-token="--accent-info"></span></td>
+            <td><code class="token-value">var(--_accent-info)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#1d4ed8</code></td><td data-theme="auto-dark"><code class="token-concrete">#7dd3fc</code></td><td data-theme="dark"><code class="token-concrete">#7dd3fc</code></td><td data-theme="forest"><code class="token-concrete">#1d4ed8</code></td><td data-theme="healthcare"><code class="token-concrete">#175e8f</code></td><td data-theme="light"><code class="token-concrete">#0369a1</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#1e40af</code></td><td data-theme="professional"><code class="token-concrete">#1d4ed8</code></td><td data-theme="saas"><code class="token-concrete">#1e40af</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-info')">Copy</button></td>
+          </tr>
+<tr data-token="--accent-info-bg">
+            <td><code class="token-name">--accent-info-bg</code></td>
+            <td><span class="token-swatch" data-token="--accent-info-bg"></span></td>
+            <td><code class="token-value">var(--_accent-info-bg)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#dbeafe</code></td><td data-theme="auto-dark"><code class="token-concrete">#0c4a6e</code></td><td data-theme="dark"><code class="token-concrete">#0c4a6e</code></td><td data-theme="forest"><code class="token-concrete">#dbeafe</code></td><td data-theme="healthcare"><code class="token-concrete">#dbeafe</code></td><td data-theme="light"><code class="token-concrete">#e0f2fe</code></td><td data-theme="minimal"><code class="token-concrete">#f5f5f5</code></td><td data-theme="ocean"><code class="token-concrete">#e0f2fe</code></td><td data-theme="professional"><code class="token-concrete">#dbeafe</code></td><td data-theme="saas"><code class="token-concrete">#dbeafe</code></td>
+            <td><button class="token-copy" onclick="copyToken('--accent-info-bg')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="focus-ring">
+        <div class="category-header">
+          <h2 class="category-title">Focus Ring</h2>
+          <span class="category-count">2 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--focus-ring">
+            <td><code class="token-name">--focus-ring</code></td>
+            <td><span class="token-swatch" data-token="--focus-ring"></span></td>
+            <td><code class="token-value">var(--_focus-ring)</code></td>
+            <td data-theme="auto"><code class="token-concrete">#4f46e5</code></td><td data-theme="auto-dark"><code class="token-concrete">#60a5fa</code></td><td data-theme="dark"><code class="token-concrete">#60a5fa</code></td><td data-theme="forest"><code class="token-concrete">#2d4a22</code></td><td data-theme="healthcare"><code class="token-concrete">#1a6b4a</code></td><td data-theme="light"><code class="token-concrete">#3b82f6</code></td><td data-theme="minimal"><code class="token-concrete">#000000</code></td><td data-theme="ocean"><code class="token-concrete">#0284c7</code></td><td data-theme="professional"><code class="token-concrete">#4f46e5</code></td><td data-theme="saas"><code class="token-concrete">#4f46e5</code></td>
+            <td><button class="token-copy" onclick="copyToken('--focus-ring')">Copy</button></td>
+          </tr>
+<tr data-token="--focus-ring-offset">
+            <td><code class="token-name">--focus-ring-offset</code></td>
+            <td><span class="token-swatch" data-token="--focus-ring-offset"></span></td>
+            <td><code class="token-value">var(--_focus-ring-offset)</code></td>
+            <td data-theme="auto"><code class="token-concrete">2px</code></td><td data-theme="auto-dark"><code class="token-concrete">2px</code></td><td data-theme="dark"><code class="token-concrete">2px</code></td><td data-theme="forest"><code class="token-concrete">2px</code></td><td data-theme="healthcare"><code class="token-concrete">2px</code></td><td data-theme="light"><code class="token-concrete">2px</code></td><td data-theme="minimal"><code class="token-concrete">2px</code></td><td data-theme="ocean"><code class="token-concrete">2px</code></td><td data-theme="professional"><code class="token-concrete">2px</code></td><td data-theme="saas"><code class="token-concrete">2px</code></td>
+            <td><button class="token-copy" onclick="copyToken('--focus-ring-offset')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="disabled-read-only">
+        <div class="category-header">
+          <h2 class="category-title">Disabled / Read-only</h2>
+          <span class="category-count">4 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--opacity-disabled">
+            <td><code class="token-name">--opacity-disabled</code></td>
+            <td><span class="token-swatch" data-token="--opacity-disabled"></span></td>
+            <td><code class="token-value">0.5</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--opacity-disabled')">Copy</button></td>
+          </tr>
+<tr data-token="--opacity-readonly">
+            <td><code class="token-name">--opacity-readonly</code></td>
+            <td><span class="token-swatch" data-token="--opacity-readonly"></span></td>
+            <td><code class="token-value">0.7</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--opacity-readonly')">Copy</button></td>
+          </tr>
+<tr data-token="--cursor-disabled">
+            <td><code class="token-name">--cursor-disabled</code></td>
+            <td><span class="token-swatch" data-token="--cursor-disabled"></span></td>
+            <td><code class="token-value">not-allowed</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--cursor-disabled')">Copy</button></td>
+          </tr>
+<tr data-token="--cursor-readonly">
+            <td><code class="token-name">--cursor-readonly</code></td>
+            <td><span class="token-swatch" data-token="--cursor-readonly"></span></td>
+            <td><code class="token-value">default</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--cursor-readonly')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="z-index-scale">
+        <div class="category-header">
+          <h2 class="category-title">Z-Index Scale</h2>
+          <span class="category-count">10 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--z-base">
+            <td><code class="token-name">--z-base</code></td>
+            <td><span class="token-swatch" data-token="--z-base"></span></td>
+            <td><code class="token-value">0</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-base')">Copy</button></td>
+          </tr>
+<tr data-token="--z-dropdown">
+            <td><code class="token-name">--z-dropdown</code></td>
+            <td><span class="token-swatch" data-token="--z-dropdown"></span></td>
+            <td><code class="token-value">100</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-dropdown')">Copy</button></td>
+          </tr>
+<tr data-token="--z-sticky">
+            <td><code class="token-name">--z-sticky</code></td>
+            <td><span class="token-swatch" data-token="--z-sticky"></span></td>
+            <td><code class="token-value">200</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-sticky')">Copy</button></td>
+          </tr>
+<tr data-token="--z-fixed">
+            <td><code class="token-name">--z-fixed</code></td>
+            <td><span class="token-swatch" data-token="--z-fixed"></span></td>
+            <td><code class="token-value">300</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-fixed')">Copy</button></td>
+          </tr>
+<tr data-token="--z-drawer">
+            <td><code class="token-name">--z-drawer</code></td>
+            <td><span class="token-swatch" data-token="--z-drawer"></span></td>
+            <td><code class="token-value">400</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-drawer')">Copy</button></td>
+          </tr>
+<tr data-token="--z-modal-backdrop">
+            <td><code class="token-name">--z-modal-backdrop</code></td>
+            <td><span class="token-swatch" data-token="--z-modal-backdrop"></span></td>
+            <td><code class="token-value">500</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-modal-backdrop')">Copy</button></td>
+          </tr>
+<tr data-token="--z-modal">
+            <td><code class="token-name">--z-modal</code></td>
+            <td><span class="token-swatch" data-token="--z-modal"></span></td>
+            <td><code class="token-value">600</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-modal')">Copy</button></td>
+          </tr>
+<tr data-token="--z-popover">
+            <td><code class="token-name">--z-popover</code></td>
+            <td><span class="token-swatch" data-token="--z-popover"></span></td>
+            <td><code class="token-value">700</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-popover')">Copy</button></td>
+          </tr>
+<tr data-token="--z-toast">
+            <td><code class="token-name">--z-toast</code></td>
+            <td><span class="token-swatch" data-token="--z-toast"></span></td>
+            <td><code class="token-value">800</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-toast')">Copy</button></td>
+          </tr>
+<tr data-token="--z-tooltip">
+            <td><code class="token-name">--z-tooltip</code></td>
+            <td><span class="token-swatch" data-token="--z-tooltip"></span></td>
+            <td><code class="token-value">900</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--z-tooltip')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="breakpoints-reference-values-in-px-">
+        <div class="category-header">
+          <h2 class="category-title">Breakpoints (reference values in px)</h2>
+          <span class="category-count">5 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--breakpoint-sm">
+            <td><code class="token-name">--breakpoint-sm</code></td>
+            <td><span class="token-swatch" data-token="--breakpoint-sm"></span></td>
+            <td><code class="token-value">640px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--breakpoint-sm')">Copy</button></td>
+          </tr>
+<tr data-token="--breakpoint-md">
+            <td><code class="token-name">--breakpoint-md</code></td>
+            <td><span class="token-swatch" data-token="--breakpoint-md"></span></td>
+            <td><code class="token-value">768px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--breakpoint-md')">Copy</button></td>
+          </tr>
+<tr data-token="--breakpoint-lg">
+            <td><code class="token-name">--breakpoint-lg</code></td>
+            <td><span class="token-swatch" data-token="--breakpoint-lg"></span></td>
+            <td><code class="token-value">1024px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--breakpoint-lg')">Copy</button></td>
+          </tr>
+<tr data-token="--breakpoint-xl">
+            <td><code class="token-name">--breakpoint-xl</code></td>
+            <td><span class="token-swatch" data-token="--breakpoint-xl"></span></td>
+            <td><code class="token-value">1280px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--breakpoint-xl')">Copy</button></td>
+          </tr>
+<tr data-token="--breakpoint-2xl">
+            <td><code class="token-name">--breakpoint-2xl</code></td>
+            <td><span class="token-swatch" data-token="--breakpoint-2xl"></span></td>
+            <td><code class="token-value">1536px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--breakpoint-2xl')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="icon-sizes">
+        <div class="category-header">
+          <h2 class="category-title">Icon Sizes</h2>
+          <span class="category-count">8 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--icon-xs">
+            <td><code class="token-name">--icon-xs</code></td>
+            <td><span class="token-swatch" data-token="--icon-xs"></span></td>
+            <td><code class="token-value">12px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--icon-xs')">Copy</button></td>
+          </tr>
+<tr data-token="--icon-sm">
+            <td><code class="token-name">--icon-sm</code></td>
+            <td><span class="token-swatch" data-token="--icon-sm"></span></td>
+            <td><code class="token-value">16px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--icon-sm')">Copy</button></td>
+          </tr>
+<tr data-token="--icon-md">
+            <td><code class="token-name">--icon-md</code></td>
+            <td><span class="token-swatch" data-token="--icon-md"></span></td>
+            <td><code class="token-value">20px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--icon-md')">Copy</button></td>
+          </tr>
+<tr data-token="--icon-lg">
+            <td><code class="token-name">--icon-lg</code></td>
+            <td><span class="token-swatch" data-token="--icon-lg"></span></td>
+            <td><code class="token-value">24px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--icon-lg')">Copy</button></td>
+          </tr>
+<tr data-token="--icon-xl">
+            <td><code class="token-name">--icon-xl</code></td>
+            <td><span class="token-swatch" data-token="--icon-xl"></span></td>
+            <td><code class="token-value">32px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--icon-xl')">Copy</button></td>
+          </tr>
+<tr data-token="--field-height-sm">
+            <td><code class="token-name">--field-height-sm</code></td>
+            <td><span class="token-swatch" data-token="--field-height-sm"></span></td>
+            <td><code class="token-value">32px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--field-height-sm')">Copy</button></td>
+          </tr>
+<tr data-token="--field-height-base">
+            <td><code class="token-name">--field-height-base</code></td>
+            <td><span class="token-swatch" data-token="--field-height-base"></span></td>
+            <td><code class="token-value">40px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--field-height-base')">Copy</button></td>
+          </tr>
+<tr data-token="--field-height-lg">
+            <td><code class="token-name">--field-height-lg</code></td>
+            <td><span class="token-swatch" data-token="--field-height-lg"></span></td>
+            <td><code class="token-value">48px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--field-height-lg')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="layout">
+        <div class="category-header">
+          <h2 class="category-title">Layout</h2>
+          <span class="category-count">7 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--container-sm">
+            <td><code class="token-name">--container-sm</code></td>
+            <td><span class="token-swatch" data-token="--container-sm"></span></td>
+            <td><code class="token-value">640px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--container-sm')">Copy</button></td>
+          </tr>
+<tr data-token="--container-md">
+            <td><code class="token-name">--container-md</code></td>
+            <td><span class="token-swatch" data-token="--container-md"></span></td>
+            <td><code class="token-value">768px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--container-md')">Copy</button></td>
+          </tr>
+<tr data-token="--container-lg">
+            <td><code class="token-name">--container-lg</code></td>
+            <td><span class="token-swatch" data-token="--container-lg"></span></td>
+            <td><code class="token-value">1024px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--container-lg')">Copy</button></td>
+          </tr>
+<tr data-token="--container-xl">
+            <td><code class="token-name">--container-xl</code></td>
+            <td><span class="token-swatch" data-token="--container-xl"></span></td>
+            <td><code class="token-value">1200px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--container-xl')">Copy</button></td>
+          </tr>
+<tr data-token="--container-2xl">
+            <td><code class="token-name">--container-2xl</code></td>
+            <td><span class="token-swatch" data-token="--container-2xl"></span></td>
+            <td><code class="token-value">1400px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--container-2xl')">Copy</button></td>
+          </tr>
+<tr data-token="--sidebar-width">
+            <td><code class="token-name">--sidebar-width</code></td>
+            <td><span class="token-swatch" data-token="--sidebar-width"></span></td>
+            <td><code class="token-value">280px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--sidebar-width')">Copy</button></td>
+          </tr>
+<tr data-token="--header-height">
+            <td><code class="token-name">--header-height</code></td>
+            <td><span class="token-swatch" data-token="--header-height"></span></td>
+            <td><code class="token-value">60px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--header-height')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="elevation-shadows-">
+        <div class="category-header">
+          <h2 class="category-title">Elevation (shadows)</h2>
+          <span class="category-count">6 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--shadow-xs">
+            <td><code class="token-name">--shadow-xs</code></td>
+            <td><span class="token-swatch" data-token="--shadow-xs"></span></td>
+            <td><code class="token-value">var(--_shadow-xs)</code></td>
+            <td data-theme="auto"><code class="token-concrete">0 1px 2px 0 rgb(15 29 64 / 0.04)</code></td><td data-theme="auto-dark"><code class="token-concrete">0 1px 2px 0 rgb(0 0 0 / 0.25)</code></td><td data-theme="dark"><code class="token-concrete">0 1px 2px 0 rgb(0 0 0 / 0.25)</code></td><td data-theme="forest"><code class="token-concrete">0 1px 2px 0 rgb(28 25 23 / 0.05)</code></td><td data-theme="healthcare"><code class="token-concrete">0 1px 2px 0 rgb(26 31 28 / 0.04)</code></td><td data-theme="light"><code class="token-concrete">0 1px 2px 0 rgb(0 0 0 / 0.03)</code></td><td data-theme="minimal"><code class="token-concrete">none</code></td><td data-theme="ocean"><code class="token-concrete">0 1px 2px 0 rgb(12 74 110 / 0.04)</code></td><td data-theme="professional"><code class="token-concrete">0 1px 2px 0 rgb(15 29 64 / 0.04)</code></td><td data-theme="saas"><code class="token-concrete">0 1px 2px 0 rgb(24 24 27 / 0.04)</code></td>
+            <td><button class="token-copy" onclick="copyToken('--shadow-xs')">Copy</button></td>
+          </tr>
+<tr data-token="--shadow-sm">
+            <td><code class="token-name">--shadow-sm</code></td>
+            <td><span class="token-swatch" data-token="--shadow-sm"></span></td>
+            <td><code class="token-value">var(--_shadow-sm)</code></td>
+            <td data-theme="auto"><code class="token-concrete">0 1px 2px 0 rgb(15 29 64 / 0.06), 0 1px 1px -1px rgb(15 29 64 / 0.04)</code></td><td data-theme="auto-dark"><code class="token-concrete">0 1px 3px 0 rgb(0 0 0 / 0.25), 0 1px 2px -1px rgb(0 0 0 / 0.25)</code></td><td data-theme="dark"><code class="token-concrete">0 1px 3px 0 rgb(0 0 0 / 0.25), 0 1px 2px -1px rgb(0 0 0 / 0.25)</code></td><td data-theme="forest"><code class="token-concrete">0 1px 3px 0 rgb(28 25 23 / 0.06)</code></td><td data-theme="healthcare"><code class="token-concrete">0 1px 3px 0 rgb(26 31 28 / 0.06)</code></td><td data-theme="light"><code class="token-concrete">0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06)</code></td><td data-theme="minimal"><code class="token-concrete">0 1px 0 0 rgb(0 0 0 / 0.1)</code></td><td data-theme="ocean"><code class="token-concrete">0 1px 3px 0 rgb(12 74 110 / 0.06)</code></td><td data-theme="professional"><code class="token-concrete">0 1px 2px 0 rgb(15 29 64 / 0.06), 0 1px 1px -1px rgb(15 29 64 / 0.04)</code></td><td data-theme="saas"><code class="token-concrete">0 1px 3px 0 rgb(24 24 27 / 0.08)</code></td>
+            <td><button class="token-copy" onclick="copyToken('--shadow-sm')">Copy</button></td>
+          </tr>
+<tr data-token="--shadow-md">
+            <td><code class="token-name">--shadow-md</code></td>
+            <td><span class="token-swatch" data-token="--shadow-md"></span></td>
+            <td><code class="token-value">var(--_shadow-md)</code></td>
+            <td data-theme="auto"><code class="token-concrete">0 3px 5px -1px rgb(15 29 64 / 0.06), 0 1px 3px -1px rgb(15 29 64 / 0.04)</code></td><td data-theme="auto-dark"><code class="token-concrete">0 4px 6px -1px rgb(0 0 0 / 0.25), 0 2px 4px -2px rgb(0 0 0 / 0.25)</code></td><td data-theme="dark"><code class="token-concrete">0 4px 6px -1px rgb(0 0 0 / 0.25), 0 2px 4px -2px rgb(0 0 0 / 0.25)</code></td><td data-theme="forest"><code class="token-concrete">0 3px 5px -1px rgb(28 25 23 / 0.06)</code></td><td data-theme="healthcare"><code class="token-concrete">0 3px 5px -1px rgb(26 31 28 / 0.06)</code></td><td data-theme="light"><code class="token-concrete">0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.06)</code></td><td data-theme="minimal"><code class="token-concrete">0 2px 0 0 rgb(0 0 0 / 0.1)</code></td><td data-theme="ocean"><code class="token-concrete">0 4px 6px -1px rgb(12 74 110 / 0.06)</code></td><td data-theme="professional"><code class="token-concrete">0 3px 5px -1px rgb(15 29 64 / 0.06), 0 1px 3px -1px rgb(15 29 64 / 0.04)</code></td><td data-theme="saas"><code class="token-concrete">0 4px 6px -1px rgb(24 24 27 / 0.08)</code></td>
+            <td><button class="token-copy" onclick="copyToken('--shadow-md')">Copy</button></td>
+          </tr>
+<tr data-token="--shadow-lg">
+            <td><code class="token-name">--shadow-lg</code></td>
+            <td><span class="token-swatch" data-token="--shadow-lg"></span></td>
+            <td><code class="token-value">var(--_shadow-lg)</code></td>
+            <td data-theme="auto"><code class="token-concrete">0 8px 12px -3px rgb(15 29 64 / 0.06), 0 3px 5px -3px rgb(15 29 64 / 0.04)</code></td><td data-theme="auto-dark"><code class="token-concrete">0 10px 15px -3px rgb(0 0 0 / 0.25), 0 4px 6px -4px rgb(0 0 0 / 0.25)</code></td><td data-theme="dark"><code class="token-concrete">0 10px 15px -3px rgb(0 0 0 / 0.25), 0 4px 6px -4px rgb(0 0 0 / 0.25)</code></td><td data-theme="forest"><code class="token-concrete">0 8px 12px -3px rgb(28 25 23 / 0.06)</code></td><td data-theme="healthcare"><code class="token-concrete">0 8px 12px -3px rgb(26 31 28 / 0.06)</code></td><td data-theme="light"><code class="token-concrete">0 10px 15px -3px rgb(0 0 0 / 0.06), 0 4px 6px -4px rgb(0 0 0 / 0.06)</code></td><td data-theme="minimal"><code class="token-concrete">0 4px 0 0 rgb(0 0 0 / 0.1)</code></td><td data-theme="ocean"><code class="token-concrete">0 10px 15px -3px rgb(12 74 110 / 0.06)</code></td><td data-theme="professional"><code class="token-concrete">0 8px 12px -3px rgb(15 29 64 / 0.06), 0 3px 5px -3px rgb(15 29 64 / 0.04)</code></td><td data-theme="saas"><code class="token-concrete">0 10px 15px -3px rgb(24 24 27 / 0.08)</code></td>
+            <td><button class="token-copy" onclick="copyToken('--shadow-lg')">Copy</button></td>
+          </tr>
+<tr data-token="--shadow-xl">
+            <td><code class="token-name">--shadow-xl</code></td>
+            <td><span class="token-swatch" data-token="--shadow-xl"></span></td>
+            <td><code class="token-value">var(--_shadow-xl)</code></td>
+            <td data-theme="auto"><code class="token-concrete">0 16px 24px -6px rgb(15 29 64 / 0.06), 0 6px 8px -6px rgb(15 29 64 / 0.04)</code></td><td data-theme="auto-dark"><code class="token-concrete">0 20px 25px -5px rgb(0 0 0 / 0.25), 0 8px 10px -6px rgb(0 0 0 / 0.25)</code></td><td data-theme="dark"><code class="token-concrete">0 20px 25px -5px rgb(0 0 0 / 0.25), 0 8px 10px -6px rgb(0 0 0 / 0.25)</code></td><td data-theme="forest"><code class="token-concrete">0 16px 24px -6px rgb(28 25 23 / 0.06)</code></td><td data-theme="healthcare"><code class="token-concrete">0 16px 24px -6px rgb(26 31 28 / 0.06)</code></td><td data-theme="light"><code class="token-concrete">0 20px 25px -5px rgb(0 0 0 / 0.06), 0 8px 10px -6px rgb(0 0 0 / 0.06)</code></td><td data-theme="minimal"><code class="token-concrete">0 8px 0 0 rgb(0 0 0 / 0.1)</code></td><td data-theme="ocean"><code class="token-concrete">0 20px 25px -5px rgb(12 74 110 / 0.06)</code></td><td data-theme="professional"><code class="token-concrete">0 16px 24px -6px rgb(15 29 64 / 0.06), 0 6px 8px -6px rgb(15 29 64 / 0.04)</code></td><td data-theme="saas"><code class="token-concrete">0 20px 25px -5px rgb(24 24 27 / 0.08)</code></td>
+            <td><button class="token-copy" onclick="copyToken('--shadow-xl')">Copy</button></td>
+          </tr>
+<tr data-token="--shadow-inset">
+            <td><code class="token-name">--shadow-inset</code></td>
+            <td><span class="token-swatch" data-token="--shadow-inset"></span></td>
+            <td><code class="token-value">var(--_shadow-inset)</code></td>
+            <td data-theme="auto"><code class="token-concrete">inset 0 1px 2px 0 rgb(15 29 64 / 0.04)</code></td><td data-theme="auto-dark"><code class="token-concrete">inset 0 2px 4px 0 rgb(0 0 0 / 0.25)</code></td><td data-theme="dark"><code class="token-concrete">inset 0 2px 4px 0 rgb(0 0 0 / 0.25)</code></td><td data-theme="forest"><code class="token-concrete">inset 0 1px 2px 0 rgb(28 25 23 / 0.04)</code></td><td data-theme="healthcare"><code class="token-concrete">inset 0 1px 2px 0 rgb(26 31 28 / 0.04)</code></td><td data-theme="light"><code class="token-concrete">inset 0 2px 4px 0 rgb(0 0 0 / 0.03)</code></td><td data-theme="minimal"><code class="token-concrete">inset 0 1px 0 0 rgb(0 0 0 / 0.1)</code></td><td data-theme="ocean"><code class="token-concrete">inset 0 2px 4px 0 rgb(12 74 110 / 0.04)</code></td><td data-theme="professional"><code class="token-concrete">inset 0 1px 2px 0 rgb(15 29 64 / 0.04)</code></td><td data-theme="saas"><code class="token-concrete">inset 0 2px 4px 0 rgb(24 24 27 / 0.04)</code></td>
+            <td><button class="token-copy" onclick="copyToken('--shadow-inset')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="radius">
+        <div class="category-header">
+          <h2 class="category-title">Radius</h2>
+          <span class="category-count">35 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--radius-none">
+            <td><code class="token-name">--radius-none</code></td>
+            <td><span class="token-swatch" data-token="--radius-none"></span></td>
+            <td><code class="token-value">0px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-none')">Copy</button></td>
+          </tr>
+<tr data-token="--radius-sm">
+            <td><code class="token-name">--radius-sm</code></td>
+            <td><span class="token-swatch" data-token="--radius-sm"></span></td>
+            <td><code class="token-value">4px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-sm')">Copy</button></td>
+          </tr>
+<tr data-token="--radius-base">
+            <td><code class="token-name">--radius-base</code></td>
+            <td><span class="token-swatch" data-token="--radius-base"></span></td>
+            <td><code class="token-value">6px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-base')">Copy</button></td>
+          </tr>
+<tr data-token="--radius-md">
+            <td><code class="token-name">--radius-md</code></td>
+            <td><span class="token-swatch" data-token="--radius-md"></span></td>
+            <td><code class="token-value">8px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-md')">Copy</button></td>
+          </tr>
+<tr data-token="--radius-lg">
+            <td><code class="token-name">--radius-lg</code></td>
+            <td><span class="token-swatch" data-token="--radius-lg"></span></td>
+            <td><code class="token-value">12px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-lg')">Copy</button></td>
+          </tr>
+<tr data-token="--radius-xl">
+            <td><code class="token-name">--radius-xl</code></td>
+            <td><span class="token-swatch" data-token="--radius-xl"></span></td>
+            <td><code class="token-value">16px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-xl')">Copy</button></td>
+          </tr>
+<tr data-token="--radius-2xl">
+            <td><code class="token-name">--radius-2xl</code></td>
+            <td><span class="token-swatch" data-token="--radius-2xl"></span></td>
+            <td><code class="token-value">24px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-2xl')">Copy</button></td>
+          </tr>
+<tr data-token="--radius-pill">
+            <td><code class="token-name">--radius-pill</code></td>
+            <td><span class="token-swatch" data-token="--radius-pill"></span></td>
+            <td><code class="token-value">9999px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-pill')">Copy</button></td>
+          </tr>
+<tr data-token="--radius-full">
+            <td><code class="token-name">--radius-full</code></td>
+            <td><span class="token-swatch" data-token="--radius-full"></span></td>
+            <td><code class="token-value">50%</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--radius-full')">Copy</button></td>
+          </tr>
+<tr data-token="--space-0">
+            <td><code class="token-name">--space-0</code></td>
+            <td><span class="token-swatch" data-token="--space-0"></span></td>
+            <td><code class="token-value">0rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-0')">Copy</button></td>
+          </tr>
+<tr data-token="--space-px">
+            <td><code class="token-name">--space-px</code></td>
+            <td><span class="token-swatch" data-token="--space-px"></span></td>
+            <td><code class="token-value">1px</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-px')">Copy</button></td>
+          </tr>
+<tr data-token="--space-0-5">
+            <td><code class="token-name">--space-0-5</code></td>
+            <td><span class="token-swatch" data-token="--space-0-5"></span></td>
+            <td><code class="token-value">0.125rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-0-5')">Copy</button></td>
+          </tr>
+<tr data-token="--space-1">
+            <td><code class="token-name">--space-1</code></td>
+            <td><span class="token-swatch" data-token="--space-1"></span></td>
+            <td><code class="token-value">0.25rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-1')">Copy</button></td>
+          </tr>
+<tr data-token="--space-1-5">
+            <td><code class="token-name">--space-1-5</code></td>
+            <td><span class="token-swatch" data-token="--space-1-5"></span></td>
+            <td><code class="token-value">0.375rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-1-5')">Copy</button></td>
+          </tr>
+<tr data-token="--space-2">
+            <td><code class="token-name">--space-2</code></td>
+            <td><span class="token-swatch" data-token="--space-2"></span></td>
+            <td><code class="token-value">0.5rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-2')">Copy</button></td>
+          </tr>
+<tr data-token="--space-2-5">
+            <td><code class="token-name">--space-2-5</code></td>
+            <td><span class="token-swatch" data-token="--space-2-5"></span></td>
+            <td><code class="token-value">0.625rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-2-5')">Copy</button></td>
+          </tr>
+<tr data-token="--space-3">
+            <td><code class="token-name">--space-3</code></td>
+            <td><span class="token-swatch" data-token="--space-3"></span></td>
+            <td><code class="token-value">0.75rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-3')">Copy</button></td>
+          </tr>
+<tr data-token="--space-3-5">
+            <td><code class="token-name">--space-3-5</code></td>
+            <td><span class="token-swatch" data-token="--space-3-5"></span></td>
+            <td><code class="token-value">0.875rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-3-5')">Copy</button></td>
+          </tr>
+<tr data-token="--space-4">
+            <td><code class="token-name">--space-4</code></td>
+            <td><span class="token-swatch" data-token="--space-4"></span></td>
+            <td><code class="token-value">1rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-4')">Copy</button></td>
+          </tr>
+<tr data-token="--space-5">
+            <td><code class="token-name">--space-5</code></td>
+            <td><span class="token-swatch" data-token="--space-5"></span></td>
+            <td><code class="token-value">1.25rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-5')">Copy</button></td>
+          </tr>
+<tr data-token="--space-6">
+            <td><code class="token-name">--space-6</code></td>
+            <td><span class="token-swatch" data-token="--space-6"></span></td>
+            <td><code class="token-value">1.5rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-6')">Copy</button></td>
+          </tr>
+<tr data-token="--space-7">
+            <td><code class="token-name">--space-7</code></td>
+            <td><span class="token-swatch" data-token="--space-7"></span></td>
+            <td><code class="token-value">1.75rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-7')">Copy</button></td>
+          </tr>
+<tr data-token="--space-8">
+            <td><code class="token-name">--space-8</code></td>
+            <td><span class="token-swatch" data-token="--space-8"></span></td>
+            <td><code class="token-value">2rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-8')">Copy</button></td>
+          </tr>
+<tr data-token="--space-9">
+            <td><code class="token-name">--space-9</code></td>
+            <td><span class="token-swatch" data-token="--space-9"></span></td>
+            <td><code class="token-value">2.25rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-9')">Copy</button></td>
+          </tr>
+<tr data-token="--space-10">
+            <td><code class="token-name">--space-10</code></td>
+            <td><span class="token-swatch" data-token="--space-10"></span></td>
+            <td><code class="token-value">2.5rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-10')">Copy</button></td>
+          </tr>
+<tr data-token="--space-12">
+            <td><code class="token-name">--space-12</code></td>
+            <td><span class="token-swatch" data-token="--space-12"></span></td>
+            <td><code class="token-value">3rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-12')">Copy</button></td>
+          </tr>
+<tr data-token="--space-14">
+            <td><code class="token-name">--space-14</code></td>
+            <td><span class="token-swatch" data-token="--space-14"></span></td>
+            <td><code class="token-value">3.5rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-14')">Copy</button></td>
+          </tr>
+<tr data-token="--space-16">
+            <td><code class="token-name">--space-16</code></td>
+            <td><span class="token-swatch" data-token="--space-16"></span></td>
+            <td><code class="token-value">4rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-16')">Copy</button></td>
+          </tr>
+<tr data-token="--space-20">
+            <td><code class="token-name">--space-20</code></td>
+            <td><span class="token-swatch" data-token="--space-20"></span></td>
+            <td><code class="token-value">5rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-20')">Copy</button></td>
+          </tr>
+<tr data-token="--space-24">
+            <td><code class="token-name">--space-24</code></td>
+            <td><span class="token-swatch" data-token="--space-24"></span></td>
+            <td><code class="token-value">6rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--space-24')">Copy</button></td>
+          </tr>
+<tr data-token="--gap-xs">
+            <td><code class="token-name">--gap-xs</code></td>
+            <td><span class="token-swatch" data-token="--gap-xs"></span></td>
+            <td><code class="token-value">var(--space-1)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--gap-xs')">Copy</button></td>
+          </tr>
+<tr data-token="--gap-sm">
+            <td><code class="token-name">--gap-sm</code></td>
+            <td><span class="token-swatch" data-token="--gap-sm"></span></td>
+            <td><code class="token-value">var(--space-2)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--gap-sm')">Copy</button></td>
+          </tr>
+<tr data-token="--gap-md">
+            <td><code class="token-name">--gap-md</code></td>
+            <td><span class="token-swatch" data-token="--gap-md"></span></td>
+            <td><code class="token-value">var(--space-4)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--gap-md')">Copy</button></td>
+          </tr>
+<tr data-token="--gap-lg">
+            <td><code class="token-name">--gap-lg</code></td>
+            <td><span class="token-swatch" data-token="--gap-lg"></span></td>
+            <td><code class="token-value">var(--space-6)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--gap-lg')">Copy</button></td>
+          </tr>
+<tr data-token="--gap-xl">
+            <td><code class="token-name">--gap-xl</code></td>
+            <td><span class="token-swatch" data-token="--gap-xl"></span></td>
+            <td><code class="token-value">var(--space-8)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--gap-xl')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="typography">
+        <div class="category-header">
+          <h2 class="category-title">Typography</h2>
+          <span class="category-count">23 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--font-sans">
+            <td><code class="token-name">--font-sans</code></td>
+            <td><span class="token-swatch" data-token="--font-sans"></span></td>
+            <td><code class="token-value">var(--_font-sans)</code></td>
+            <td data-theme="auto"><code class="token-concrete">&quot;Inter&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif</code></td><td data-theme="auto-dark"><code class="token-concrete">ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif</code></td><td data-theme="dark"><code class="token-concrete">ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif</code></td><td data-theme="forest"><code class="token-concrete">&quot;Inter&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif</code></td><td data-theme="healthcare"><code class="token-concrete">&quot;Inter&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif</code></td><td data-theme="light"><code class="token-concrete">ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif</code></td><td data-theme="minimal"><code class="token-concrete">ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif</code></td><td data-theme="ocean"><code class="token-concrete">&quot;Inter&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif</code></td><td data-theme="professional"><code class="token-concrete">&quot;Inter&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif</code></td><td data-theme="saas"><code class="token-concrete">&quot;Inter&quot;, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif</code></td>
+            <td><button class="token-copy" onclick="copyToken('--font-sans')">Copy</button></td>
+          </tr>
+<tr data-token="--font-serif">
+            <td><code class="token-name">--font-serif</code></td>
+            <td><span class="token-swatch" data-token="--font-serif"></span></td>
+            <td><code class="token-value">var(--_font-serif)</code></td>
+            <td data-theme="auto"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="auto-dark"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="dark"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="forest"><code class="token-concrete">&quot;Georgia&quot;, ui-serif, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="healthcare"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="light"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="minimal"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="ocean"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="professional"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td><td data-theme="saas"><code class="token-concrete">ui-serif, Georgia, Cambria, &quot;Times New Roman&quot;, Times, serif</code></td>
+            <td><button class="token-copy" onclick="copyToken('--font-serif')">Copy</button></td>
+          </tr>
+<tr data-token="--font-mono">
+            <td><code class="token-name">--font-mono</code></td>
+            <td><span class="token-swatch" data-token="--font-mono"></span></td>
+            <td><code class="token-value">var(--_font-mono)</code></td>
+            <td data-theme="auto"><code class="token-concrete">&quot;JetBrains Mono&quot;, ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace</code></td><td data-theme="auto-dark"><code class="token-concrete">ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace</code></td><td data-theme="dark"><code class="token-concrete">ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace</code></td><td data-theme="forest"><code class="token-concrete">ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace</code></td><td data-theme="healthcare"><code class="token-concrete">ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace</code></td><td data-theme="light"><code class="token-concrete">ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace</code></td><td data-theme="minimal"><code class="token-concrete">ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace</code></td><td data-theme="ocean"><code class="token-concrete">&quot;JetBrains Mono&quot;, ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace</code></td><td data-theme="professional"><code class="token-concrete">&quot;JetBrains Mono&quot;, ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;, monospace</code></td><td data-theme="saas"><code class="token-concrete">&quot;JetBrains Mono&quot;, ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, monospace</code></td>
+            <td><button class="token-copy" onclick="copyToken('--font-mono')">Copy</button></td>
+          </tr>
+<tr data-token="--text-xs">
+            <td><code class="token-name">--text-xs</code></td>
+            <td><span class="token-swatch" data-token="--text-xs"></span></td>
+            <td><code class="token-value">0.75rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-xs')">Copy</button></td>
+          </tr>
+<tr data-token="--text-sm">
+            <td><code class="token-name">--text-sm</code></td>
+            <td><span class="token-swatch" data-token="--text-sm"></span></td>
+            <td><code class="token-value">0.875rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-sm')">Copy</button></td>
+          </tr>
+<tr data-token="--text-base">
+            <td><code class="token-name">--text-base</code></td>
+            <td><span class="token-swatch" data-token="--text-base"></span></td>
+            <td><code class="token-value">1rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-base')">Copy</button></td>
+          </tr>
+<tr data-token="--text-lg">
+            <td><code class="token-name">--text-lg</code></td>
+            <td><span class="token-swatch" data-token="--text-lg"></span></td>
+            <td><code class="token-value">1.125rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-lg')">Copy</button></td>
+          </tr>
+<tr data-token="--text-xl">
+            <td><code class="token-name">--text-xl</code></td>
+            <td><span class="token-swatch" data-token="--text-xl"></span></td>
+            <td><code class="token-value">1.25rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-xl')">Copy</button></td>
+          </tr>
+<tr data-token="--text-2xl">
+            <td><code class="token-name">--text-2xl</code></td>
+            <td><span class="token-swatch" data-token="--text-2xl"></span></td>
+            <td><code class="token-value">1.5rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-2xl')">Copy</button></td>
+          </tr>
+<tr data-token="--text-3xl">
+            <td><code class="token-name">--text-3xl</code></td>
+            <td><span class="token-swatch" data-token="--text-3xl"></span></td>
+            <td><code class="token-value">1.875rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-3xl')">Copy</button></td>
+          </tr>
+<tr data-token="--text-4xl">
+            <td><code class="token-name">--text-4xl</code></td>
+            <td><span class="token-swatch" data-token="--text-4xl"></span></td>
+            <td><code class="token-value">2.25rem</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--text-4xl')">Copy</button></td>
+          </tr>
+<tr data-token="--weight-normal">
+            <td><code class="token-name">--weight-normal</code></td>
+            <td><span class="token-swatch" data-token="--weight-normal"></span></td>
+            <td><code class="token-value">400</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--weight-normal')">Copy</button></td>
+          </tr>
+<tr data-token="--weight-medium">
+            <td><code class="token-name">--weight-medium</code></td>
+            <td><span class="token-swatch" data-token="--weight-medium"></span></td>
+            <td><code class="token-value">500</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--weight-medium')">Copy</button></td>
+          </tr>
+<tr data-token="--weight-semibold">
+            <td><code class="token-name">--weight-semibold</code></td>
+            <td><span class="token-swatch" data-token="--weight-semibold"></span></td>
+            <td><code class="token-value">600</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--weight-semibold')">Copy</button></td>
+          </tr>
+<tr data-token="--weight-bold">
+            <td><code class="token-name">--weight-bold</code></td>
+            <td><span class="token-swatch" data-token="--weight-bold"></span></td>
+            <td><code class="token-value">700</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--weight-bold')">Copy</button></td>
+          </tr>
+<tr data-token="--leading-none">
+            <td><code class="token-name">--leading-none</code></td>
+            <td><span class="token-swatch" data-token="--leading-none"></span></td>
+            <td><code class="token-value">1</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--leading-none')">Copy</button></td>
+          </tr>
+<tr data-token="--leading-tight">
+            <td><code class="token-name">--leading-tight</code></td>
+            <td><span class="token-swatch" data-token="--leading-tight"></span></td>
+            <td><code class="token-value">1.25</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--leading-tight')">Copy</button></td>
+          </tr>
+<tr data-token="--leading-snug">
+            <td><code class="token-name">--leading-snug</code></td>
+            <td><span class="token-swatch" data-token="--leading-snug"></span></td>
+            <td><code class="token-value">1.375</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--leading-snug')">Copy</button></td>
+          </tr>
+<tr data-token="--leading-normal">
+            <td><code class="token-name">--leading-normal</code></td>
+            <td><span class="token-swatch" data-token="--leading-normal"></span></td>
+            <td><code class="token-value">1.5</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--leading-normal')">Copy</button></td>
+          </tr>
+<tr data-token="--leading-relaxed">
+            <td><code class="token-name">--leading-relaxed</code></td>
+            <td><span class="token-swatch" data-token="--leading-relaxed"></span></td>
+            <td><code class="token-value">1.625</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--leading-relaxed')">Copy</button></td>
+          </tr>
+<tr data-token="--tracking-tight">
+            <td><code class="token-name">--tracking-tight</code></td>
+            <td><span class="token-swatch" data-token="--tracking-tight"></span></td>
+            <td><code class="token-value">-0.025em</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--tracking-tight')">Copy</button></td>
+          </tr>
+<tr data-token="--tracking-normal">
+            <td><code class="token-name">--tracking-normal</code></td>
+            <td><span class="token-swatch" data-token="--tracking-normal"></span></td>
+            <td><code class="token-value">0em</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--tracking-normal')">Copy</button></td>
+          </tr>
+<tr data-token="--tracking-wide">
+            <td><code class="token-name">--tracking-wide</code></td>
+            <td><span class="token-swatch" data-token="--tracking-wide"></span></td>
+            <td><code class="token-value">0.025em</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--tracking-wide')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="token-category" data-category="motion">
+        <div class="category-header">
+          <h2 class="category-title">Motion</h2>
+          <span class="category-count">15 tokens</span>
+        </div>
+        <div class="table-wrap">
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Swatch</th>
+                <th>Reference</th>
+                <th data-theme="auto">Auto (light)</th><th data-theme="auto-dark">Auto (dark)</th><th data-theme="dark">Dark</th><th data-theme="forest">Forest</th><th data-theme="healthcare">Healthcare</th><th data-theme="light">Light</th><th data-theme="minimal">Minimal</th><th data-theme="ocean">Ocean</th><th data-theme="professional">Professional</th><th data-theme="saas">Saas</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-token="--duration-instant">
+            <td><code class="token-name">--duration-instant</code></td>
+            <td><span class="token-swatch" data-token="--duration-instant"></span></td>
+            <td><code class="token-value">0ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--duration-instant')">Copy</button></td>
+          </tr>
+<tr data-token="--duration-fast">
+            <td><code class="token-name">--duration-fast</code></td>
+            <td><span class="token-swatch" data-token="--duration-fast"></span></td>
+            <td><code class="token-value">100ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--duration-fast')">Copy</button></td>
+          </tr>
+<tr data-token="--duration-base">
+            <td><code class="token-name">--duration-base</code></td>
+            <td><span class="token-swatch" data-token="--duration-base"></span></td>
+            <td><code class="token-value">150ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--duration-base')">Copy</button></td>
+          </tr>
+<tr data-token="--duration-normal">
+            <td><code class="token-name">--duration-normal</code></td>
+            <td><span class="token-swatch" data-token="--duration-normal"></span></td>
+            <td><code class="token-value">200ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--duration-normal')">Copy</button></td>
+          </tr>
+<tr data-token="--duration-slow">
+            <td><code class="token-name">--duration-slow</code></td>
+            <td><span class="token-swatch" data-token="--duration-slow"></span></td>
+            <td><code class="token-value">300ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--duration-slow')">Copy</button></td>
+          </tr>
+<tr data-token="--duration-slower">
+            <td><code class="token-name">--duration-slower</code></td>
+            <td><span class="token-swatch" data-token="--duration-slower"></span></td>
+            <td><code class="token-value">500ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--duration-slower')">Copy</button></td>
+          </tr>
+<tr data-token="--ease-linear">
+            <td><code class="token-name">--ease-linear</code></td>
+            <td><span class="token-swatch" data-token="--ease-linear"></span></td>
+            <td><code class="token-value">linear</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--ease-linear')">Copy</button></td>
+          </tr>
+<tr data-token="--ease-in">
+            <td><code class="token-name">--ease-in</code></td>
+            <td><span class="token-swatch" data-token="--ease-in"></span></td>
+            <td><code class="token-value">cubic-bezier(0.4, 0, 1, 1)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--ease-in')">Copy</button></td>
+          </tr>
+<tr data-token="--ease-out">
+            <td><code class="token-name">--ease-out</code></td>
+            <td><span class="token-swatch" data-token="--ease-out"></span></td>
+            <td><code class="token-value">cubic-bezier(0, 0, 0.2, 1)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--ease-out')">Copy</button></td>
+          </tr>
+<tr data-token="--ease-in-out">
+            <td><code class="token-name">--ease-in-out</code></td>
+            <td><span class="token-swatch" data-token="--ease-in-out"></span></td>
+            <td><code class="token-value">cubic-bezier(0.4, 0, 0.2, 1)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--ease-in-out')">Copy</button></td>
+          </tr>
+<tr data-token="--ease-spring">
+            <td><code class="token-name">--ease-spring</code></td>
+            <td><span class="token-swatch" data-token="--ease-spring"></span></td>
+            <td><code class="token-value">cubic-bezier(0.34, 1.56, 0.64, 1)</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--ease-spring')">Copy</button></td>
+          </tr>
+<tr data-token="--stagger-none">
+            <td><code class="token-name">--stagger-none</code></td>
+            <td><span class="token-swatch" data-token="--stagger-none"></span></td>
+            <td><code class="token-value">0ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--stagger-none')">Copy</button></td>
+          </tr>
+<tr data-token="--stagger-fast">
+            <td><code class="token-name">--stagger-fast</code></td>
+            <td><span class="token-swatch" data-token="--stagger-fast"></span></td>
+            <td><code class="token-value">20ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--stagger-fast')">Copy</button></td>
+          </tr>
+<tr data-token="--stagger-base">
+            <td><code class="token-name">--stagger-base</code></td>
+            <td><span class="token-swatch" data-token="--stagger-base"></span></td>
+            <td><code class="token-value">40ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--stagger-base')">Copy</button></td>
+          </tr>
+<tr data-token="--stagger-slow">
+            <td><code class="token-name">--stagger-slow</code></td>
+            <td><span class="token-swatch" data-token="--stagger-slow"></span></td>
+            <td><code class="token-value">80ms</code></td>
+            <td data-theme="auto"><code class="token-concrete">—</code></td><td data-theme="auto-dark"><code class="token-concrete">—</code></td><td data-theme="dark"><code class="token-concrete">—</code></td><td data-theme="forest"><code class="token-concrete">—</code></td><td data-theme="healthcare"><code class="token-concrete">—</code></td><td data-theme="light"><code class="token-concrete">—</code></td><td data-theme="minimal"><code class="token-concrete">—</code></td><td data-theme="ocean"><code class="token-concrete">—</code></td><td data-theme="professional"><code class="token-concrete">—</code></td><td data-theme="saas"><code class="token-concrete">—</code></td>
+            <td><button class="token-copy" onclick="copyToken('--stagger-slow')">Copy</button></td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer style="text-align: center; padding: var(--space-8) 0; color: var(--text-muted); border-top: 1px solid var(--border-subtle); margin-top: var(--space-8);">
+      <p class="token-value">Generated from tokens.css · 153 tokens across 13 categories</p>
+    </footer>
+  </div>
+
+  <script>
+    const themeLink = document.getElementById('theme-link');
+    const themeSelect = document.getElementById('theme-select');
+
+    themeSelect.addEventListener('change', (e) => {
+      themeLink.href = '../themes/' + e.target.value + '.css';
+      setTimeout(updateSwatches, 100);
+    });
+
+    function copyToken(name) {
+      const text = 'var(' + name + ')';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      const btn = document.querySelector('button[onclick="copyToken(\'' + name + '\')"]');
+      if (btn) {
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      }
+    }
+
+    function updateSwatches() {
+      const computed = getComputedStyle(document.documentElement);
+      document.querySelectorAll('.token-swatch').forEach(swatch => {
+        const token = swatch.dataset.token;
+        const value = computed.getPropertyValue(token).trim();
+        if (value && (/^#/.test(value) || /^rgb/.test(value) || /^hsl/.test(value))) {
+          swatch.style.backgroundColor = value;
+        } else {
+          swatch.style.backgroundColor = 'transparent';
+        }
+      });
+    }
+
+    document.getElementById('token-search').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.token-table tbody tr').forEach(row => {
+        const token = row.dataset.token.toLowerCase();
+        row.style.display = token.includes(q) ? '' : 'none';
+      });
+      document.querySelectorAll('.token-category').forEach(cat => {
+        const visible = cat.querySelectorAll('.token-table tbody tr:not([style*="none"])').length;
+        cat.style.display = visible > 0 ? '' : 'none';
+      });
+      const anyVisible = document.querySelectorAll('.token-category:not([style*="none"])').length;
+      const empty = document.getElementById('empty-state');
+      if (empty) empty.style.display = anyVisible ? 'none' : '';
+    });
+
+    updateSwatches();
+  </script>
+</body>
+</html>

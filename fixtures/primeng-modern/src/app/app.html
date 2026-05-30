@@ -1,0 +1,77 @@
+<div class="fixture-shell">
+
+  <header class="fixture-header">
+    <div>
+      <h1>{{ title }}</h1>
+      <p class="subtitle">{{ subtitle }}</p>
+    </div>
+    <div class="theme-switcher">
+      <label for="theme-select">Theme</label>
+      <select id="theme-select" [value]="currentTheme" (change)="setTheme($any($event.target).value)">
+        <option *ngFor="let t of themes" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="fixture-main">
+
+    <section class="fixture-section">
+      <h2>Buttons</h2>
+      <div class="fixture-row">
+        <p-button label="Primary" styleClass="p-button-primary"></p-button>
+        <p-button label="Secondary" styleClass="p-button-secondary" [outlined]="true"></p-button>
+        <p-button label="Danger" styleClass="p-button-danger"></p-button>
+      </div>
+    </section>
+
+    <section class="fixture-section">
+      <h2>Card</h2>
+      <p-card header="Account Summary" subheader="Overview of current holdings" [style]="{ maxWidth: '480px' }">
+        <p class="card-body">
+          This card uses real PrimeNG components styled by the ACME adapter.
+          If the adapter breaks, you will see PrimeNG's original theme colors.
+        </p>
+        <div class="fixture-row" style="margin-top: 12px;">
+          <p-button label="View Details" styleClass="p-button-primary p-button-sm"></p-button>
+          <p-button label="Export" styleClass="p-button-secondary p-button-sm" [outlined]="true"></p-button>
+        </div>
+      </p-card>
+    </section>
+
+    <section class="fixture-section">
+      <h2>Data Table</h2>
+      <p-table [value]="transactions" [tableStyle]="{ 'min-width': '480px' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th style="text-align: right;">Amount</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tx>
+          <tr>
+            <td>{{ tx.name }}</td>
+            <td>{{ tx.date }}</td>
+            <td>
+              <span class="ds-badge" [class.ds-badge-success]="tx.statusSeverity === 'success'" [class.ds-badge-warning]="tx.statusSeverity === 'warning'">
+                {{ tx.status }}
+              </span>
+            </td>
+            <td style="text-align: right; font-family: var(--font-mono);">{{ tx.amount }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </section>
+
+    <section class="fixture-section">
+      <h2>Form Field</h2>
+      <div class="field">
+        <label for="email" class="field-label">Email</label>
+        <input id="email" pInputText type="email" placeholder="user@company.com" style="width: 320px;" />
+        <p class="field-help">Use your work email.</p>
+      </div>
+    </section>
+
+  </main>
+</div>

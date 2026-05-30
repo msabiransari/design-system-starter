@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint & Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:css
+      - run: npm run audit:contrast
+      - run: npm run build
+      - name: Verify dist output
+        run: |
+          test -f dist/tokens.css
+          test -f dist/base.css
+          test -f dist/base-scoped.css
+          test -f dist/motion.css
+          test -f dist/primitives.css
+          test -f dist/themes/professional.css
+          test -f dist/themes/dark.css
+          test -f dist/adapters/primeng-adapter.css
+          test -f dist/adapters/primeng7-adapter.css
+          test -f dist/adapters/material-adapter.css
+      - name: Build fixtures
+        run: |
+          cd fixtures/primeng-modern && npm ci && npm run build
+          cd ../angularjs-legacy && npm ci
+      - run: npx playwright install --with-deps
+      - run: npm run test:e2e
+
+  angular7-fixture:
+    name: Angular 7 + PrimeNG 7 Fixture
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Angular 7 fixture in Node 12 container
+        run: |
+          docker run --rm \
+            -v "$PWD:/repo" \
+            -w /repo/fixtures/angular7-primeng \
+            node:12-buster \
+            bash -lc "npm ci && npm run build"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e:angular7

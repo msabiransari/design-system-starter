@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixture: Material Adapter</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="../themes/professional.css" id="theme-link">
+  <link rel="stylesheet" href="../base.css">
+  <link rel="stylesheet" href="../primitives.css">
+  <!-- Load library mock FIRST so adapter can override it -->
+  <link rel="stylesheet" href="lib-mocks/material-mock.css">
+  <link rel="stylesheet" href="../adapters/material-adapter.css">
+  <style>
+    body { padding: 2rem; }
+    .fixture-grid { display: grid; gap: 2rem; max-width: 960px; margin: 0 auto; }
+    .fixture-section h2 { margin-bottom: 1rem; font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--text-primary); }
+    .fixture-row { display: flex; gap: var(--gap-sm); flex-wrap: wrap; align-items: center; margin-bottom: var(--gap-sm); }
+  </style>
+</head>
+<body>
+
+  <div class="fixture-grid">
+
+    <header>
+      <h1 class="ds-headline">Material Adapter Fixture</h1>
+      <p class="ds-body" style="color: var(--text-muted);">Library mock CSS is loaded first, then the adapter overrides it with tokens. If the adapter breaks, you will see the library's original neutral colors.</p>
+    </header>
+
+    <section class="fixture-section">
+      <h2>Buttons</h2>
+      <div class="fixture-row">
+        <button class="mat-mdc-raised-button">Raised</button>
+        <button class="mat-mdc-raised-button mat-primary">Primary</button>
+        <button class="mat-mdc-button mat-primary">Text</button>
+        <button class="mat-mdc-outlined-button">Outlined</button>
+      </div>
+    </section>
+
+    <section class="fixture-section">
+      <h2>Card</h2>
+      <div class="mat-mdc-card" style="padding: var(--gap-md); max-width: 420px;">
+        <div class="mat-mdc-card-title">Card Title</div>
+        <div class="mat-mdc-card-subtitle">Card subtitle</div>
+        <p class="ds-body-sm" style="margin-top: var(--space-2); color: var(--text-muted);">This card should use token surfaces, borders, and shadows.</p>
+        <div class="fixture-row" style="margin-top: var(--gap-sm);">
+          <button class="mat-mdc-raised-button mat-primary" style="height: 36px; padding: 0 1rem; font-size: var(--text-sm);">Action</button>
+          <button class="mat-mdc-button mat-primary" style="height: 36px; padding: 0 1rem; font-size: var(--text-sm);">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="fixture-section">
+      <h2>Form Fields</h2>
+      <div class="fixture-row" style="max-width: 480px;">
+        <div class="mat-mdc-form-field" style="flex: 1;">
+          <div class="mdc-text-field--outlined">
+            <input placeholder="Email address">
+          </div>
+        </div>
+        <div class="mat-mdc-form-field" style="flex: 1;">
+          <div class="mdc-text-field--outlined mdc-text-field--invalid">
+            <input placeholder="Invalid field" value="error">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="fixture-section">
+      <h2>Data Table</h2>
+      <table class="mat-mdc-table">
+        <thead>
+          <tr>
+            <th class="mat-mdc-header-cell">Transaction</th>
+            <th class="mat-mdc-header-cell">Date</th>
+            <th class="mat-mdc-header-cell">Status</th>
+            <th class="mat-mdc-header-cell" style="text-align: right;">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="mat-mdc-row">
+            <td class="mat-mdc-cell">Meridian Holdings</td>
+            <td class="mat-mdc-cell">Oct 24</td>
+            <td class="mat-mdc-cell"><span class="ds-badge ds-badge-success">Completed</span></td>
+            <td class="mat-mdc-cell ds-mono" style="text-align: right;">+$450,000</td>
+          </tr>
+          <tr class="mat-mdc-row">
+            <td class="mat-mdc-cell">Apex Construction</td>
+            <td class="mat-mdc-cell">Oct 23</td>
+            <td class="mat-mdc-cell"><span class="ds-badge ds-badge-warning">Pending</span></td>
+            <td class="mat-mdc-cell ds-mono" style="text-align: right; color: var(--text-danger);">-$82,500</td>
+          </tr>
+          <tr class="mat-mdc-row">
+            <td class="mat-mdc-cell">Nova Biotech</td>
+            <td class="mat-mdc-cell">Oct 21</td>
+            <td class="mat-mdc-cell"><span class="ds-badge ds-badge-success">Completed</span></td>
+            <td class="mat-mdc-cell ds-mono" style="text-align: right;">+$125,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="fixture-section">
+      <h2>Tabs</h2>
+      <div class="mat-mdc-tab-group">
+        <div class="mat-mdc-tab-header">
+          <div class="mat-mdc-tab mdc-tab--active">Active</div>
+          <div class="mat-mdc-tab">Inactive</div>
+          <div class="mat-mdc-tab">Settings</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="fixture-section">
+      <h2>Menu</h2>
+      <div class="mat-mdc-menu-panel">
+        <div class="mat-mdc-menu-item">Menu Item 1</div>
+        <div class="mat-mdc-menu-item">Menu Item 2</div>
+        <div class="mat-mdc-menu-item">Menu Item 3</div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const themes = ['professional', 'light', 'dark', 'healthcare', 'saas', 'minimal', 'forest', 'ocean'];
+    const select = document.createElement('select');
+    select.style.cssText = 'position:fixed;top:1rem;right:1rem;padding:var(--space-2) var(--space-4);font-size:var(--text-sm);font-weight:var(--weight-medium);background:var(--surface-raised);border:1px solid var(--border-default);border-radius:var(--radius-base);cursor:pointer;box-shadow:var(--shadow-sm);z-index:var(--z-popover);';
+    themes.forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; select.appendChild(o); });
+    select.addEventListener('change', (e) => { document.getElementById('theme-link').href = `../themes/${e.target.value}.css`; });
+    document.body.appendChild(select);
+  </script>
+
+</body>
+</html>

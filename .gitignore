@@ -1,0 +1,11 @@
+.DS_Store
+
+node_modules/
+dist/
+playwright-report/
+test-results/
+
+fixtures/**/node_modules/
+fixtures/**/dist/
+fixtures/**/.angular/
+fixtures/angular7-primeng/src/assets/acme/

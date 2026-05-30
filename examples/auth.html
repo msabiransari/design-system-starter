@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auth — Design System</title>
+  <link rel="stylesheet" href="../tokens.css" />
+  <link rel="stylesheet" href="../themes/professional.css" id="theme-link" />
+  <link rel="stylesheet" href="../base.css" />
+  <link rel="stylesheet" href="../motion.css" />
+  <link rel="stylesheet" href="../primitives.css" />
+  <link rel="stylesheet" href="./shared/examples.css" />
+  <script src="./shared/nav.js" defer></script>
+  <style>
+    .auth-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 60px);
+    }
+    @media (max-width: 768px) {
+      .auth-layout { grid-template-columns: 1fr; }
+    }
+    .auth-brand {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--gap-lg);
+      background: var(--surface-raised);
+      border-right: 1px solid var(--border-default);
+    }
+    .auth-form-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--gap-lg);
+      max-width: 440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .auth-tabs {
+      display: flex;
+      gap: var(--space-1);
+      margin-bottom: var(--gap-md);
+      background: var(--surface-inset);
+      padding: var(--space-0-5);
+      border-radius: var(--radius-base);
+    }
+    .auth-tab {
+      flex: 1;
+      padding: var(--space-1-5) var(--space-3);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      border: none;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+    .auth-tab.active {
+      background: var(--surface-raised);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-xs);
+    }
+    .auth-panel {
+      display: none;
+    }
+    .auth-panel.active {
+      display: block;
+      animation: ds-fade-in var(--duration-normal) var(--ease-out);
+    }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin: var(--gap-md) 0;
+      color: var(--text-muted);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-medium);
+    }
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="auth-layout">
+
+    <!-- Brand Side -->
+    <section class="auth-brand" aria-label="Product information">
+      <div style="max-width: 400px; margin: 0 auto;">
+        <div style="font-weight: var(--weight-bold); font-size: var(--text-2xl); color: var(--text-primary); margin-bottom: var(--space-4);">Acme Capital</div>
+        <blockquote style="margin: 0; padding: 0; border: none;">
+          <p style="font-size: var(--text-xl); line-height: var(--leading-snug); color: var(--text-secondary); font-style: italic; margin-bottom: var(--space-4);">"The most reliable platform we've used for institutional settlements. Onboarding took one day."</p>
+          <footer>
+            <cite style="font-style: normal; font-weight: var(--weight-semibold); color: var(--text-primary);">— Sarah Kensington</cite>
+            <div style="font-size: var(--text-sm); color: var(--text-muted);">VP Finance, Meridian Holdings Ltd</div>
+          </footer>
+        </blockquote>
+        <div style="margin-top: var(--space-8); display: flex; gap: var(--space-4); color: var(--text-muted);">
+          <div>
+            <div class="ds-mono ds-title">500+</div>
+            <div class="ds-body-sm">Institutions</div>
+          </div>
+          <div>
+            <div class="ds-mono ds-title">$2B+</div>
+            <div class="ds-body-sm">Processed</div>
+          </div>
+          <div>
+            <div class="ds-mono ds-title">99.9%</div>
+            <div class="ds-body-sm">Uptime</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form Side -->
+    <section class="auth-form-panel" aria-label="Authentication forms">
+
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" onclick="switchTab('login')" role="tab" aria-selected="true">Sign In</button>
+        <button class="auth-tab" onclick="switchTab('register')" role="tab" aria-selected="false">Create Account</button>
+      </div>
+
+      <!-- Login -->
+      <div id="panel-login" class="auth-panel active">
+        <h1 class="ds-headline" style="margin-bottom: var(--space-2);">Welcome back</h1>
+        <p class="ds-body" style="color: var(--text-muted); margin-bottom: var(--gap-md);">Enter your credentials to access your dashboard.</p>
+
+        <form class="ex-stack" onsubmit="event.preventDefault();" style="gap: var(--gap-sm);">
+          <div class="ex-stack" style="gap: var(--space-1);">
+            <label for="login-email" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Email Address</label>
+            <input id="login-email" type="email" class="ds-input" placeholder="you@company.com" autocomplete="email" />
+          </div>
+          <div class="ex-stack" style="gap: var(--space-1);">
+            <label for="login-password" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Password</label>
+            <input id="login-password" type="password" class="ds-input" placeholder="••••••••" autocomplete="current-password" />
+          </div>
+          <div class="ex-flex" style="justify-content: space-between;">
+            <label class="ex-flex" style="gap: var(--space-2); font-size: var(--text-sm); color: var(--text-secondary);">
+              <input type="checkbox" /> Remember me
+            </label>
+            <a href="#" class="ds-body-sm" style="color: var(--text-link);">Forgot password?</a>
+          </div>
+          <button type="submit" class="ds-button ds-button-primary" style="width: 100%;">Sign In</button>
+        </form>
+
+        <div class="auth-divider">or continue with</div>
+
+        <div class="ex-grid ex-grid-2">
+          <button class="ds-button ds-button-secondary" style="justify-content: center;">Google</button>
+          <button class="ds-button ds-button-secondary" style="justify-content: center;">SSO</button>
+        </div>
+      </div>
+
+      <!-- Register -->
+      <div id="panel-register" class="auth-panel">
+        <h1 class="ds-headline" style="margin-bottom: var(--space-2);">Create your account</h1>
+        <p class="ds-body" style="color: var(--text-muted); margin-bottom: var(--gap-md);">Start your 14-day free trial. No credit card required.</p>
+
+        <form class="ex-stack" onsubmit="event.preventDefault();" style="gap: var(--gap-sm);">
+          <fieldset style="border: none; padding: 0; margin: 0;">
+            <legend class="ds-caption" style="margin-bottom: var(--space-2);">Account Information</legend>
+            <div class="ex-grid ex-grid-2" style="gap: var(--gap-sm);">
+              <div class="ex-stack" style="gap: var(--space-1);">
+                <label for="reg-first" class="ds-caption" style="text-transform: none; letter-spacing: normal;">First Name</label>
+                <input id="reg-first" type="text" class="ds-input" placeholder="Jane" autocomplete="given-name" />
+              </div>
+              <div class="ex-stack" style="gap: var(--space-1);">
+                <label for="reg-last" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Last Name</label>
+                <input id="reg-last" type="text" class="ds-input" placeholder="Doe" autocomplete="family-name" />
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="ex-stack" style="gap: var(--space-1);">
+            <label for="reg-email" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Work Email</label>
+            <input id="reg-email" type="email" class="ds-input" placeholder="jane@company.com" autocomplete="email" />
+          </div>
+
+          <div class="ex-stack" style="gap: var(--space-1);">
+            <label for="reg-company" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Company</label>
+            <input id="reg-company" type="text" class="ds-input" placeholder="Acme Inc" list="companies" />
+            <datalist id="companies">
+              <option>Meridian Holdings</option>
+              <option>Apex Construction</option>
+              <option>Nova Biotech</option>
+              <option>Volt Energy</option>
+            </datalist>
+          </div>
+
+          <div class="ex-stack" style="gap: var(--space-1);">
+            <label for="reg-password" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Password</label>
+            <input id="reg-password" type="password" class="ds-input" placeholder="Min. 8 characters" autocomplete="new-password" />
+          </div>
+
+          <label class="ex-flex" style="gap: var(--space-2); font-size: var(--text-sm); color: var(--text-secondary);">
+            <input type="checkbox" required /> I agree to the <a href="#" style="color: var(--text-link);">Terms of Service</a> and <a href="#" style="color: var(--text-link);">Privacy Policy</a>.
+          </label>
+
+          <button type="submit" class="ds-button ds-button-primary" style="width: 100%;">Create Account</button>
+        </form>
+      </div>
+
+      <!-- Forgot Password (inline toggle) -->
+      <div id="panel-forgot" class="auth-panel">
+        <h1 class="ds-headline" style="margin-bottom: var(--space-2);">Reset password</h1>
+        <p class="ds-body" style="color: var(--text-muted); margin-bottom: var(--gap-md);">We'll send you a link to reset your password.</p>
+        <form class="ex-stack" onsubmit="event.preventDefault();" style="gap: var(--gap-sm);">
+          <div class="ex-stack" style="gap: var(--space-1);">
+            <label for="reset-email" class="ds-caption" style="text-transform: none; letter-spacing: normal;">Email Address</label>
+            <input id="reset-email" type="email" class="ds-input" placeholder="you@company.com" />
+          </div>
+          <button type="submit" class="ds-button ds-button-primary" style="width: 100%;">Send Reset Link</button>
+          <button type="button" class="ds-button ds-button-ghost" style="width: 100%;" onclick="switchTab('login')">Back to Sign In</button>
+        </form>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    function switchTab(name) {
+      document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
+      event.target.classList.add('active');
+      document.querySelectorAll('.auth-tab').forEach(t => {
+        t.setAttribute('aria-selected', t.classList.contains('active'));
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<main class="legacy-shell ds-base">
+  <section class="fixture-layout">
+    <header class="fixture-header">
+      <div>
+        <p class="ds-caption">Legacy fixture</p>
+        <h1 class="ds-headline">Angular 7 + PrimeNG 7 Fixture</h1>
+        <p class="ds-body">Validates ACME tokens, scoped base styles, and the PrimeNG 7 ui-* adapter in an old Angular application.</p>
+      </div>
+
+      <label class="theme-picker">
+        <span class="ds-caption">Theme</span>
+        <select class="ds-select" [ngModel]="selectedTheme" (ngModelChange)="setTheme($event)">
+          <option *ngFor="let theme of themes" [value]="theme.value">{{ theme.label }}</option>
+        </select>
+      </label>
+    </header>
+
+    <section class="fixture-grid">
+      <p-card header="PrimeNG 7 Buttons" subheader="ui-button class shim">
+        <div class="fixture-actions">
+          <button pButton type="button" label="Primary"></button>
+          <button pButton type="button" label="Secondary" class="ui-button-secondary"></button>
+          <button pButton type="button" label="Danger" class="ui-button-danger"></button>
+        </div>
+      </p-card>
+
+      <p-card header="Legacy Form" subheader="pInputText + p-dropdown">
+        <div class="fixture-form">
+          <label>
+            <span class="ds-caption">Customer</span>
+            <input pInputText type="text" value="Northstar Clinic">
+          </label>
+
+          <label>
+            <span class="ds-caption">Theme via PrimeNG dropdown</span>
+            <p-dropdown
+              [options]="segments"
+              [(ngModel)]="selectedSegment"
+              optionLabel="label">
+            </p-dropdown>
+          </label>
+        </div>
+      </p-card>
+    </section>
+
+    <p-card header="PrimeNG 7 Table" subheader="ui-table class shim">
+      <p-table [value]="transactions">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Invoice</th>
+            <th>Account</th>
+            <th>Status</th>
+            <th>Amount</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.account }}</td>
+            <td><span class="ds-badge ds-badge-default">{{ row.status }}</span></td>
+            <td>{{ row.amount }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </section>
+</main>
