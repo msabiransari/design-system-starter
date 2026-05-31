@@ -8,6 +8,7 @@
     ".": "./dist/tokens.css",
     "./tokens": "./dist/tokens.css",
     "./base": "./dist/base.css",
+    "./classless": "./dist/classless.css",
     "./base-scoped": "./dist/base-scoped.css",
     "./motion": "./dist/motion.css",
     "./primitives": "./dist/primitives.css",
@@ -23,6 +24,7 @@
     "tokens.css",
     "base.css",
     "base-scoped.css",
+    "classless.css",
     "motion.css",
     "primitives.css",
     "themes/",
@@ -32,7 +34,7 @@
     "icons.css"
   ],
   "scripts": {
-    "build": "mkdir -p dist && cp tokens.css base.css base-scoped.css motion.css primitives.css icons.css dist/ && cp -r themes dist/ && cp -r adapters dist/ && cp -r icons dist/",
+    "build": "mkdir -p dist && cp tokens.css base.css base-scoped.css classless.css motion.css primitives.css icons.css dist/ && cp -r themes dist/ && cp -r adapters dist/ && cp -r icons dist/",
     "docs:generate": "node scripts/generate-token-docs.js",
     "audit:contrast": "node scripts/audit-contrast.js",
     "lint:css": "stylelint '**/*.css'",
