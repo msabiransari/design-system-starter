@@ -42,7 +42,7 @@
   ];
 
   function hrefFor(dir) {
-    return dir === 'index' ? toExamples : `${toExamples}${dir}/`;
+    return dir === 'index' ? `${toExamples}index.html` : `${toExamples}${dir}/index.html`;
   }
 
   function init() {

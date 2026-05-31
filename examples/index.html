@@ -173,43 +173,43 @@
       <h2 id="examples-heading" class="ds-caption" style="margin-bottom: var(--gap-md);">Choose an Example</h2>
       <div class="ex-card-grid">
 
-        <a href="dashboard/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 0ms;">
+        <a href="dashboard/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 0ms;">
           <div class="suite-card-icon">📊</div>
           <div class="suite-card-title">Dashboard</div>
           <div class="suite-card-desc">Financial overview with KPI cards, transaction tables, quick-transfer forms, and activity feeds.</div>
         </a>
 
-        <a href="crm/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 40ms;">
+        <a href="crm/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 40ms;">
           <div class="suite-card-icon">🤝</div>
           <div class="suite-card-title">CRM</div>
           <div class="suite-card-desc">Contact directory with avatars, deal pipelines, search filters, and expandable detail cards.</div>
         </a>
 
-        <a href="marketing/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 80ms;">
+        <a href="marketing/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 80ms;">
           <div class="suite-card-icon">🚀</div>
           <div class="suite-card-title">Marketing</div>
           <div class="suite-card-desc">Landing page hero, feature grid, testimonials, pricing tiers, and call-to-action sections.</div>
         </a>
 
-        <a href="data/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 120ms;">
+        <a href="data/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 120ms;">
           <div class="suite-card-icon">📈</div>
           <div class="suite-card-title">Data Tables</div>
           <div class="suite-card-desc">Dense data administration with filters, paginated tables, progress bars, and chart bars.</div>
         </a>
 
-        <a href="auth/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 160ms;">
+        <a href="auth/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 160ms;">
           <div class="suite-card-icon">🔐</div>
           <div class="suite-card-title">Auth</div>
           <div class="suite-card-desc">Login, registration, and password-reset forms with fieldsets, validation states, and split layouts.</div>
         </a>
 
-        <a href="components/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 200ms;">
+        <a href="components/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 200ms;">
           <div class="suite-card-icon">🧩</div>
           <div class="suite-card-title">Components</div>
           <div class="suite-card-desc">Complete reference of every primitive: buttons, inputs, badges, dialogs, tables, motion, and elevation.</div>
         </a>
 
-        <a href="guide/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 240ms;">
+        <a href="guide/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 240ms;">
           <div class="suite-card-icon">📖</div>
           <div class="suite-card-title">Guide &amp; Docs</div>
           <div class="suite-card-desc">Architecture, quick start, adapter pattern for PrimeNG/Material, migration strategy, and loading order.</div>
@@ -221,19 +221,19 @@
           <div class="suite-card-desc">The exact playbook for engineering teams: install, shim, refactor, theme-switch — one afternoon to modern UI.</div>
         </a>
 
-        <a href="pilot-app/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 320ms;">
+        <a href="pilot-app/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 320ms;">
           <div class="suite-card-icon">🧪</div>
           <div class="suite-card-title">Pilot App</div>
           <div class="suite-card-desc">Before/after demo of a legacy AngularJS/PrimeNG app transformed by tokens + shim. Toggle between Legacy and Modern.</div>
         </a>
 
-        <a href="aggrid/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 360ms;">
+        <a href="aggrid/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 360ms;">
           <div class="suite-card-icon">🧮</div>
           <div class="suite-card-title">ag-Grid 14</div>
           <div class="suite-card-desc">Legacy ag-Grid 14 skinned by a token shim, plus classless bare HTML — switch themes to watch the grid and page re-skin together.</div>
         </a>
 
-        <a href="studio/" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 400ms;">
+        <a href="studio/index.html" class="ds-card suite-card ds-animate-slide-up" style="animation-delay: 400ms;">
           <div class="suite-card-icon">🎛️</div>
           <div class="suite-card-title">Studio</div>
           <div class="suite-card-desc">Interactive console: preview apps, inspect tokens, trigger motion, explore state matrices, and preview migration shims.</div>
@@ -329,11 +329,11 @@
       for (const theme of THEMES) {
         const card = document.createElement('a');
         card.className = 'theme-card';
-        card.href = `studio.html?theme=${theme.id}`;
+        card.href = `studio/index.html?theme=${theme.id}`;
         card.onclick = (e) => {
           e.preventDefault();
           localStorage.setItem('ds-theme', theme.id);
-          window.location.href = 'studio/';
+          window.location.href = 'studio/index.html';
         };
 
         let previewHtml = '';
