@@ -18,6 +18,7 @@
 - [Why it exists](#why-it-exists)
 - [How it works](#how-it-works)
 - [Quick start](#quick-start)
+- [Examples](#examples)
 - [What you get](#what-you-get)
 - [Built-in themes](#built-in-themes)
 - [How flexible is it?](#how-flexible-is-it)
@@ -106,6 +107,9 @@ The magic: `tokens.css` declares `--surface-default: var(--_surface-default);`. 
 
 <!-- 5. Ready-made component classes (optional) -->
 <link rel="stylesheet" href="primitives.css" />
+
+<!-- 6. Classless layer (optional) — themes bare HTML; see "Classless layer" below -->
+<link rel="stylesheet" href="classless.css" />
 ```
 
 ### Option B — bundler entry (Vite / Webpack / Angular CLI)
@@ -116,6 +120,7 @@ The magic: `tokens.css` declares `--surface-default: var(--_surface-default);`. 
 @import "@acme/design-tokens/base";
 @import "@acme/design-tokens/motion";
 @import "@acme/design-tokens/primitives";
+@import "@acme/design-tokens/classless";   /* optional — themes bare HTML */
 ```
 
 ### See it live
@@ -126,6 +131,31 @@ npm run serve
 ```
 
 The examples suite includes a **theme switcher** (top nav) so you can watch every demo re-skin in real time.
+
+---
+
+## Examples
+
+Run `npm run serve` and open `http://localhost:8080/examples/`. Every example is a **self-contained folder** (`examples/<name>/index.html`) and shares a top nav with a **theme switcher** (localStorage-persisted) — switch the theme and watch any demo re-skin live.
+
+| Example | Path | What it shows |
+|---------|------|---------------|
+| Overview | `examples/` | Suite landing + interactive theme gallery |
+| Dashboard | `examples/dashboard/` | Financial dashboard — KPI cards, transaction tables, quick-transfer forms |
+| CRM | `examples/crm/` | Contact directory, deal pipeline, avatars, filters |
+| Marketing | `examples/marketing/` | Landing page — hero, feature grid, pricing, CTAs |
+| Data | `examples/data/` | Dense data administration — filters, paginated tables, progress bars |
+| Auth | `examples/auth/` | Login / register / password-reset forms with validation states |
+| Components | `examples/components/` | Complete reference of every `.ds-*` primitive |
+| Guide | `examples/guide/` | In-browser docs — architecture, adapters, migration strategy |
+| **ag-Grid 14** 🆕 | `examples/aggrid/` | **New in this version** — classless bare HTML **+ legacy ag-Grid 14** skinned by the token shim. Switch themes to watch the grid *and* the page re-skin together. Bundles a pinned, vendored `ag-grid@14.2.0` so it runs offline. |
+| Studio | `examples/studio/` | Interactive console — token inspector, motion preview, primitive state matrix, migration preview |
+| Pilot App | `examples/pilot-app/` | Before/after demo of a legacy AngularJS/PrimeNG app transformed by tokens + a shim |
+
+**New in this version:**
+
+- 🆕 **`examples/aggrid/`** — a working demonstration of the **classless layer** and the **ag-Grid 14 shim** on one page (the focus of this release; see [Classless layer](#classless-layer) and [Third-party library adapters](#third-party-library-adapters)).
+- 📁 Every example was reorganized into its **own folder** (`examples/<name>/index.html`) so each is self-contained and collision-free.
 
 ---
 
@@ -362,11 +392,15 @@ design-system-starter/
 ├── base-scoped.css         # Scoped reset under .ds-base (legacy/hybrid)
 ├── motion.css              # Animations + keyframes (respects reduced-motion)
 ├── primitives.css          # ~80 component classes (.ds-button, .ds-card, …)
+├── classless.css           # Opt-in classless layer — themes bare HTML (@layer ds.classless)
 ├── icons.css / icons/      # Icon sprite + sizing tokens
 ├── themes/                 # 9 themes: light, dark, auto, professional, …
-├── adapters/               # PrimeNG (modern + 7), Angular Material + MATRIX.md
-├── examples/               # Dashboard, CRM, marketing, data, auth, components…
-│   └── shared/nav.js       # Theme switcher with localStorage persistence
+├── adapters/               # PrimeNG (modern + 7), Angular Material, ag-Grid 14 + MATRIX.md
+├── examples/               # Self-contained demos — one folder per example (examples/<name>/index.html)
+│   ├── index.html          # Suite overview + theme gallery
+│   ├── aggrid/             # 🆕 ag-Grid 14 + classless demo (vendored ag-grid 14.2.0)
+│   ├── dashboard/ · crm/ · marketing/ · data/ · auth/ · components/ · guide/ · studio/ · pilot-app/
+│   └── shared/             # nav.js (depth-aware nav + theme switcher) + examples.css
 ├── skills/                 # AI-agent migration skill + legacy-style scanner
 ├── fixtures/               # Real Angular/PrimeNG apps for adapter testing
 ├── tests/e2e/              # Playwright visual-regression tests + snapshots
