@@ -1,0 +1,146 @@
+/* ============================================================
+   CLASSLESS LAYER
+   Themes all user-visible HTML via tokens, inside the lowest
+   cascade layer so ANY unlayered app/primitive style overrides
+   it with no !important. Opt in by importing this file.
+   ============================================================ */
+
+@layer ds.classless {
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-3);
+  }
+  h1 { font-size: var(--text-3xl); }
+  h2 { font-size: var(--text-2xl); }
+  h3 { font-size: var(--text-xl); }
+  h4 { font-size: var(--text-lg); }
+  h5 { font-size: var(--text-base); }
+  h6 { font-size: var(--text-sm); }
+
+  /* Body text + inline */
+  p, li, dd, dt, figcaption, blockquote {
+    color: var(--text-primary);
+    line-height: var(--leading-normal);
+  }
+  p { margin-bottom: var(--space-3); }
+  /* base.css also styles a/hr when loaded (unlayered, so it wins); these keep
+     the classless layer self-consistent when imported without base.css. */
+  a { color: var(--text-link); text-decoration: none; }
+  a:hover { color: var(--text-link-hover); text-decoration: underline; }
+  small { font-size: var(--text-sm); color: var(--text-secondary); }
+  strong, b { font-weight: var(--weight-semibold); }
+  mark { background: var(--accent-warning-bg, var(--surface-hover)); color: var(--text-primary); }
+  abbr { text-decoration-style: dotted; }
+  code, kbd, samp, var, pre {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+  code, kbd { background: var(--surface-hover); border-radius: var(--radius-sm); padding: 0 var(--space-1); }
+  pre {
+    background: var(--surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-base);
+    padding: var(--space-3);
+    overflow: auto;
+  }
+  pre code { background: transparent; padding: 0; }
+  blockquote {
+    border-left: 3px solid var(--border-default);
+    padding-left: var(--space-3);
+    color: var(--text-secondary);
+  }
+  hr { border: 0; height: 1px; background: var(--border-subtle); margin: var(--gap-md) 0; }
+
+  /* Lists */
+  ul, ol, menu, dl { margin-bottom: var(--space-3); padding-left: var(--space-5); }
+  dl { padding-left: 0; }
+  dt { font-weight: var(--weight-semibold); }
+
+  /* Tables (mirrors .ds-table but at bare selectors; .ds-table still wins) */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+  }
+  caption { color: var(--text-muted); text-align: left; padding: var(--space-2); }
+  thead { background: var(--surface-raised); }
+  th {
+    background: var(--surface-raised);
+    color: var(--text-secondary);
+    text-align: left;
+    font-weight: var(--weight-semibold);
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--border-default);
+  }
+  td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  tbody tr:hover td { background: var(--surface-hover); }
+
+  /* Forms */
+  fieldset {
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-base);
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  legend { color: var(--text-secondary); font-weight: var(--weight-semibold); padding: 0 var(--space-2); }
+  label { color: var(--text-secondary); font-size: var(--text-sm); }
+  input, textarea, select {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    background: var(--surface-default);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-base);
+    padding: var(--space-2) var(--space-3);
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--border-focus, var(--accent-primary));
+    box-shadow: 0 0 0 2px var(--focus-ring);
+  }
+  input::placeholder, textarea::placeholder { color: var(--text-muted); }
+  button {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--accent-primary-text);
+    background: var(--accent-primary);
+    border: 1px solid var(--accent-primary);
+    border-radius: var(--radius-base);
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+  button:hover { background: var(--accent-primary-hover, var(--accent-primary)); }
+  progress { accent-color: var(--accent-primary); }
+  meter { accent-color: var(--accent-primary); }
+
+  /* Interactive / disclosure */
+  details {
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-base);
+    padding: var(--space-2) var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  summary { cursor: pointer; color: var(--text-primary); font-weight: var(--weight-medium); }
+  dialog {
+    background: var(--surface-default);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-base);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Media */
+  img, video, audio, canvas, svg { max-width: 100%; }
+  figure { margin: 0 0 var(--space-3); }
+}

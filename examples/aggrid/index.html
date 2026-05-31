@@ -8,13 +8,48 @@
   <link rel="stylesheet" href="../../themes/professional.css" id="theme-link" />
   <link rel="stylesheet" href="../../base.css" />
   <link rel="stylesheet" href="../../motion.css" />
+  <!-- Unlayered app rule, declared BEFORE classless.css. Equal specificity + earlier source
+       order would normally lose to classless's later `mark` rule — but unlayered always beats
+       layered, so this wins with NO !important. Proves the @layer override model. -->
+  <style>
+    mark { background-color: rgb(255, 0, 0); color: rgb(255, 255, 255); }
+  </style>
+  <link rel="stylesheet" href="../../classless.css" />
+  <link rel="stylesheet" href="../../primitives.css" />
   <link rel="stylesheet" href="../shared/examples.css" />
   <script src="../shared/nav.js" defer></script>
 </head>
 <body>
   <main class="ex-page">
     <h1 class="ds-headline">ag-Grid 14 + Classless</h1>
-    <p class="ds-body">Coming together in the next steps.</p>
+    <p class="ds-body">Bare semantic HTML below is themed only by <code>classless.css</code>. Switch themes in the nav — everything re-skins live. This <mark id="probe">app override</mark> stays red, proving the classless layer yields to app styles with no <code>!important</code>.</p>
+
+    <section style="margin-top: var(--gap-md);">
+      <h2>Bare table (no classes)</h2>
+      <table id="bare-table">
+        <thead>
+          <tr><th>Account</th><th>Type</th><th>Balance</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Operating</td><td>Checking</td><td>$12,400</td></tr>
+          <tr><td>Reserve</td><td>Savings</td><td>$48,900</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section style="margin-top: var(--gap-md);">
+      <h2>Bare form (no classes)</h2>
+      <form>
+        <fieldset>
+          <legend>Profile</legend>
+          <label for="nm">Name</label>
+          <input id="nm" type="text" placeholder="Jane Doe" />
+          <label for="rl">Role</label>
+          <select id="rl"><option>Admin</option><option>Member</option></select>
+          <button type="button">Save</button>
+        </fieldset>
+      </form>
+    </section>
   </main>
 </body>
 </html>
