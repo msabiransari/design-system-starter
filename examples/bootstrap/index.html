@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bootstrap 5 + Tokens — Design System</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f1d40'/%3E%3Ctext x='16' y='22' font-size='15' font-weight='700' fill='%23fff' text-anchor='middle' font-family='Arial,sans-serif'%3EDS%3C/text%3E%3C/svg%3E" />
+  <!-- Token contract + active theme (swappable at runtime) -->
+  <link rel="stylesheet" href="../../tokens.css" />
+  <link rel="stylesheet" href="../../themes/professional.css" id="theme-link" />
+  <!-- Vendored Bootstrap, then the adapter that maps its --bs-* vars to our tokens -->
+  <link rel="stylesheet" href="./vendor/bootstrap-5.3.3/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../adapters/bootstrap-adapter.css" />
+  <!-- Shared example nav + theme switcher -->
+  <link rel="stylesheet" href="../shared/examples.css" />
+  <script src="../shared/nav.js" defer></script>
+  <style>
+    .bs-demo { max-width: 1100px; margin: 0 auto; padding: var(--gap-md); }
+    .bs-demo h2 { font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--text-primary); margin: var(--gap-lg) 0 var(--space-3); }
+    .bs-demo .ds-caption { margin-bottom: var(--gap-md); }
+    .bs-row { display: flex; flex-wrap: wrap; gap: var(--gap-md); }
+    .bs-row > * { flex: 1 1 320px; }
+  </style>
+</head>
+<body>
+  <main class="bs-demo">
+    <h1 style="font-size: var(--text-3xl); font-weight: var(--weight-bold); color: var(--text-primary);">Bootstrap 5 + Tokens</h1>
+    <p class="ds-caption" style="text-transform: none; letter-spacing: normal; color: var(--text-secondary);">
+      Stock Bootstrap 5.3 components, re-skinned by <code>bootstrap-adapter.css</code> mapping
+      <code>--bs-*</code> variables to our tokens. Switch the theme in the nav — Bootstrap re-skins live.
+    </p>
+
+    <!-- Navbar -->
+    <h2>Navbar</h2>
+    <nav class="navbar navbar-expand rounded mb-2">
+      <div class="container-fluid">
+        <span class="navbar-brand">Acme Capital</span>
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Reports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+        </ul>
+        <button class="btn btn-primary btn-sm" type="button">New Entry</button>
+      </div>
+    </nav>
+
+    <!-- Buttons -->
+    <h2>Buttons</h2>
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-secondary">Secondary</button>
+      <button type="button" class="btn btn-success">Success</button>
+      <button type="button" class="btn btn-danger">Danger</button>
+      <button type="button" class="btn btn-warning">Warning</button>
+      <button type="button" class="btn btn-info">Info</button>
+      <button type="button" class="btn btn-outline-primary">Outline</button>
+      <button type="button" class="btn btn-link">Link</button>
+    </div>
+
+    <div class="bs-row mt-4">
+      <!-- Card -->
+      <div>
+        <h2>Card</h2>
+        <div class="card">
+          <div class="card-header">Account Summary</div>
+          <div class="card-body">
+            <h5 class="card-title">Operating · $12,400</h5>
+            <p class="card-text text-secondary">A token-skinned Bootstrap card. The surface, border, and header all come from the active theme.</p>
+            <a href="#" class="btn btn-primary btn-sm">View</a>
+            <a href="#" class="btn btn-outline-primary btn-sm">Export</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div>
+        <h2>Form</h2>
+        <form>
+          <div class="mb-3">
+            <label for="bsEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="bsEmail" placeholder="you@company.com" />
+          </div>
+          <div class="mb-3">
+            <label for="bsRole" class="form-label">Role</label>
+            <select class="form-select" id="bsRole">
+              <option>Admin</option>
+              <option>Member</option>
+            </select>
+          </div>
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="bsCheck" checked />
+            <label class="form-check-label" for="bsCheck">Email me reports</label>
+          </div>
+          <button type="button" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Alerts -->
+    <h2>Alerts</h2>
+    <div class="alert alert-primary" role="alert">A primary alert, themed by tokens.</div>
+    <div class="alert alert-success" role="alert">Payment processed successfully.</div>
+    <div class="alert alert-danger" role="alert">Something went wrong — please retry.</div>
+    <div class="alert alert-warning" role="alert">Your trial ends in 3 days.</div>
+
+    <!-- Badges -->
+    <h2>Badges</h2>
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge text-bg-primary">Primary</span>
+      <span class="badge text-bg-secondary">Secondary</span>
+      <span class="badge text-bg-success">Active</span>
+      <span class="badge text-bg-danger">Failed</span>
+      <span class="badge text-bg-warning">Pending</span>
+      <span class="badge text-bg-info">Info</span>
+    </div>
+
+    <!-- Table -->
+    <h2>Table</h2>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr><th>Account</th><th>Type</th><th>Balance</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Operating</td><td>Checking</td><td>$12,400</td><td><span class="badge text-bg-success">Active</span></td></tr>
+        <tr><td>Reserve</td><td>Savings</td><td>$48,900</td><td><span class="badge text-bg-success">Active</span></td></tr>
+        <tr><td>Payroll</td><td>Checking</td><td>$8,150</td><td><span class="badge text-bg-warning">Hold</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="bs-row">
+      <!-- Progress + tabs -->
+      <div>
+        <h2>Progress</h2>
+        <div class="progress mb-2" role="progressbar" aria-label="Example" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar" style="width: 72%">72%</div>
+        </div>
+
+        <h2>Nav tabs</h2>
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a class="nav-link active" href="#">Overview</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Activity</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+        </ul>
+      </div>
+
+      <!-- List group + pagination -->
+      <div>
+        <h2>List group</h2>
+        <ul class="list-group">
+          <li class="list-group-item active">Dashboard</li>
+          <li class="list-group-item">Transactions</li>
+          <li class="list-group-item">Reports</li>
+        </ul>
+
+        <h2>Pagination</h2>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

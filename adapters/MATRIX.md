@@ -96,6 +96,35 @@ Same as other adapters — requires CSS custom properties and `color-mix()`. No 
 
 ---
 
+## Bootstrap Adapter
+
+**File:** `adapters/bootstrap-adapter.css`
+
+### Tested Versions
+
+| Bootstrap | Status | Notes |
+|-----------|--------|-------|
+| 5.3.x | ✅ Validated | Vendored fixture at `examples/bootstrap/vendor/bootstrap-5.3.3/` |
+| 5.2.x | ✅ Expected | Same `--bs-*` CSS-variable theming + component vars |
+| 5.0–5.1 | ⚠️ Partial | Fewer CSS variables; some components need extra class overrides |
+| 3.x / 4.x (legacy) | ❌ Different mechanism | No `--bs-*` variables — needs a class-based shim (like the ag-Grid 14 adapter) |
+
+### How It Works
+
+Bootstrap 5.2+ is themed largely through `--bs-*` CSS variables, so this adapter is mostly a
+**variable mapping** (global `:root` vars + component-scoped vars like `--bs-btn-bg`,
+`--bs-card-bg`, `--bs-table-*`). A few variants (button/alert/badge colors) bake static values at
+Sass-compile time, so those get **direct class overrides**. Solid semantic colors use
+`var(--text-inverted)` for their text, which flips with the theme so contrast holds in light and
+dark. Must load **after** `bootstrap.min.css`. It restyles only — Bootstrap's JavaScript
+(modals, dropdowns, collapse) is untouched.
+
+### Browser Support
+
+Same as other adapters — requires CSS custom properties and `color-mix()`. No IE11.
+
+---
+
 ## Adding a New Adapter
 
 1. Inspect the library's CSS custom properties (Chrome DevTools → Computed → filter by `--`).

@@ -1,0 +1,258 @@
+/* ============================================================
+   BOOTSTRAP 5.3 ADAPTER (CSS-variable mapping + component shims)
+   Bootstrap 5.2+ is themed largely through --bs-* CSS variables, so this is
+   mostly a variable mapping (like the modern PrimeNG adapter). A few component
+   variants (buttons, alerts, badges) bake static colours at Sass-compile time,
+   so those get direct overrides.
+
+   Load AFTER bootstrap.min.css. Because the overrides reference ACME tokens,
+   switching the active theme re-skins Bootstrap live, with no rebuild.
+
+   Note: this adapter restyles Bootstrap; it does not touch Bootstrap's
+   JavaScript (modals, dropdowns, collapse keep working as-is).
+   ============================================================ */
+
+/* ---- Global theme variables (used live by most of Bootstrap) ---- */
+:root {
+  --bs-body-bg: var(--surface-page);
+  --bs-body-color: var(--text-primary);
+  --bs-emphasis-color: var(--text-primary);
+  --bs-secondary-color: var(--text-secondary);
+  --bs-secondary-bg: var(--surface-raised);
+  --bs-tertiary-color: var(--text-muted);
+  --bs-tertiary-bg: var(--surface-hover);
+  --bs-heading-color: var(--text-primary);
+  --bs-border-color: var(--border-default);
+  --bs-border-color-translucent: var(--border-subtle);
+  --bs-link-color: var(--text-link);
+  --bs-link-hover-color: var(--text-link-hover);
+  --bs-code-color: var(--text-danger, var(--accent-danger));
+}
+
+/* ---- Buttons (variants bake static --bs-btn-* values) ---- */
+.btn-primary {
+  --bs-btn-bg: var(--accent-primary);
+  --bs-btn-border-color: var(--accent-primary);
+  --bs-btn-color: var(--accent-primary-text);
+  --bs-btn-hover-bg: var(--accent-primary-hover);
+  --bs-btn-hover-border-color: var(--accent-primary-hover);
+  --bs-btn-hover-color: var(--accent-primary-text);
+  --bs-btn-active-bg: var(--accent-primary-active, var(--accent-primary-hover));
+  --bs-btn-active-border-color: var(--accent-primary-active, var(--accent-primary-hover));
+  --bs-btn-active-color: var(--accent-primary-text);
+  --bs-btn-disabled-bg: var(--accent-primary);
+  --bs-btn-disabled-border-color: var(--accent-primary);
+  --bs-btn-disabled-color: var(--accent-primary-text);
+}
+.btn-secondary {
+  --bs-btn-bg: var(--accent-secondary);
+  --bs-btn-border-color: var(--border-default);
+  --bs-btn-color: var(--accent-secondary-text);
+  --bs-btn-hover-bg: var(--accent-secondary-hover);
+  --bs-btn-hover-border-color: var(--border-hover);
+  --bs-btn-hover-color: var(--accent-secondary-text);
+  --bs-btn-active-bg: var(--accent-secondary-hover);
+  --bs-btn-active-color: var(--accent-secondary-text);
+  --bs-btn-disabled-bg: var(--accent-secondary);
+  --bs-btn-disabled-color: var(--accent-secondary-text);
+}
+.btn-success {
+  --bs-btn-bg: var(--accent-success);
+  --bs-btn-border-color: var(--accent-success);
+  --bs-btn-color: var(--text-inverted);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--accent-success) 88%, #000);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--accent-success) 88%, #000);
+  --bs-btn-hover-color: var(--text-inverted);
+  --bs-btn-active-bg: color-mix(in srgb, var(--accent-success) 80%, #000);
+  --bs-btn-active-color: var(--text-inverted);
+}
+.btn-danger {
+  --bs-btn-bg: var(--accent-danger);
+  --bs-btn-border-color: var(--accent-danger);
+  --bs-btn-color: var(--accent-danger-text, #fff);
+  --bs-btn-hover-bg: var(--accent-danger-hover, color-mix(in srgb, var(--accent-danger) 88%, #000));
+  --bs-btn-hover-border-color: var(--accent-danger-hover, color-mix(in srgb, var(--accent-danger) 88%, #000));
+  --bs-btn-hover-color: var(--accent-danger-text, #fff);
+  --bs-btn-active-bg: color-mix(in srgb, var(--accent-danger) 80%, #000);
+  --bs-btn-active-color: var(--accent-danger-text, #fff);
+}
+.btn-warning {
+  --bs-btn-bg: var(--accent-warning);
+  --bs-btn-border-color: var(--accent-warning);
+  --bs-btn-color: var(--text-inverted);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--accent-warning) 88%, #000);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--accent-warning) 88%, #000);
+  --bs-btn-hover-color: var(--text-inverted);
+}
+.btn-info {
+  --bs-btn-bg: var(--accent-info);
+  --bs-btn-border-color: var(--accent-info);
+  --bs-btn-color: var(--text-inverted);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--accent-info) 88%, #000);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--accent-info) 88%, #000);
+  --bs-btn-hover-color: var(--text-inverted);
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--accent-primary);
+  --bs-btn-border-color: var(--accent-primary);
+  --bs-btn-hover-bg: var(--accent-primary);
+  --bs-btn-hover-border-color: var(--accent-primary);
+  --bs-btn-hover-color: var(--accent-primary-text);
+  --bs-btn-active-bg: var(--accent-primary);
+  --bs-btn-active-border-color: var(--accent-primary);
+  --bs-btn-active-color: var(--accent-primary-text);
+}
+.btn-link {
+  --bs-btn-color: var(--text-link);
+  --bs-btn-hover-color: var(--text-link-hover);
+}
+
+/* ---- Cards ---- */
+.card {
+  --bs-card-bg: var(--surface-default);
+  --bs-card-color: var(--text-primary);
+  --bs-card-border-color: var(--border-default);
+  --bs-card-cap-bg: var(--surface-raised);
+  --bs-card-cap-color: var(--text-primary);
+}
+
+/* ---- Forms ---- */
+.form-control,
+.form-select {
+  background-color: var(--surface-default);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+.form-control::placeholder { color: var(--text-muted); }
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--surface-default);
+  border-color: var(--border-focus, var(--accent-primary));
+  box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--focus-ring) 35%, transparent);
+}
+.form-label { color: var(--text-secondary); }
+.form-check-input:checked {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+.form-check-input:focus {
+  border-color: var(--border-focus, var(--accent-primary));
+  box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--focus-ring) 35%, transparent);
+}
+
+/* ---- Tables ---- */
+.table {
+  --bs-table-bg: var(--surface-default);
+  --bs-table-color: var(--text-primary);
+  --bs-table-border-color: var(--border-subtle);
+  --bs-table-striped-bg: var(--surface-page);
+  --bs-table-striped-color: var(--text-primary);
+  --bs-table-hover-bg: var(--surface-hover);
+  --bs-table-hover-color: var(--text-primary);
+}
+
+/* ---- Alerts (design-system subtle convention: tinted bg + token text) ---- */
+.alert-primary {
+  --bs-alert-bg: color-mix(in srgb, var(--accent-primary) 12%, var(--surface-default));
+  --bs-alert-border-color: color-mix(in srgb, var(--accent-primary) 28%, var(--surface-default));
+  --bs-alert-color: var(--text-primary);
+}
+.alert-success {
+  --bs-alert-bg: var(--accent-success-bg);
+  --bs-alert-border-color: color-mix(in srgb, var(--accent-success) 32%, var(--surface-default));
+  --bs-alert-color: var(--accent-success);
+}
+.alert-danger {
+  --bs-alert-bg: color-mix(in srgb, var(--accent-danger) 12%, var(--surface-default));
+  --bs-alert-border-color: color-mix(in srgb, var(--accent-danger) 30%, var(--surface-default));
+  --bs-alert-color: var(--accent-danger);
+}
+.alert-warning {
+  --bs-alert-bg: var(--accent-warning-bg);
+  --bs-alert-border-color: color-mix(in srgb, var(--accent-warning) 32%, var(--surface-default));
+  --bs-alert-color: var(--accent-warning);
+}
+.alert-info {
+  --bs-alert-bg: var(--accent-info-bg);
+  --bs-alert-border-color: color-mix(in srgb, var(--accent-info) 32%, var(--surface-default));
+  --bs-alert-color: var(--accent-info);
+}
+
+/* ---- Badges (text-bg-* are rgb-driven; override directly) ---- */
+.text-bg-primary { background-color: var(--accent-primary) !important; color: var(--accent-primary-text) !important; }
+.text-bg-secondary { background-color: var(--accent-secondary) !important; color: var(--accent-secondary-text) !important; }
+.text-bg-success { background-color: var(--accent-success) !important; color: var(--text-inverted) !important; }
+.text-bg-danger { background-color: var(--accent-danger) !important; color: var(--accent-danger-text, #fff) !important; }
+.text-bg-warning { background-color: var(--accent-warning) !important; color: var(--text-inverted) !important; }
+.text-bg-info { background-color: var(--accent-info) !important; color: var(--text-inverted) !important; }
+
+/* ---- Navbar ---- */
+.navbar {
+  --bs-navbar-color: var(--text-secondary);
+  --bs-navbar-hover-color: var(--text-primary);
+  --bs-navbar-active-color: var(--text-primary);
+  --bs-navbar-brand-color: var(--text-primary);
+  --bs-navbar-brand-hover-color: var(--text-primary);
+
+  background-color: var(--surface-raised) !important;
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* ---- Nav / tabs ---- */
+.nav {
+  --bs-nav-link-color: var(--text-secondary);
+  --bs-nav-link-hover-color: var(--accent-primary);
+}
+.nav-tabs {
+  --bs-nav-tabs-border-color: var(--border-default);
+  --bs-nav-tabs-link-active-color: var(--accent-primary);
+  --bs-nav-tabs-link-active-bg: var(--surface-default);
+  --bs-nav-tabs-link-active-border-color: var(--border-default) var(--border-default) var(--surface-default);
+  --bs-nav-tabs-link-hover-border-color: var(--border-subtle);
+}
+
+/* ---- Progress ---- */
+.progress,
+.progress-stacked {
+  --bs-progress-bg: var(--surface-hover);
+  --bs-progress-bar-bg: var(--accent-primary);
+  --bs-progress-bar-color: var(--accent-primary-text);
+}
+
+/* ---- List group ---- */
+.list-group {
+  --bs-list-group-bg: var(--surface-default);
+  --bs-list-group-color: var(--text-primary);
+  --bs-list-group-border-color: var(--border-default);
+  --bs-list-group-action-hover-bg: var(--surface-hover);
+  --bs-list-group-action-hover-color: var(--text-primary);
+  --bs-list-group-active-bg: var(--accent-primary);
+  --bs-list-group-active-border-color: var(--accent-primary);
+  --bs-list-group-active-color: var(--accent-primary-text);
+}
+
+/* ---- Pagination ---- */
+.pagination {
+  --bs-pagination-color: var(--text-secondary);
+  --bs-pagination-bg: var(--surface-default);
+  --bs-pagination-border-color: var(--border-default);
+  --bs-pagination-hover-color: var(--accent-primary);
+  --bs-pagination-hover-bg: var(--surface-hover);
+  --bs-pagination-hover-border-color: var(--border-hover);
+  --bs-pagination-focus-color: var(--accent-primary);
+  --bs-pagination-active-bg: var(--accent-primary);
+  --bs-pagination-active-border-color: var(--accent-primary);
+  --bs-pagination-active-color: var(--accent-primary-text);
+}
+
+/* ---- Dropdowns (styling only; Bootstrap JS handles open/close) ---- */
+.dropdown-menu {
+  --bs-dropdown-bg: var(--surface-default);
+  --bs-dropdown-color: var(--text-primary);
+  --bs-dropdown-border-color: var(--border-default);
+  --bs-dropdown-link-color: var(--text-primary);
+  --bs-dropdown-link-hover-bg: var(--surface-hover);
+  --bs-dropdown-link-hover-color: var(--text-primary);
+  --bs-dropdown-link-active-bg: var(--accent-primary);
+  --bs-dropdown-link-active-color: var(--accent-primary-text);
+}

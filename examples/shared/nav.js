@@ -26,6 +26,7 @@
     { dir: 'components', label: 'Components' },
     { dir: 'guide', label: 'Guide' },
     { dir: 'aggrid', label: 'ag-Grid 14' },
+    { dir: 'bootstrap', label: 'Bootstrap' },
     { dir: 'studio', label: 'Studio' },
   ];
 

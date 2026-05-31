@@ -148,7 +148,8 @@ Run `npm run serve` and open `http://localhost:8080/examples/`. Every example is
 | Auth | `examples/auth/` | Login / register / password-reset forms with validation states |
 | Components | `examples/components/` | Complete reference of every `.ds-*` primitive |
 | Guide | `examples/guide/` | In-browser docs — architecture, adapters, migration strategy |
-| **ag-Grid 14** 🆕 | `examples/aggrid/` | **New in this version** — classless bare HTML **+ legacy ag-Grid 14** skinned by the token shim. Switch themes to watch the grid *and* the page re-skin together. Bundles a pinned, vendored `ag-grid@14.2.0` so it runs offline. |
+| **ag-Grid 14** | `examples/aggrid/` | Classless bare HTML **+ legacy ag-Grid 14** skinned by the token shim. Switch themes to watch the grid *and* the page re-skin together. Bundles a pinned, vendored `ag-grid@14.2.0` so it runs offline. |
+| **Bootstrap 5** 🆕 | `examples/bootstrap/` | **New** — stock Bootstrap 5.3 (buttons, cards, alerts, forms, tables, badges, nav, pagination) re-skinned to our tokens via `adapters/bootstrap-adapter.css`. Switch themes → Bootstrap re-skins live. Vendored `bootstrap@5.3.3` so it runs offline. |
 | Studio | `examples/studio/` | Interactive console — token inspector, motion preview, primitive state matrix, migration preview |
 | Pilot App | `examples/pilot-app/` | Before/after demo of a legacy AngularJS/PrimeNG app transformed by tokens + a shim |
 
@@ -348,6 +349,7 @@ Adapters map a library's internal CSS variables/classes onto your tokens so vend
 | PrimeNG 7 | `adapters/primeng7-adapter.css` | For legacy `ui-*` class names; verify with `fixtures/angular7-primeng/`. |
 | Angular Material | `adapters/material-adapter.css` | ✅ MDC-based (17). ⚠️ 16 partial. ❌ legacy non-MDC (15). |
 | ag-Grid 14 (legacy) | `adapters/ag-grid-14-adapter.css` | ✅ Class-based shim over `.ag-fresh` (v14 has no CSS variables). Load after ag-Grid's CSS. |
+| Bootstrap 5 | `adapters/bootstrap-adapter.css` | ✅ Maps `--bs-*` variables + component overrides to tokens (5.2+). Load after Bootstrap's CSS. Demo: `examples/bootstrap/`. |
 
 Full version/browser matrix and known limitations: [adapters/MATRIX.md](adapters/MATRIX.md). Authoring a new adapter is documented in [adapters/README.md](adapters/README.md).
 
@@ -395,10 +397,11 @@ design-system-starter/
 ├── classless.css           # Opt-in classless layer — themes bare HTML (@layer ds.classless)
 ├── icons.css / icons/      # Icon sprite + sizing tokens
 ├── themes/                 # 9 themes: light, dark, auto, professional, …
-├── adapters/               # PrimeNG (modern + 7), Angular Material, ag-Grid 14 + MATRIX.md
+├── adapters/               # PrimeNG (modern + 7), Angular Material, ag-Grid 14, Bootstrap 5 + MATRIX.md
 ├── examples/               # Self-contained demos — one folder per example (examples/<name>/index.html)
 │   ├── index.html          # Suite overview + theme gallery
-│   ├── aggrid/             # 🆕 ag-Grid 14 + classless demo (vendored ag-grid 14.2.0)
+│   ├── aggrid/             # ag-Grid 14 + classless demo (vendored ag-grid 14.2.0)
+│   ├── bootstrap/          # 🆕 Bootstrap 5 re-skinned by the adapter (vendored bootstrap 5.3.3)
 │   ├── dashboard/ · crm/ · marketing/ · data/ · auth/ · components/ · guide/ · studio/ · pilot-app/
 │   └── shared/             # nav.js (depth-aware nav + theme switcher) + examples.css
 ├── skills/                 # AI-agent migration skill + legacy-style scanner
