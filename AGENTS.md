@@ -130,6 +130,25 @@ design-system-starter/
 3. **Use existing token values** for sizing (radius, spacing, typography) where possible.
 4. **Verify** changes across all example pages, especially `components.html`.
 
+### Task: Use or extend the classless layer
+
+1. **Use it:** import `classless.css` after `base.css`. It themes all bare HTML via tokens
+   inside `@layer ds.classless` (lowest layer), so app styles override it with no `!important`.
+2. **Add an element:** add a token-only rule inside the `@layer ds.classless { }` block in
+   `classless.css`. No hex/rgb/hsl literals (strict stylelint at repo root).
+3. **Verify:** `npm run lint:css` and the `examples/aggrid/` fixture.
+
+### Task: Add a class-based library shim (ag-Grid 14 pattern)
+
+1. Use this when a library has **no CSS variables** (old ag-Grid, legacy widgets). For
+   libraries that expose `--vars`, follow the CSS-variable adapter pattern instead
+   (`adapters/primeng-adapter.css`).
+2. Inspect the library's compiled theme CSS to find its real theme class and internal
+   selectors (e.g. ag-Grid 14 uses `.ag-fresh .ag-header`, not `.ag-theme-*`).
+3. Create `adapters/{library}-{version}-adapter.css`; override those selectors with
+   `var(--token)` values. `!important` is allowed in adapters/shims.
+4. Load the adapter **after** the library's own CSS. Update `adapters/MATRIX.md`.
+
 ### Task: Update example pages
 
 1. Example pages are in `examples/*.html`.

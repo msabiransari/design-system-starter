@@ -23,6 +23,7 @@
 - [How flexible is it?](#how-flexible-is-it)
 - [Using it with legacy applications](#using-it-with-legacy-applications)
 - [Re-branding / revamp playbook](#re-branding--revamp-playbook-for-engineers)
+- [Classless layer](#classless-layer)
 - [Framework support](#framework-support)
 - [Third-party library adapters](#third-party-library-adapters)
 - [Runtime theme switching](#runtime-theme-switching)
@@ -247,6 +248,25 @@ If your goal is *"make our app(s) look modern and on-brand,"* here's the fastest
 
 ---
 
+## Classless layer
+
+Import one file and **every bare semantic element is themed** — no classes required:
+
+```css
+@import "@acme/design-tokens/tokens";
+@import "@acme/design-tokens/themes/professional.css";
+@import "@acme/design-tokens/base";
+@import "@acme/design-tokens/classless";   /* ← themes table, button, input, h1–h6, … */
+```
+
+`classless.css` lives in the lowest CSS cascade layer (`@layer ds.classless`). Because
+**unlayered CSS always beats layered CSS**, any of your own styles — a class, an element rule,
+or inline `style=` — overrides it automatically, with **no `!important` ever**. Add `.ds-table`
+and the richer primitive wins; write `td { color: red }` in your app and that wins too. Demo:
+`examples/aggrid/` (bare HTML + ag-Grid 14, both re-skinning on theme switch).
+
+---
+
 ## Framework support
 
 Because everything is plain CSS variables, the system is framework-neutral. Reference tokens directly in your components:
@@ -297,6 +317,7 @@ Adapters map a library's internal CSS variables/classes onto your tokens so vend
 | PrimeNG (modern) | `adapters/primeng-adapter.css` | ✅ PrimeNG 17 / Angular 17–21 (validated fixture). ⚠️ 16 partial. ❌ 21+ uses new variable injection. |
 | PrimeNG 7 | `adapters/primeng7-adapter.css` | For legacy `ui-*` class names; verify with `fixtures/angular7-primeng/`. |
 | Angular Material | `adapters/material-adapter.css` | ✅ MDC-based (17). ⚠️ 16 partial. ❌ legacy non-MDC (15). |
+| ag-Grid 14 (legacy) | `adapters/ag-grid-14-adapter.css` | ✅ Class-based shim over `.ag-fresh` (v14 has no CSS variables). Load after ag-Grid's CSS. |
 
 Full version/browser matrix and known limitations: [adapters/MATRIX.md](adapters/MATRIX.md). Authoring a new adapter is documented in [adapters/README.md](adapters/README.md).
 

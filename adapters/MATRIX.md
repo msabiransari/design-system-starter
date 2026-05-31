@@ -70,6 +70,32 @@ Same as PrimeNG adapter. IE11 is not supported.
 
 ---
 
+## ag-Grid 14 Adapter
+
+**File:** `adapters/ag-grid-14-adapter.css`
+
+### Tested Versions
+
+| ag-Grid | Status | Notes |
+|---------|--------|-------|
+| 14.2.0 | ✅ Validated | Vendored fixture at `examples/aggrid/vendor/ag-grid-14.2.0/` |
+| 14.x | ✅ Expected | Same `.ag-fresh` theme + class structure |
+| 15.x–17.x | ⚠️ Untested | Class names begin shifting toward `ag-theme-*` |
+| 28.x+ | ❌ Different mechanism | Uses `--ag-*` CSS variables — needs a separate variable-mapping adapter |
+
+### How It Works
+
+ag-Grid 14 has **no CSS variables**; it ships compiled Sass themes. This adapter overrides the
+`.ag-fresh .ag-*` classes (header, rows, cells, borders) with ACME token values, so the grid
+matches the active theme and re-skins live on theme switch. Must load **after** ag-Grid's
+`ag-grid.css` + `theme-fresh.css`. Uses `!important` to defeat ag-Grid's compiled specificity.
+
+### Browser Support
+
+Same as other adapters — requires CSS custom properties and `color-mix()`. No IE11.
+
+---
+
 ## Adding a New Adapter
 
 1. Inspect the library's CSS custom properties (Chrome DevTools → Computed → filter by `--`).
