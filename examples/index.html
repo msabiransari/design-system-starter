@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="../primitives.css" />
   <link rel="stylesheet" href="./shared/examples.css" />
   <script src="./shared/nav.js" defer></script>
+  <!-- Baked theme preview values (generated from themes/*.css) so the gallery
+       renders without fetch(), which is blocked under the file:// protocol. -->
+  <script src="./shared/theme-previews.js"></script>
   <style>
     .suite-hero {
       text-align: center;
@@ -270,33 +273,6 @@
       { id: 'auto', label: 'System Preference', name: 'Auto' },
     ];
 
-    function extractVars(cssText) {
-      const vars = {};
-      const regex = /--_([a-z0-9-]+):\s*([^;]+);/g;
-      let m;
-      while ((m = regex.exec(cssText)) !== null) {
-        vars[m[1]] = m[2].trim();
-      }
-      return vars;
-    }
-
-    function extractLightVars(cssText) {
-      // For auto themes, only extract vars from the default :root (before @media)
-      const mediaIndex = cssText.indexOf('@media');
-      const lightBlock = mediaIndex >= 0 ? cssText.substring(0, mediaIndex) : cssText;
-      return extractVars(lightBlock);
-    }
-
-    function extractDarkVars(cssText) {
-      const mediaMatch = cssText.match(/@media\s*\(\s*prefers-color-scheme\s*:\s*dark\s*\)\s*\{([\s\S]*)\}/);
-      if (!mediaMatch) return null;
-      return extractVars(mediaMatch[1]);
-    }
-
-    function varsToStyle(vars) {
-      return Object.entries(vars).map(([k, v]) => `--_${k}: ${v};`).join(' ');
-    }
-
     function buildPreviewInner() {
       return `
         <div class="theme-card-preview-inner">
@@ -322,9 +298,13 @@
       `;
     }
 
-    async function renderGallery() {
+    function renderGallery() {
       const container = document.getElementById('theme-gallery');
       if (!container) return;
+
+      // Preview values are baked at build time into shared/theme-previews.js
+      // (generated from themes/*.css) so the gallery works under file:// too.
+      const previews = window.DS_THEME_PREVIEWS || {};
 
       for (const theme of THEMES) {
         const card = document.createElement('a');
@@ -336,26 +316,19 @@
           window.location.href = 'studio/index.html';
         };
 
-        let previewHtml = '';
-        try {
-          const res = await fetch(`../themes/${theme.id}.css`);
-          const cssText = await res.text();
-
-          if (theme.id === 'auto') {
-            const lightVars = extractLightVars(cssText);
-            const darkVars = extractDarkVars(cssText);
-            previewHtml = `
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1);">
-                <div class="theme-card-preview" style="${varsToStyle(lightVars)}">${buildPreviewInner()}</div>
-                <div class="theme-card-preview" style="${varsToStyle(darkVars)}">${buildPreviewInner()}</div>
-              </div>
-            `;
-          } else {
-            const vars = extractVars(cssText);
-            previewHtml = `<div class="theme-card-preview" style="${varsToStyle(vars)}">${buildPreviewInner()}</div>`;
-          }
-        } catch (err) {
+        const data = previews[theme.id];
+        let previewHtml;
+        if (!data) {
           previewHtml = '<div class="theme-card-preview" style="padding: var(--space-3); color: var(--text-muted); font-size: var(--text-xs);">Preview unavailable</div>';
+        } else if (theme.id === 'auto') {
+          previewHtml = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1);">
+              <div class="theme-card-preview" style="${data.light}">${buildPreviewInner()}</div>
+              <div class="theme-card-preview" style="${data.dark}">${buildPreviewInner()}</div>
+            </div>
+          `;
+        } else {
+          previewHtml = `<div class="theme-card-preview" style="${data}">${buildPreviewInner()}</div>`;
         }
 
         card.innerHTML = `
