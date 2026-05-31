@@ -1,0 +1,51 @@
+/* ============================================================
+   ag-Grid 14 ADAPTER (class-based shim)
+   ag-Grid 14 has NO CSS variables; it ships compiled Sass themes.
+   We override its .ag-fresh classes with our tokens so the grid
+   matches the active theme and re-skins live on theme switch.
+   Load AFTER vendor/ag-grid.css and vendor/theme-fresh.css.
+   !important is required to defeat ag-Grid's compiled specificity.
+   ============================================================ */
+
+/* Root: font + base text/background */
+.ag-fresh {
+  font-family: var(--font-sans) !important;
+  font-size: var(--text-sm) !important;
+  color: var(--text-primary) !important;
+}
+.ag-fresh .ag-root,
+.ag-fresh .ag-body-viewport,
+.ag-fresh .ag-body {
+  background-color: var(--surface-default) !important;
+  border-color: var(--border-default) !important;
+}
+
+/* Header: replace the white→grey gradient with a flat token surface */
+.ag-fresh .ag-header {
+  background-image: none !important;
+  background-color: var(--surface-raised) !important;
+  color: var(--text-secondary) !important;
+  border-bottom: 1px solid var(--border-default) !important;
+}
+.ag-fresh .ag-header-cell {
+  color: var(--text-secondary) !important;
+  border-right: 1px solid var(--border-subtle) !important;
+}
+
+/* Rows */
+.ag-fresh .ag-row-odd { background-color: var(--surface-page) !important; }
+.ag-fresh .ag-row-even { background-color: var(--surface-default) !important; }
+.ag-fresh .ag-row:hover,
+.ag-fresh .ag-row-hover { background-color: var(--surface-hover) !important; }
+.ag-fresh .ag-row-selected {
+  background-color: color-mix(in srgb, var(--accent-primary) 14%, transparent) !important;
+}
+
+/* Cells */
+.ag-fresh .ag-cell {
+  color: var(--text-primary) !important;
+  border-right: 1px solid var(--border-subtle) !important;
+}
+
+/* Borders / dividers */
+.ag-fresh .ag-row { border-bottom: 1px solid var(--border-subtle) !important; }

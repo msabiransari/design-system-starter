@@ -16,6 +16,9 @@
   </style>
   <link rel="stylesheet" href="../../classless.css" />
   <link rel="stylesheet" href="../../primitives.css" />
+  <link rel="stylesheet" href="./vendor/ag-grid-14.2.0/ag-grid.css" />
+  <link rel="stylesheet" href="./vendor/ag-grid-14.2.0/theme-fresh.css" />
+  <link rel="stylesheet" href="../../adapters/ag-grid-14-adapter.css" />
   <link rel="stylesheet" href="../shared/examples.css" />
   <script src="../shared/nav.js" defer></script>
 </head>
@@ -50,6 +53,32 @@
         </fieldset>
       </form>
     </section>
+
+    <section style="margin-top: var(--gap-md);">
+      <h2>ag-Grid 14 (skinned by the token shim)</h2>
+      <div id="grid" class="ag-fresh" style="height: 320px; width: 100%;"></div>
+    </section>
   </main>
+  <script src="./vendor/ag-grid-14.2.0/ag-grid.js"></script>
+  <script>
+    var gridOptions = {
+      enableSorting: true,
+      enableColResize: true,
+      columnDefs: [
+        { headerName: 'Account', field: 'account' },
+        { headerName: 'Type', field: 'type' },
+        { headerName: 'Balance', field: 'balance' },
+        { headerName: 'Status', field: 'status' }
+      ],
+      rowData: [
+        { account: 'Operating', type: 'Checking', balance: '$12,400', status: 'Active' },
+        { account: 'Reserve', type: 'Savings', balance: '$48,900', status: 'Active' },
+        { account: 'Payroll', type: 'Checking', balance: '$8,150', status: 'Hold' },
+        { account: 'Tax', type: 'Savings', balance: '$22,300', status: 'Active' },
+        { account: 'Escrow', type: 'Trust', balance: '$61,000', status: 'Review' }
+      ]
+    };
+    new agGrid.Grid(document.getElementById('grid'), gridOptions);
+  </script>
 </body>
 </html>

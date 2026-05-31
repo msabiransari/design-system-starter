@@ -26,7 +26,8 @@
     "dist/**",
     "fixtures/**/node_modules/**",
     "fixtures/**/dist/**",
-    "fixtures/**/.angular/**"
+    "fixtures/**/.angular/**",
+    "**/vendor/**"
   ],
   "overrides": [
     {
