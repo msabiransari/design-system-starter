@@ -64,6 +64,9 @@
     var gridOptions = {
       enableSorting: true,
       enableColResize: true,
+      // Comfortable spacing — ag-Grid 14 defaults to a cramped 25px row.
+      rowHeight: 44,
+      headerHeight: 48,
       columnDefs: [
         { headerName: 'Account', field: 'account' },
         { headerName: 'Type', field: 'type' },
@@ -76,9 +79,14 @@
         { account: 'Payroll', type: 'Checking', balance: '$8,150', status: 'Hold' },
         { account: 'Tax', type: 'Savings', balance: '$22,300', status: 'Active' },
         { account: 'Escrow', type: 'Trust', balance: '$61,000', status: 'Review' }
-      ]
+      ],
+      // Fill the container width instead of leaving an empty gutter on the right.
+      onGridReady: function (params) { params.api.sizeColumnsToFit(); }
     };
     new agGrid.Grid(document.getElementById('grid'), gridOptions);
+    window.addEventListener('resize', function () {
+      if (gridOptions.api) gridOptions.api.sizeColumnsToFit();
+    });
   </script>
 </body>
 </html>

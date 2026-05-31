@@ -5,13 +5,22 @@
    matches the active theme and re-skins live on theme switch.
    Load AFTER vendor/ag-grid.css and vendor/theme-fresh.css.
    !important is required to defeat ag-Grid's compiled specificity.
+
+   Note on spacing: ag-Grid 14 positions rows by a fixed rowHeight set
+   in JS (gridOptions.rowHeight / headerHeight), so comfortable row
+   height is set there, not here. This file handles colour, padding,
+   borders, and vertical centring (via flex, so it stays decoupled
+   from the exact pixel height).
    ============================================================ */
 
-/* Root: font + base text/background */
+/* Container — present the grid as a contained card */
 .ag-fresh {
   font-family: var(--font-sans) !important;
   font-size: var(--text-sm) !important;
   color: var(--text-primary) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-base) !important;
+  overflow: hidden !important;
 }
 .ag-fresh .ag-root,
 .ag-fresh .ag-body-viewport,
@@ -20,32 +29,44 @@
   border-color: var(--border-default) !important;
 }
 
-/* Header: replace the white→grey gradient with a flat token surface */
+/* Header — distinct surface, quiet uppercase labels, no gradient or vertical rules */
 .ag-fresh .ag-header {
   background-image: none !important;
-  background-color: var(--surface-raised) !important;
-  color: var(--text-secondary) !important;
+  background-color: var(--surface-page) !important;
   border-bottom: 1px solid var(--border-default) !important;
 }
 .ag-fresh .ag-header-cell {
-  color: var(--text-secondary) !important;
-  border-right: 1px solid var(--border-subtle) !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 var(--space-3) !important;
+  color: var(--text-muted) !important;
+  font-size: var(--text-xs) !important;
+  font-weight: var(--weight-semibold) !important;
+  letter-spacing: var(--tracking-wide) !important;
+  text-transform: uppercase !important;
+  border-right: 0 !important;
+}
+/* Keep ag-Grid's absolutely-positioned column resize handle clickable */
+.ag-fresh .ag-header-cell-resize { right: 0 !important; }
+
+/* Cells — comfortable padding, vertically centred, no vertical gridlines */
+.ag-fresh .ag-cell {
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 var(--space-3) !important;
+  color: var(--text-primary) !important;
+  border-right: 0 !important;
 }
 
-/* Rows */
-.ag-fresh .ag-row-odd { background-color: var(--surface-page) !important; }
+/* Rows — clean horizontal separators, hover, and an accent-tinted selection */
+.ag-fresh .ag-row {
+  border-bottom: 1px solid var(--border-subtle) !important;
+  background-color: var(--surface-default) !important;
+}
+.ag-fresh .ag-row-odd,
 .ag-fresh .ag-row-even { background-color: var(--surface-default) !important; }
 .ag-fresh .ag-row:hover,
 .ag-fresh .ag-row-hover { background-color: var(--surface-hover) !important; }
 .ag-fresh .ag-row-selected {
-  background-color: color-mix(in srgb, var(--accent-primary) 14%, transparent) !important;
+  background-color: color-mix(in srgb, var(--accent-primary) 12%, var(--surface-default)) !important;
 }
-
-/* Cells */
-.ag-fresh .ag-cell {
-  color: var(--text-primary) !important;
-  border-right: 1px solid var(--border-subtle) !important;
-}
-
-/* Borders / dividers */
-.ag-fresh .ag-row { border-bottom: 1px solid var(--border-subtle) !important; }
