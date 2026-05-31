@@ -49,35 +49,35 @@ test.describe('Examples', () => {
 
   test('components page renders', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/components.html');
+    await page.goto('/examples/components/');
     await expect(page.locator('h1')).toContainText('Component Reference');
     await network.verify();
   });
 
   test('guide page renders', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/guide.html');
+    await page.goto('/examples/guide/');
     await expect(page.locator('h2#overview')).toContainText('Overview');
     await network.verify();
   });
 
   test('pilot app renders', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/pilot-app.html');
+    await page.goto('/examples/pilot-app/');
     await expect(page.locator('h2')).toContainText('Dashboard');
     await network.verify();
   });
 
   test('studio page renders', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/studio.html');
+    await page.goto('/examples/studio/');
     await expect(page.locator('h1')).toContainText('Design System Studio');
     await network.verify();
   });
 
   test('studio preview tab shows live app', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/studio.html');
+    await page.goto('/examples/studio/');
     await expect(page.locator('#panel-preview')).toContainText('Live App Preview');
     await expect(page.locator('#panel-preview .mini-app-toolbar')).toBeVisible();
     await network.verify();
@@ -85,7 +85,7 @@ test.describe('Examples', () => {
 
   test('studio primitives tab shows state matrix', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/studio.html');
+    await page.goto('/examples/studio/');
     await page.locator('.studio-tab[data-panel="primitives"]').click();
     await expect(page.locator('#panel-primitives')).toContainText('Primitive State Matrix');
     await expect(page.locator('#panel-primitives')).toContainText('Buttons');
@@ -95,7 +95,7 @@ test.describe('Examples', () => {
 
   test('studio tokens tab shows inspector', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/studio.html');
+    await page.goto('/examples/studio/');
     await page.locator('.studio-tab[data-panel="tokens"]').click();
     await expect(page.locator('#panel-tokens')).toContainText('Token Inspector');
     await expect(page.locator('#token-search')).toBeVisible();
@@ -104,7 +104,7 @@ test.describe('Examples', () => {
 
   test('studio motion tab shows animations', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/studio.html');
+    await page.goto('/examples/studio/');
     await page.locator('.studio-tab[data-panel="motion"]').click();
     await expect(page.locator('#panel-motion')).toContainText('Motion Preview');
     await expect(page.locator('#panel-motion')).toContainText('Fade In');
@@ -113,7 +113,7 @@ test.describe('Examples', () => {
 
   test('studio migration tab shows before/after', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/studio.html');
+    await page.goto('/examples/studio/');
     await page.locator('.studio-tab[data-panel="migration"]').click();
     await expect(page.locator('#panel-migration')).toContainText('Migration Preview');
     await expect(page.locator('#panel-migration')).toContainText('Legacy CSS');
@@ -151,7 +151,7 @@ test.describe('Fixture smoke tests', () => {
 test.describe('Studio tab screenshots', () => {
   test('studio primitives tab — professional', async ({ page }) => {
     const network = assertNo404s(page);
-    await page.goto('/examples/studio.html');
+    await page.goto('/examples/studio/');
     await setTheme(page, 'professional');
     await page.locator('.studio-tab[data-panel="primitives"]').click();
     await expect(page.locator('#panel-primitives')).toBeVisible();
@@ -167,11 +167,11 @@ test.describe('Studio tab screenshots', () => {
 test.describe('Theme screenshots', () => {
   const targets = [
     { path: '/examples/index.html', name: 'index' },
-    { path: '/examples/components.html', name: 'components' },
-    { path: '/examples/studio.html', name: 'studio' },
+    { path: '/examples/components/', name: 'components' },
+    { path: '/examples/studio/', name: 'studio' },
     { path: '/fixtures/angularjs-legacy/index.html', name: 'angularjs-legacy' },
     { path: 'http://localhost:8082/', name: 'primeng-modern' },
-    { path: '/examples/pilot-app.html', name: 'pilot' },
+    { path: '/examples/pilot-app/', name: 'pilot' },
   ];
 
   for (const target of targets) {
@@ -193,11 +193,11 @@ test.describe('Theme screenshots', () => {
 test.describe('Auto theme screenshots', () => {
   const targets = [
     { path: '/examples/index.html', name: 'index' },
-    { path: '/examples/components.html', name: 'components' },
-    { path: '/examples/studio.html', name: 'studio' },
+    { path: '/examples/components/', name: 'components' },
+    { path: '/examples/studio/', name: 'studio' },
     { path: '/fixtures/angularjs-legacy/index.html', name: 'angularjs-legacy' },
     { path: 'http://localhost:8082/', name: 'primeng-modern' },
-    { path: '/examples/pilot-app.html', name: 'pilot' },
+    { path: '/examples/pilot-app/', name: 'pilot' },
   ];
 
   for (const target of targets) {

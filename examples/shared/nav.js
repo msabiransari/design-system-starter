@@ -1,23 +1,32 @@
 /* ============================================================
    SHARED NAVIGATION + THEME SWITCHER
-   Injects a sticky nav into every example page and handles
-   theme persistence via localStorage.
+   Depth-aware: works from examples/index.html (depth 0) and
+   examples/<name>/index.html (depth 1). Theme path is derived
+   from the existing #theme-link href so it is depth-independent.
    ============================================================ */
 
 (function () {
-  const path = window.location.pathname;
-  const currentPage = path.split('/').pop() || 'index.html';
+  const segments = window.location.pathname.split('/').filter(Boolean);
+  const exIdx = segments.lastIndexOf('examples');
+  let afterEx = exIdx >= 0 ? segments.slice(exIdx + 1) : [];
+  if (afterEx.length && afterEx[afterEx.length - 1].endsWith('.html')) {
+    afterEx = afterEx.slice(0, -1);
+  }
+  const depth = afterEx.length; // 0 = overview, 1 = a sub-page
+  const toExamples = depth === 0 ? './' : '../'.repeat(depth);
+  const currentDir = depth === 0 ? 'index' : afterEx[afterEx.length - 1];
 
   const examples = [
-    { file: 'index.html', label: 'Overview' },
-    { file: 'dashboard.html', label: 'Dashboard' },
-    { file: 'crm.html', label: 'CRM' },
-    { file: 'marketing.html', label: 'Marketing' },
-    { file: 'data.html', label: 'Data' },
-    { file: 'auth.html', label: 'Auth' },
-    { file: 'components.html', label: 'Components' },
-    { file: 'guide.html', label: 'Guide' },
-    { file: 'studio.html', label: 'Studio' },
+    { dir: 'index', label: 'Overview' },
+    { dir: 'dashboard', label: 'Dashboard' },
+    { dir: 'crm', label: 'CRM' },
+    { dir: 'marketing', label: 'Marketing' },
+    { dir: 'data', label: 'Data' },
+    { dir: 'auth', label: 'Auth' },
+    { dir: 'components', label: 'Components' },
+    { dir: 'guide', label: 'Guide' },
+    { dir: 'aggrid', label: 'ag-Grid 14' },
+    { dir: 'studio', label: 'Studio' },
   ];
 
   const themes = [
@@ -31,6 +40,10 @@
     { id: 'forest', label: 'Forest' },
     { id: 'ocean', label: 'Ocean' },
   ];
+
+  function hrefFor(dir) {
+    return dir === 'index' ? toExamples : `${toExamples}${dir}/`;
+  }
 
   function init() {
     injectNav();
@@ -47,7 +60,7 @@
       </div>
       <nav class="ex-nav-links" aria-label="Examples">
         ${examples.map(ex => `
-          <a href="${ex.file}" class="ex-nav-link ${currentPage === ex.file ? 'active' : ''}">${ex.label}</a>
+          <a href="${hrefFor(ex.dir)}" class="ex-nav-link ${currentDir === ex.dir ? 'active' : ''}">${ex.label}</a>
         `).join('')}
       </nav>
       <div class="ex-nav-theme">
@@ -69,15 +82,13 @@
     const html = document.documentElement;
     if (!link) return;
 
-    link.href = `../themes/${name}.css`;
+    // Derive base path from the existing href so depth does not matter.
+    link.href = link.href.replace(/themes\/[^/]+\.css/, `themes/${name}.css`);
     localStorage.setItem('ds-theme', name);
 
     if (name === 'dark') {
       html.classList.add('dark');
       html.setAttribute('data-theme', 'dark');
-    } else if (name === 'auto') {
-      html.classList.remove('dark');
-      html.removeAttribute('data-theme');
     } else {
       html.classList.remove('dark');
       html.removeAttribute('data-theme');
