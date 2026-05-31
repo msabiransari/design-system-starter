@@ -47,7 +47,7 @@ Reduced motion should:
 - `motion.css`
 - `README.md`
 - `examples/shared/nav.js`
-- `examples/components.html`
+- `examples/components/`
 - `tests/e2e/visual.spec.js`
 
 ### Acceptance Criteria
@@ -89,8 +89,8 @@ The shimmer must respect `prefers-reduced-motion`.
 
 - `primitives.css`
 - `motion.css`
-- `examples/components.html`
-- `examples/pilot-app.html`
+- `examples/components/`
+- `examples/pilot-app/`
 - `README.md`
 - `scripts/audit-contrast.js` if new color pairs are introduced
 
@@ -112,7 +112,7 @@ Create one first-class visual experience for engineers, agents, and stakeholders
 Create:
 
 ```text
-examples/studio.html
+examples/studio/index.html
 ```
 
 The studio should include:
@@ -129,7 +129,7 @@ Keep it tool-like, not marketing-like. This should feel like a platform engineer
 
 ### Files
 
-- `examples/studio.html`
+- `examples/studio/`
 - `examples/shared/nav.js`
 - `examples/shared/examples.css`
 - `tests/e2e/visual.spec.js`
@@ -280,8 +280,8 @@ Use existing z-index token `--z-toast`.
 
 - `primitives.css`
 - `motion.css`
-- `examples/components.html`
-- `examples/studio.html` if studio exists
+- `examples/components/`
+- `examples/studio/` if studio exists
 - `scripts/audit-contrast.js`
 
 ### Acceptance Criteria
@@ -341,8 +341,8 @@ All icons must inherit `currentColor`.
 - `icons.css`
 - `package.json`
 - `README.md`
-- `examples/components.html`
-- `examples/studio.html` if studio exists
+- `examples/components/`
+- `examples/studio/` if studio exists
 
 ### Acceptance Criteria
 
@@ -360,7 +360,7 @@ Expose missing states and token gaps before consuming teams find them.
 
 ### Recommended Implementation
 
-Add a dedicated section to `examples/components.html` or `examples/studio.html` that shows:
+Add a dedicated section to `examples/components/` or `examples/studio/` that shows:
 
 - Buttons: default, hover sample, active sample, focus sample, disabled, loading.
 - Inputs: default, focus, disabled, read-only, error, help text.
@@ -380,8 +380,8 @@ Use explicit classes for display states where pseudo-classes cannot be demonstra
 ### Files
 
 - `primitives.css`
-- `examples/components.html`
-- `examples/studio.html` if studio exists
+- `examples/components/`
+- `examples/studio/` if studio exists
 - `tests/e2e/visual.spec.js`
 
 ### Acceptance Criteria

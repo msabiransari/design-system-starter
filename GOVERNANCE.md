@@ -21,7 +21,7 @@ Rules for adding, deprecating, naming, and releasing tokens. Every contributor m
    npm run lint:css
    ```
 6. **Update `README.md`** to document the new token in the Token Categories section.
-7. **Update `examples/guide.html`** if the token is user-facing.
+7. **Update `examples/guide/`** if the token is user-facing.
 8. **Get one review** from a maintainer before merging.
 
 ### What Makes a Token Justified
@@ -62,7 +62,7 @@ Every theme in `themes/` must define **ALL** `--_*` variables. No exceptions.
 - [ ] All `--_*` variables are defined.
 - [ ] Contrast audit passes (`npm run audit:contrast`).
 - [ ] The theme renders correctly in `examples/index.html`.
-- [ ] The theme renders correctly in `examples/components.html`.
+- [ ] The theme renders correctly in `examples/components/`.
 - [ ] The theme is added to `examples/shared/nav.js`.
 - [ ] The theme has a preview swatch in `examples/index.html`.
 

@@ -386,8 +386,8 @@ Expected implementation files:
 - `motion.css` — add only reusable functional keyframes/timing if needed.
 - `tokens.css` — add semantic tokens only if existing tokens cannot express the primitive safely.
 - `themes/*.css` — add concrete private values for any new theme-backed token.
-- `examples/components.html` — add complete examples and state matrix rows.
-- `examples/studio.html` — add diagnostic coverage in the Primitives tab only; do not duplicate every showcase page.
+- `examples/components/` — add complete examples and state matrix rows.
+- `examples/studio/` — add diagnostic coverage in the Primitives tab only; do not duplicate every showcase page.
 - `tests/e2e/visual.spec.js` — add smoke/screenshot coverage for new primitives.
 - `README.md` — document new public primitive categories.
 - `docs/tokens.html` — regenerate if token categories changed.
@@ -450,7 +450,7 @@ Do not implement a custom interactive primitive if its behavior contract is not 
 
 ## Examples Requirements
 
-`examples/components.html` should show:
+`examples/components/` should show:
 
 - Default state.
 - Hover/focus-ready styling where applicable.
@@ -475,7 +475,7 @@ npm run test:e2e
 
 Also verify:
 
-- New examples render in `examples/components.html`.
+- New examples render in `examples/components/`.
 - Studio Primitives tab still renders and remains diagnostic.
 - Theme screenshots include new primitives across all themes.
 - Auto light/dark screenshots still pass.

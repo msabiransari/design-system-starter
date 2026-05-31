@@ -34,13 +34,20 @@ design-system-starter/
 │       └── scripts/        # Legacy style scanner
 └── examples/
     ├── index.html          # Suite overview
-    ├── guide.html          # Documentation viewer (has TOC + all docs)
-    ├── dashboard.html      # Financial dashboard demo
-    ├── crm.html            # CRM contacts + pipeline demo
-    ├── marketing.html      # Landing page demo
-    ├── data.html           # Data tables + filters demo
-    ├── auth.html           # Login/register demo
-    ├── components.html     # Complete primitive reference
+    ├── guide/
+    │   └── index.html      # Documentation viewer (has TOC + all docs)
+    ├── dashboard/
+    │   └── index.html      # Financial dashboard demo
+    ├── crm/
+    │   └── index.html      # CRM contacts + pipeline demo
+    ├── marketing/
+    │   └── index.html      # Landing page demo
+    ├── data/
+    │   └── index.html      # Data tables + filters demo
+    ├── auth/
+    │   └── index.html      # Login/register demo
+    ├── components/
+    │   └── index.html      # Complete primitive reference
     └── shared/
         ├── nav.js          # Injects nav + theme switcher. Has localStorage persistence.
         └── examples.css    # Layout helpers for demo pages
@@ -128,7 +135,7 @@ design-system-starter/
 1. **Edit** `primitives.css`.
 2. **Only use token references.** No hex codes, no px values for colors.
 3. **Use existing token values** for sizing (radius, spacing, typography) where possible.
-4. **Verify** changes across all example pages, especially `components.html`.
+4. **Verify** changes across all example pages, especially `examples/components/`.
 
 ### Task: Use or extend the classless layer
 
@@ -151,7 +158,7 @@ design-system-starter/
 
 ### Task: Update example pages
 
-1. Example pages are in `examples/*.html`.
+1. Example pages are each in their own folder, e.g. `examples/components/index.html`, `examples/guide/index.html`.
 2. **Always use the shared nav and styles:**
    ```html
    <link rel="stylesheet" href="./shared/examples.css" />
@@ -185,8 +192,8 @@ Before declaring a change complete:
 - [ ] Open `examples/index.html` in a browser.
 - [ ] Switch between ALL themes using the nav dropdown.
 - [ ] Verify no visual regressions (broken colors, missing borders, invisible text).
-- [ ] Check `components.html` — all primitives should render correctly.
-- [ ] Check `guide.html` — documentation should remain readable.
+- [ ] Check `examples/components/` — all primitives should render correctly.
+- [ ] Check `examples/guide/` — documentation should remain readable.
 - [ ] If you added a theme, verify it in light and dark contexts.
 - [ ] If you added an adapter, verify it with the target library's components.
 
