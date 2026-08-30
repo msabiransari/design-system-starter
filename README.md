@@ -188,7 +188,7 @@ Nine themes ship ready to use (`themes/`). Pick one, or copy the closest and twe
 | Theme | Feel | Typical use |
 |-------|------|-------------|
 | `light` | Clean neutral light | General default |
-| `dark` | Dark mode (scoped to `.dark` / `[data-theme="dark"]`) | Dark preference |
+| `dark` | Dark mode | Dark preference |
 | `auto` | Follows OS `prefers-color-scheme` | Automatic light/dark |
 | `professional` | Financial / enterprise navy | CRMs, dashboards, fintech |
 | `healthcare` | Calm medical blues/greens | Health & care apps |
