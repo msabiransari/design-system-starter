@@ -57,10 +57,30 @@ A new token is **NOT** justified if:
 
 Every theme in `themes/` must define **ALL** `--_*` variables. No exceptions.
 
+### Non-text contrast floors (WCAG 1.4.11 — rule for NEW themes)
+
+Structure must survive a bad monitor, not just text: every boundary a user needs to
+identify a component has a floor, enforced by `scripts/audit-contrast.js` (which
+`npm run build` runs first — `dist/` cannot be produced from failing tokens).
+
+| Pair | Floor | Why |
+|---|---|---|
+| `--_border-default` on each `surface-*` it is drawn on | **3.0:1** | component boundaries (inputs, panes, cards) |
+| `--_border-hover`, `--_border-focus` on surface | 3.0:1 | same; focus must be at least as visible as the rest state |
+| `--_border-subtle` on surface | **2.0:1** | separators are not component boundaries; 3:1 makes every table heavy, 1.1:1 is invisible |
+| `--_surface-selected` vs `--_surface-default` | **1.5:1** AND a left accent bar of `--border-focus` width `3px` | a tint alone cannot reach 3:1 without turning grey; the bar carries selection when the tint fails |
+| `--_surface-inset` / `--_surface-page` vs `--_surface-default` | no floor on the tint — a pane or card boundary must be a `--_border-default` line, never a tint alone | a tint-only pane split vanishes on a cheap panel |
+| every `--_text-*` on every `--_surface-*` | 4.5:1 (unchanged) | the existing audit |
+
+When a value fails a floor, walk it toward that theme's `--_text-primary` until the
+floor is met — the hue family is kept that way. Never fix structure by changing a
+`text-*` token, and never add a theme that passes text but not non-text.
+
 ### Checklist for a new theme PR
 
 - [ ] All `--_*` variables are defined.
-- [ ] Contrast audit passes (`npm run audit:contrast`).
+- [ ] Contrast audit passes (`npm run audit:contrast`) — text AND non-text floors.
+- [ ] `npm run build` passes (it runs the audit first; failing tokens cannot build `dist/`).
 - [ ] The theme renders correctly in `examples/index.html`.
 - [ ] The theme renders correctly in `examples/components/`.
 - [ ] The theme is added to `examples/shared/nav.js`.
