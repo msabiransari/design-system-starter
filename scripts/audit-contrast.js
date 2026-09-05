@@ -4,6 +4,21 @@
  * Checks all theme files for WCAG AA compliance on critical pairs
  * including normal, hover, focus, and disabled states.
  * Run: node scripts/audit-contrast.js
+ *
+ * Two audits run here:
+ *   * TEXT pairs (WCAG 1.4.3) — 4.5:1 floors, unchanged since the first release.
+ *   * NON-TEXT pairs (WCAG 1.4.11, 2026-09-04) — component boundaries and state
+ *     indicators are NOT text and were shipped as 1.05–1.35:1 surface steps: on an
+ *     ordinary office monitor every boundary disappeared while every label stayed
+ *     readable. The floors are normative:
+ *       border-default / border-hover / border-focus on surface-default: 3:1
+ *       border-subtle on surface-default:                             2:1 (separators)
+ *       surface-selected vs surface-default:                          1.5:1 (a left
+ *         accent bar of border-focus carries selection — a tint alone cannot reach 3:1
+ *         without turning grey)
+ *     Any non-text failure names the theme file and the token, and exits 1 — the
+ *     build gate (`npm run build` runs this audit FIRST) cannot produce dist/ from
+ *     failing tokens.
  */
 
 const fs = require('fs');
@@ -101,9 +116,19 @@ const checks = [
   { name: 'Text Primary on Surface Hover', fg: 'text-primary', bg: 'surface-hover', min: AA_NORMAL },
   { name: 'Text Primary on Surface Active', fg: 'text-primary', bg: 'surface-active', min: AA_NORMAL },
   { name: 'Text Link Hover on Surface Default', fg: 'text-link-hover', bg: 'surface-default', min: AA_NORMAL },
+];
 
-  // Note: border-subtle and border-default are intentionally low-contrast for decorative use.
-  // They are excluded from this audit because they are not required to be UI-component visible.
+// WCAG 1.4.11 — non-text contrast. Structure must survive a bad monitor, not just
+// text: component boundaries (inputs, panes, cards) at 3:1, separators at 2:1 (3:1
+// makes every table heavy; the shipped 1.1:1 was invisible), and selection at 1.5:1
+// carried by a border-focus accent bar (a tint alone cannot reach 3:1 without
+// turning grey). Each pair names the private token so a failure is actionable.
+const NON_TEXT_PAIRS = [
+  { name: 'Border Default on Surface Default', fg: 'border-default', bg: 'surface-default', min: 3.0 },
+  { name: 'Border Hover on Surface Default', fg: 'border-hover', bg: 'surface-default', min: 3.0 },
+  { name: 'Border Focus on Surface Default', fg: 'border-focus', bg: 'surface-default', min: 3.0 },
+  { name: 'Border Subtle on Surface Default', fg: 'border-subtle', bg: 'surface-default', min: 2.0 },
+  { name: 'Surface Selected vs Surface Default', fg: 'surface-selected', bg: 'surface-default', min: 1.5 },
 ];
 
 const files = fs.readdirSync(THEMES_DIR).filter((f) => f.endsWith('.css'));
@@ -140,5 +165,56 @@ files.forEach((file) => {
   });
 });
 
-console.log(`\n${totalFailures === 0 ? '✅ All themes pass WCAG AA.' : `❌ ${totalFailures} contrast failure(s) found.`}\n`);
+// Non-text table: every theme/branch row names its ratio and floor per pair, so the
+// build log itself is the evidence that structure passes — and a failure names the
+// token that broke.
+console.log('\n  NON-TEXT STRUCTURE FLOORS (WCAG 1.4.11)\n');
+console.log('  theme (branch)          border-default  border-hover  border-focus  border-subtle  surface-selected');
+console.log('  ----------------------  --------------  ------------  ------------  -------------  ----------------');
+
+const nonTextRows = [];
+files.forEach((file) => {
+  const branches = parseTheme(path.join(THEMES_DIR, file));
+  branches.forEach(({ branch, vars }) => {
+    const label = branches.length > 1 ? `${file} (${branch})` : file;
+    const cells = NON_TEXT_PAIRS.map((pair) => {
+      const fgHex = vars[pair.fg];
+      const bgHex = vars[pair.bg];
+      const ratio = contrastRatio(fgHex, bgHex);
+      if (ratio === null) {
+        totalFailures++;
+        return { cell: 'missing token', ok: false, pair: pair.name, label };
+      }
+      const ok = ratio >= pair.min;
+      if (!ok) totalFailures++;
+      return { cell: `${ratio.toFixed(2)} (≥${pair.min.toFixed(1)})`, ok, pair: pair.name, label };
+    });
+    nonTextRows.push({ label, cells });
+  });
+});
+
+nonTextRows.forEach(({ label, cells }) => {
+  const pad = label.padEnd(24);
+  const row = cells.map((c) => c.cell.padEnd(15)).join(' ');
+  const mark = cells.every((c) => c.ok) ? '✅' : '❌';
+  console.log(`  ${pad} ${row}  ${mark}`);
+});
+
+console.log('');
+files.forEach((file) => {
+  const branches = parseTheme(path.join(THEMES_DIR, file));
+  branches.forEach(({ branch, vars }) => {
+    const label = branches.length > 1 ? `${file} (${branch})` : file;
+    NON_TEXT_PAIRS.forEach((pair) => {
+      const fgHex = vars[pair.fg];
+      const bgHex = vars[pair.bg];
+      const ratio = contrastRatio(fgHex, bgHex);
+      if (ratio !== null && ratio < pair.min) {
+        console.log(`  ❌ ${label}: ${pair.name} — ${ratio.toFixed(2)}:1 needs ${pair.min}:1 (raise --_${pair.fg})`);
+      }
+    });
+  });
+});
+
+console.log(`\n${totalFailures === 0 ? '✅ All themes pass WCAG AA (text) and 1.4.11 (non-text).' : `❌ ${totalFailures} contrast failure(s) found.`}\n`);
 process.exit(totalFailures > 0 ? 1 : 0);
