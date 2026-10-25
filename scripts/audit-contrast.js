@@ -11,8 +11,8 @@
  *     indicators are NOT text and were shipped as 1.05–1.35:1 surface steps: on an
  *     ordinary office monitor every boundary disappeared while every label stayed
  *     readable. The floors are normative:
- *       border-default / border-hover / border-focus on surface-default: 3:1
- *       border-subtle on surface-default:                             2:1 (separators)
+ *       border-default / border-hover / border-focus on each surface: 3:1
+ *       border-subtle on each surface:                               2:1 (separators)
  *       surface-selected vs surface-default:                          1.5:1 (a left
  *         accent bar of border-focus carries selection — a tint alone cannot reach 3:1
  *         without turning grey)
@@ -122,12 +122,29 @@ const checks = [
 // text: component boundaries (inputs, panes, cards) at 3:1, separators at 2:1 (3:1
 // makes every table heavy; the shipped 1.1:1 was invisible), and selection at 1.5:1
 // carried by a border-focus accent bar (a tint alone cannot reach 3:1 without
-// turning grey). Each pair names the private token so a failure is actionable.
+// turning grey). Borders cover page/default/raised/inset/hover. Each pair names
+// the private token so a failure is actionable.
 const NON_TEXT_PAIRS = [
+  { name: 'Border Default on Surface Page', fg: 'border-default', bg: 'surface-page', min: 3.0 },
   { name: 'Border Default on Surface Default', fg: 'border-default', bg: 'surface-default', min: 3.0 },
+  { name: 'Border Default on Surface Raised', fg: 'border-default', bg: 'surface-raised', min: 3.0 },
+  { name: 'Border Default on Surface Inset', fg: 'border-default', bg: 'surface-inset', min: 3.0 },
+  { name: 'Border Default on Surface Hover', fg: 'border-default', bg: 'surface-hover', min: 3.0 },
+  { name: 'Border Hover on Surface Page', fg: 'border-hover', bg: 'surface-page', min: 3.0 },
   { name: 'Border Hover on Surface Default', fg: 'border-hover', bg: 'surface-default', min: 3.0 },
+  { name: 'Border Hover on Surface Raised', fg: 'border-hover', bg: 'surface-raised', min: 3.0 },
+  { name: 'Border Hover on Surface Inset', fg: 'border-hover', bg: 'surface-inset', min: 3.0 },
+  { name: 'Border Hover on Surface Hover', fg: 'border-hover', bg: 'surface-hover', min: 3.0 },
+  { name: 'Border Focus on Surface Page', fg: 'border-focus', bg: 'surface-page', min: 3.0 },
   { name: 'Border Focus on Surface Default', fg: 'border-focus', bg: 'surface-default', min: 3.0 },
+  { name: 'Border Focus on Surface Raised', fg: 'border-focus', bg: 'surface-raised', min: 3.0 },
+  { name: 'Border Focus on Surface Inset', fg: 'border-focus', bg: 'surface-inset', min: 3.0 },
+  { name: 'Border Focus on Surface Hover', fg: 'border-focus', bg: 'surface-hover', min: 3.0 },
+  { name: 'Border Subtle on Surface Page', fg: 'border-subtle', bg: 'surface-page', min: 2.0 },
   { name: 'Border Subtle on Surface Default', fg: 'border-subtle', bg: 'surface-default', min: 2.0 },
+  { name: 'Border Subtle on Surface Raised', fg: 'border-subtle', bg: 'surface-raised', min: 2.0 },
+  { name: 'Border Subtle on Surface Inset', fg: 'border-subtle', bg: 'surface-inset', min: 2.0 },
+  { name: 'Border Subtle on Surface Hover', fg: 'border-subtle', bg: 'surface-hover', min: 2.0 },
   { name: 'Surface Selected vs Surface Default', fg: 'surface-selected', bg: 'surface-default', min: 1.5 },
 ];
 
@@ -169,7 +186,7 @@ files.forEach((file) => {
 // build log itself is the evidence that structure passes — and a failure names the
 // token that broke.
 console.log('\n  NON-TEXT STRUCTURE FLOORS (WCAG 1.4.11)\n');
-console.log('  theme (branch)          border-default  border-hover  border-focus  border-subtle  surface-selected');
+console.log('  theme (branch)          ' + NON_TEXT_PAIRS.map((pair) => pair.name).join(' | '));
 console.log('  ----------------------  --------------  ------------  ------------  -------------  ----------------');
 
 const nonTextRows = [];
@@ -210,7 +227,7 @@ files.forEach((file) => {
       const bgHex = vars[pair.bg];
       const ratio = contrastRatio(fgHex, bgHex);
       if (ratio !== null && ratio < pair.min) {
-        console.log(`  ❌ ${label}: ${pair.name} — ${ratio.toFixed(2)}:1 needs ${pair.min}:1 (raise --_${pair.fg})`);
+        console.log(`  ❌ ${label}: ${pair.name} — ${ratio.toFixed(2)}:1 needs ${pair.min}:1 (adjust --_${pair.fg})`);
       }
     });
   });
