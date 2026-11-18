@@ -1,6 +1,6 @@
 {
   "name": "@acme/design-tokens",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Framework-agnostic semantic design tokens for theming systems",
   "main": "dist/tokens.css",
   "style": "dist/tokens.css",
@@ -48,7 +48,8 @@
     "test:e2e:update": "playwright test --update-snapshots",
     "build:angular7:docker": "docker run --rm -v \"$PWD:/repo\" -w /repo/fixtures/angular7-primeng node:12-buster bash -lc \"npm ci && npm run build\"",
     "verify": "npm run lint:css && npm run audit:contrast && npm run build && npm run test:e2e",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test:e2e:modes": "playwright test -c playwright.modes.config.js"
   },
   "keywords": [
     "design-system",

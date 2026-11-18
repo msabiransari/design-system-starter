@@ -49,6 +49,7 @@
   function init() {
     injectNav();
     restoreTheme();
+    setMode(localStorage.getItem('ds-mode') || 'light');
   }
 
   function injectNav() {
@@ -65,10 +66,20 @@
         `).join('')}
       </nav>
       <div class="ex-nav-theme">
-        <label for="theme-select" class="ex-nav-theme-label">Theme</label>
-        <select id="theme-select" class="ex-nav-select" aria-label="Select theme">
-          ${themes.map(t => `<option value="${t.id}">${t.label}</option>`).join('')}
-        </select>
+        <div class="ex-nav-control">
+          <label for="theme-select" class="ex-nav-theme-label">Theme</label>
+          <select id="theme-select" class="ex-nav-select" aria-label="Select theme">
+            ${themes.map(t => `<option value="${t.id}">${t.label}</option>`).join('')}
+          </select>
+        </div>
+        <div class="ex-nav-control">
+          <label for="mode-select" class="ex-nav-theme-label">Mode</label>
+          <select id="mode-select" class="ex-nav-select" aria-label="Select mode">
+            <option value="light">Day</option>
+            <option value="dark">Night</option>
+            <option value="auto">Device</option>
+          </select>
+        </div>
       </div>
     `;
     document.body.insertBefore(header, document.body.firstChild);
@@ -76,6 +87,16 @@
     document.getElementById('theme-select').addEventListener('change', (e) => {
       setTheme(e.target.value);
     });
+    document.getElementById('mode-select').addEventListener('change', (e) => {
+      setMode(e.target.value);
+    });
+  }
+
+  function setMode(mode) {
+    const value = ['light', 'dark', 'auto'].includes(mode) ? mode : 'light';
+    document.documentElement.setAttribute('data-mode', value);
+    document.getElementById('mode-select').value = value;
+    localStorage.setItem('ds-mode', value);
   }
 
   function setTheme(name) {
@@ -97,6 +118,9 @@
 
     const select = document.getElementById('theme-select');
     if (select) select.value = name;
+    const modeSelect = document.getElementById('mode-select');
+    modeSelect.disabled = ['light', 'dark', 'auto'].includes(name);
+    modeSelect.title = modeSelect.disabled ? 'This neutral theme controls its own mode' : 'Choose the brand theme mode';
   }
 
   function restoreTheme() {

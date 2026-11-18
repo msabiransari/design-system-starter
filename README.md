@@ -185,6 +185,12 @@ Run `npm run serve` and open `http://localhost:8080/examples/`. Every example is
 
 Nine themes ship ready to use (`themes/`). Pick one, or copy the closest and tweak the `--_*` values.
 
+The six brand themes (`professional`, `healthcare`, `saas`, `minimal`, `forest`,
+`ocean`) each include day and night forms. Day remains the default. Select a form
+with `data-mode` on `<html>`; the examples provide a persisted Day / Night / Device
+control beside the theme dropdown and show both forms in the gallery. The neutral
+`light`, `dark`, and `auto` stylesheets retain their own modes.
+
 | Theme | Feel | Typical use |
 |-------|------|-------------|
 | `light` | Clean neutral light | General default |
@@ -357,6 +363,22 @@ Full version/browser matrix and known limitations: [adapters/MATRIX.md](adapters
 
 ## Runtime theme switching
 
+For a brand theme, keep its stylesheet loaded and set the root mode:
+
+| Root attribute | Result | `color-scheme` |
+|---|---|---|
+| Absent, or `data-mode="light"` | Day, regardless of device preference | `light` |
+| `data-mode="dark"` | Night, regardless of device preference | `dark` |
+| `data-mode="auto"` | Follows `prefers-color-scheme` as it changes | `light` or `dark` |
+
+```js
+document.documentElement.dataset.mode = 'dark'; // 'light' or 'auto' also supported
+```
+
+Set the attribute before first paint when restoring a saved preference. This hook
+belongs to the brand themes; `.dark` and `data-theme="dark"` are not brand mode
+selectors. The separate neutral dark stylesheet declares its values on `:root`.
+
 Swap one stylesheet and the whole UI — including adapted PrimeNG/Material components — re-skins with no reload:
 
 ```ts
@@ -425,6 +447,7 @@ npm run lint:css         # Stylelint (enforces no hardcoded colors)
 npm run audit:contrast   # WCAG AA contrast audit across theme token pairs
 npm run docs:generate    # Generate token documentation
 npm run test:e2e         # Playwright visual-regression tests (themes × viewports)
+npm run test:e2e:modes   # Computed-value mode checks; DS_MODES_PORT defaults to 8094
 npm run verify           # lint:css + audit:contrast + build + test:e2e  (full gate)
 ```
 

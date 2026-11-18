@@ -37,6 +37,7 @@ jobs:
           cd fixtures/primeng-modern && npm ci && npm run build
           cd ../angularjs-legacy && npm ci
       - run: npx playwright install --with-deps
+      - run: npm run test:e2e:modes
       - run: npm run test:e2e
 
   angular7-fixture:

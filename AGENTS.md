@@ -16,7 +16,7 @@ design-system-starter/
 ├── AGENTS.md               # This file
 ├── themes/
 │   ├── light.css           # Light theme (concrete values for tokens)
-│   ├── dark.css            # Dark theme (scoped to .dark or [data-theme="dark"])
+│   ├── dark.css            # Neutral dark theme (values on :root)
 │   ├── professional.css    # Financial/enterprise theme
 │   ├── healthcare.css      # Medical/calm theme
 │   ├── saas.css            # Modern indigo theme
@@ -101,11 +101,11 @@ design-system-starter/
 ### Task: Add a new theme
 
 1. **Copy** the most similar existing theme (e.g. `themes/professional.css` → `themes/mybrand.css`).
-2. **Edit ONLY the `--_*` variables** inside `:root`.
+2. **Edit the `--_*` variables in both complete forms.** Keep day values in `:root` with `color-scheme: light`. Night uses `:root[data-mode="dark"]` and, inside `@media (prefers-color-scheme: dark)`, `:root[data-mode="auto"]`, both with `color-scheme: dark`. Keep the two night blocks identical: the build fails if their variable sets or values differ. Existing consumers without `data-mode` keep the day form.
 3. **Do NOT edit** `tokens.css`. The new theme works automatically because tokens reference `--_*` variables.
 4. **Update** `examples/shared/nav.js` to include the new theme in the `themes` array so it appears in the dropdown.
-5. **Update** `examples/index.html` theme preview swatches if you want it visible there.
-6. **Verify** by opening `examples/index.html` and selecting the new theme from the dropdown.
+5. **Update** `examples/index.html` to include the theme, then run `npm run previews:generate` for both forms. Never hand-edit `examples/shared/theme-previews.js`.
+6. **Verify** with `npm run lint:css`, `npm run audit:contrast`, `npm run build`, and `npm run test:e2e:modes`. Add the theme's expected day/night values to the modes test. The audit checks every brand form for completeness and the same contrast pairs. The modes server uses `DS_MODES_PORT` (default 8094), refuses reuse, and rejects ports 8080 and 8082. Open `examples/index.html` and `examples/components/` and exercise Day / Night / Device.
 
 ### Task: Add a new token
 

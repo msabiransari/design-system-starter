@@ -29,7 +29,7 @@ const AA_NORMAL = 4.5;
 const AA_LARGE = 3.0;
 
 function hexToRgb(hex) {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex.trim());
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec((hex || '').trim());
   return result
     ? {
         r: parseInt(result[1], 16),
@@ -70,6 +70,24 @@ function extractVars(cssBlock) {
 
 function parseTheme(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
+
+  // Neutral themes keep their existing contract. Every brand has two complete
+  // forms; compare forced/device night blocks before any dist output is built.
+  if (!['light.css', 'dark.css', 'auto.css'].includes(path.basename(filePath))) {
+    const day = extractVars(content.match(/:root\s*\{([^{}]*)\}/)?.[1] || '');
+    const night = extractVars(content.match(/:root\[data-mode="dark"\]\s*\{([^{}]*)\}/)?.[1] || '');
+    const device = extractVars(content.match(/:root\[data-mode="auto"\]\s*\{([^{}]*)\}/)?.[1] || '');
+    const errors = [];
+    for (const key of new Set([...Object.keys(day), ...Object.keys(night), ...Object.keys(device)])) {
+      if (!(key in day)) errors.push(`day: missing --_${key}`);
+      if (!(key in night)) errors.push(`night: missing --_${key}`);
+      if (!(key in device)) errors.push(`night (device): missing --_${key}`);
+      if (night[key] !== device[key]) errors.push(`night: forced/device mismatch for --_${key}`);
+    }
+    if (!Object.keys(day).length) errors.push('day: missing variable block');
+    if (errors.length) throw new Error(`${path.basename(filePath)}: ${errors.join('; ')}`);
+    return [{ branch: 'day', vars: day }, { branch: 'night', vars: night }];
+  }
 
   // For auto themes, audit both the default branch and the dark @media branch
   const mediaMatch = content.match(/@media\s*\(\s*prefers-color-scheme\s*:\s*dark\s*\)\s*\{([\s\S]*)\}/);
@@ -149,12 +167,12 @@ const NON_TEXT_PAIRS = [
 ];
 
 const files = fs.readdirSync(THEMES_DIR).filter((f) => f.endsWith('.css'));
+const themes = files.map((file) => ({ file, branches: parseTheme(path.join(THEMES_DIR, file)) }));
 let totalFailures = 0;
 
 console.log('\n🎨  Design Token Contrast Audit\n');
 
-files.forEach((file) => {
-  const branches = parseTheme(path.join(THEMES_DIR, file));
+themes.forEach(({ file, branches }) => {
 
   branches.forEach(({ branch, vars }) => {
     const failures = [];
@@ -163,10 +181,9 @@ files.forEach((file) => {
     checks.forEach((check) => {
       const fgHex = vars[check.fg];
       const bgHex = vars[check.bg];
-      if (!fgHex || !bgHex) return;
       const ratio = contrastRatio(fgHex, bgHex);
-      if (ratio && ratio < check.min) {
-        failures.push({ check: check.name, ratio: ratio.toFixed(2), min: check.min });
+      if (ratio === null || ratio < check.min) {
+        failures.push({ check: check.name, ratio: ratio === null ? 'missing/invalid token' : ratio.toFixed(2), min: check.min });
       }
     });
 
@@ -190,8 +207,7 @@ console.log('  theme (branch)          ' + NON_TEXT_PAIRS.map((pair) => pair.nam
 console.log('  ----------------------  --------------  ------------  ------------  -------------  ----------------');
 
 const nonTextRows = [];
-files.forEach((file) => {
-  const branches = parseTheme(path.join(THEMES_DIR, file));
+themes.forEach(({ file, branches }) => {
   branches.forEach(({ branch, vars }) => {
     const label = branches.length > 1 ? `${file} (${branch})` : file;
     const cells = NON_TEXT_PAIRS.map((pair) => {
@@ -218,8 +234,7 @@ nonTextRows.forEach(({ label, cells }) => {
 });
 
 console.log('');
-files.forEach((file) => {
-  const branches = parseTheme(path.join(THEMES_DIR, file));
+themes.forEach(({ file, branches }) => {
   branches.forEach(({ branch, vars }) => {
     const label = branches.length > 1 ? `${file} (${branch})` : file;
     NON_TEXT_PAIRS.forEach((pair) => {

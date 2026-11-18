@@ -17,6 +17,11 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const THEMES_DIR = path.join(ROOT, 'themes');
 const OUT = path.join(ROOT, 'examples', 'shared', 'theme-previews.js');
+// Resolve aliases at the preview element, not at :root where they would inherit
+// the currently selected theme's already-computed values.
+const aliases = [...fs.readFileSync(path.join(ROOT, 'tokens.css'), 'utf8')
+  .matchAll(/(--[a-z][a-z0-9-]*):\s*(var\(--_[a-z0-9-]+\));/g)]
+  .map((match) => `${match[1]}: ${match[2]};`).join(' ');
 
 function extractVars(cssText) {
   const vars = {};
@@ -31,7 +36,7 @@ function extractVars(cssText) {
 function varsToStyle(vars) {
   return Object.entries(vars)
     .map(([k, v]) => `--_${k}: ${v};`)
-    .join(' ');
+    .join(' ') + ' ' + aliases;
 }
 
 // The `auto` theme carries light values in the default block and dark values
@@ -50,7 +55,12 @@ for (const file of fs.readdirSync(THEMES_DIR).sort()) {
   if (!file.endsWith('.css')) continue;
   const id = file.replace(/\.css$/, '');
   const css = fs.readFileSync(path.join(THEMES_DIR, file), 'utf8');
-  if (id === 'auto') {
+  if (css.includes(':root[data-mode="dark"]')) {
+    previews[id] = {
+      light: 'color-scheme: light; ' + varsToStyle(extractVars(css.match(/:root\s*\{([^{}]*)\}/)[1])),
+      dark: 'color-scheme: dark; ' + varsToStyle(extractVars(css.match(/:root\[data-mode="dark"\]\s*\{([^{}]*)\}/)[1])),
+    };
+  } else if (id === 'auto') {
     previews[id] = {
       light: varsToStyle(extractVars(lightBlock(css))),
       dark: varsToStyle(extractVars(darkBlock(css))),

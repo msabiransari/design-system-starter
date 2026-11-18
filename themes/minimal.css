@@ -67,3 +67,115 @@
   --_font-serif:              ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --_font-mono:               ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
+
+/* Night form. Keep both blocks identical; the build audits their parity.
+   Device block comes first so token documentation preserves the day defaults. */
+@media (prefers-color-scheme: dark) {
+  :root[data-mode="auto"] {
+    color-scheme: dark;
+
+    --_surface-page:               #121212;
+    --_surface-default:            #1b1b1b;
+    --_surface-raised:             #292929;
+    --_surface-overlay:            #292929;
+    --_surface-inset:              #090909;
+    --_surface-hover:              #303030;
+    --_surface-active:             #303030;
+    --_surface-selected:           #404040;
+    --_text-primary:               #f5f5f5;
+    --_text-secondary:             #c2c2c2;
+    --_text-muted:                 #a0a0a0;
+    --_text-inverted:              #121212;
+    --_text-link:                  #f5f5f5;
+    --_text-link-hover:            #dddddd;
+    --_text-danger:                #f5f5f5;
+    --_text-success:               #f5f5f5;
+    --_text-warning:               #f5f5f5;
+    --_border-default:             #c2c2c2;
+    --_border-hover:               #dedede;
+    --_border-focus:               #f5f5f5;
+    --_border-subtle:              #777777;
+    --_border-danger:              #f5f5f5;
+    --_accent-primary:             #f5f5f5;
+    --_accent-primary-hover:       #dddddd;
+    --_accent-primary-active:      #f5f5f5;
+    --_accent-primary-text:        #121212;
+    --_accent-secondary:           #292929;
+    --_accent-secondary-hover:     #303030;
+    --_accent-secondary-text:      #f5f5f5;
+    --_accent-danger:              #f5f5f5;
+    --_accent-danger-hover:        #f5f5f5;
+    --_accent-danger-text:         #121212;
+    --_accent-success:             #f5f5f5;
+    --_accent-success-bg:          #303030;
+    --_accent-warning:             #f5f5f5;
+    --_accent-warning-bg:          #303030;
+    --_accent-info:                #f5f5f5;
+    --_accent-info-bg:             #303030;
+    --_focus-ring:                 #f5f5f5;
+    --_focus-ring-offset:          2px;
+    --_shadow-xs:                  none;
+    --_shadow-sm:                  0 1px 0 0 rgb(0 0 0 / 0.1);
+    --_shadow-md:                  0 2px 0 0 rgb(0 0 0 / 0.1);
+    --_shadow-lg:                  0 4px 0 0 rgb(0 0 0 / 0.1);
+    --_shadow-xl:                  0 8px 0 0 rgb(0 0 0 / 0.1);
+    --_shadow-inset:               inset 0 1px 0 0 rgb(0 0 0 / 0.1);
+    --_font-sans:                  ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --_font-serif:                 ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --_font-mono:                  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+}
+
+:root[data-mode="dark"] {
+  color-scheme: dark;
+
+  --_surface-page:               #121212;
+  --_surface-default:            #1b1b1b;
+  --_surface-raised:             #292929;
+  --_surface-overlay:            #292929;
+  --_surface-inset:              #090909;
+  --_surface-hover:              #303030;
+  --_surface-active:             #303030;
+  --_surface-selected:           #404040;
+  --_text-primary:               #f5f5f5;
+  --_text-secondary:             #c2c2c2;
+  --_text-muted:                 #a0a0a0;
+  --_text-inverted:              #121212;
+  --_text-link:                  #f5f5f5;
+  --_text-link-hover:            #dddddd;
+  --_text-danger:                #f5f5f5;
+  --_text-success:               #f5f5f5;
+  --_text-warning:               #f5f5f5;
+  --_border-default:             #c2c2c2;
+  --_border-hover:               #dedede;
+  --_border-focus:               #f5f5f5;
+  --_border-subtle:              #777777;
+  --_border-danger:              #f5f5f5;
+  --_accent-primary:             #f5f5f5;
+  --_accent-primary-hover:       #dddddd;
+  --_accent-primary-active:      #f5f5f5;
+  --_accent-primary-text:        #121212;
+  --_accent-secondary:           #292929;
+  --_accent-secondary-hover:     #303030;
+  --_accent-secondary-text:      #f5f5f5;
+  --_accent-danger:              #f5f5f5;
+  --_accent-danger-hover:        #f5f5f5;
+  --_accent-danger-text:         #121212;
+  --_accent-success:             #f5f5f5;
+  --_accent-success-bg:          #303030;
+  --_accent-warning:             #f5f5f5;
+  --_accent-warning-bg:          #303030;
+  --_accent-info:                #f5f5f5;
+  --_accent-info-bg:             #303030;
+  --_focus-ring:                 #f5f5f5;
+  --_focus-ring-offset:          2px;
+  --_shadow-xs:                  none;
+  --_shadow-sm:                  0 1px 0 0 rgb(0 0 0 / 0.1);
+  --_shadow-md:                  0 2px 0 0 rgb(0 0 0 / 0.1);
+  --_shadow-lg:                  0 4px 0 0 rgb(0 0 0 / 0.1);
+  --_shadow-xl:                  0 8px 0 0 rgb(0 0 0 / 0.1);
+  --_shadow-inset:               inset 0 1px 0 0 rgb(0 0 0 / 0.1);
+  --_font-sans:                  ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --_font-serif:                 ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --_font-mono:                  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}

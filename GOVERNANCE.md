@@ -57,6 +57,14 @@ A new token is **NOT** justified if:
 
 Every theme in `themes/` must define **ALL** `--_*` variables. No exceptions.
 
+Every brand theme has a complete day form and a complete night form in its own
+file. Keep the default `:root` day block backward compatible. Use
+`:root[data-mode="dark"]` for forced night and `:root[data-mode="auto"]` inside
+`@media (prefers-color-scheme: dark)` for device night, with matching `color-scheme`.
+The audit fails if either night block lacks a day variable or if their values
+differ. `npm run build` runs that check before producing output. The neutral
+`light`, `dark`, and `auto` stylesheets keep their existing contracts.
+
 ### Non-text contrast floors (WCAG 1.4.11 — rule for NEW themes)
 
 Structure must survive a bad monitor, not just text: every boundary a user needs to
@@ -78,13 +86,15 @@ floor is met — the hue family is kept that way. Never fix structure by changin
 
 ### Checklist for a new theme PR
 
-- [ ] All `--_*` variables are defined.
+- [ ] All `--_*` variables are defined in both brand forms; forced/device night values match.
 - [ ] Contrast audit passes (`npm run audit:contrast`) — text AND non-text floors.
 - [ ] `npm run build` passes (it runs the audit first; failing tokens cannot build `dist/`).
 - [ ] The theme renders correctly in `examples/index.html`.
 - [ ] The theme renders correctly in `examples/components/`.
 - [ ] The theme is added to `examples/shared/nav.js`.
 - [ ] The theme has a preview swatch in `examples/index.html`.
+- [ ] Both forms appear in the generated previews (`npm run previews:generate`).
+- [ ] Mode assertions pass (`npm run test:e2e:modes`): default day, forced day/night, and device light/dark, including `color-scheme`.
 
 ---
 

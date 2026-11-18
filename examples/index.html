@@ -124,6 +124,8 @@
     }
 
     .theme-card-preview {
+      background: var(--surface-page);
+      color: var(--text-primary);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-base);
       overflow: hidden;
@@ -312,6 +314,7 @@
       // Preview values are baked at build time into shared/theme-previews.js
       // (generated from themes/*.css) so the gallery works under file:// too.
       const previews = window.DS_THEME_PREVIEWS || {};
+      const styleAttribute = (value) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;');
 
       for (const theme of THEMES) {
         const card = document.createElement('a');
@@ -327,15 +330,15 @@
         let previewHtml;
         if (!data) {
           previewHtml = '<div class="theme-card-preview" style="padding: var(--space-3); color: var(--text-muted); font-size: var(--text-xs);">Preview unavailable</div>';
-        } else if (theme.id === 'auto') {
+        } else if (typeof data === 'object') {
           previewHtml = `
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1);">
-              <div class="theme-card-preview" style="${data.light}">${buildPreviewInner()}</div>
-              <div class="theme-card-preview" style="${data.dark}">${buildPreviewInner()}</div>
+              <div class="theme-card-preview" data-preview-mode="light" style="${styleAttribute(data.light)}"><span class="ds-caption">Day</span>${buildPreviewInner()}</div>
+              <div class="theme-card-preview" data-preview-mode="dark" style="${styleAttribute(data.dark)}"><span class="ds-caption">Night</span>${buildPreviewInner()}</div>
             </div>
           `;
         } else {
-          previewHtml = `<div class="theme-card-preview" style="${data}">${buildPreviewInner()}</div>`;
+          previewHtml = `<div class="theme-card-preview" style="${styleAttribute(data)}">${buildPreviewInner()}</div>`;
         }
 
         card.innerHTML = `
