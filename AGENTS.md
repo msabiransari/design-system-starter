@@ -200,7 +200,7 @@ Before declaring a change complete:
 ## How to Serve Locally
 
 ```bash
-cd /Users/msabir/development/projects/design-system-starter
+cd <repo>
 npm run serve
 # Open http://localhost:8080/examples/
 ```

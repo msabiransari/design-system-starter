@@ -43,7 +43,7 @@ Atomic change: move all 9 pages into folders, fix their relative paths, make `na
 - [ ] **Step 1: Move the 9 pages into folders (preserve git history)**
 
 ```bash
-cd /Users/msabir/development/projects/design-system-starter
+cd <repo>
 for n in auth components crm dashboard data guide marketing pilot-app studio; do
   mkdir -p "examples/$n"
   git mv "examples/$n.html" "examples/$n/index.html"
@@ -61,7 +61,7 @@ Each moved page is now one directory deeper, so `"../X"` → `"../../X"` and `".
 `./`, so it is untouched), THEN convert `./shared/` and any other `./`:
 
 ```bash
-cd /Users/msabir/development/projects/design-system-starter
+cd <repo>
 for n in auth components crm dashboard data guide marketing pilot-app studio; do
   f="examples/$n/index.html"
   # 1) "../X" (one level up to repo root) -> "../../X"  (does NOT match "./shared/")
@@ -84,7 +84,7 @@ Expected: both sanity greps print `clean`. (`../shared/` and `../../` references
 `studio/index.html` and others may reference assets in inline `<script>` via backtick/quote paths the head rewrite missed.
 
 ```bash
-cd /Users/msabir/development/projects/design-system-starter
+cd <repo>
 grep -REn "fetch\(|\.href ?=|url\(|new Image|XMLHttpRequest|import\(" examples/*/index.html \
   | grep -E "\.\./|themes/|shared/|fixtures/" || echo "no relative refs in JS"
 ```
@@ -211,7 +211,7 @@ Full file replacement:
 The overview stays at depth 0, so its `../tokens.css`/`../themes/` head links and the inline `fetch('../themes/...')` are already correct. Only the page-to-page links change from `<name>.html` to `<name>/`.
 
 ```bash
-cd /Users/msabir/development/projects/design-system-starter
+cd <repo>
 perl -0pi -e 's{href="(auth|components|crm|dashboard|data|guide|marketing|pilot-app|studio)\.html"}{href="$1/"}g' examples/index.html
 # inline gallery script links to studio
 perl -0pi -e "s{'studio\.html}{'studio/}g" examples/index.html
@@ -260,7 +260,7 @@ Minimal valid page (fleshed out in Tasks 2–3) so the new nav link and card nev
 - [ ] **Step 7: Update example URLs in `tests/e2e/visual.spec.js`**
 
 ```bash
-cd /Users/msabir/development/projects/design-system-starter
+cd <repo>
 perl -0pi -e 's{/examples/(components|guide|pilot-app|studio)\.html}{/examples/$1/}g' tests/e2e/visual.spec.js
 echo "=== confirm no flat example URLs remain (index.html is allowed) ==="
 grep -nE "/examples/(components|guide|pilot-app|studio)\.html" tests/e2e/visual.spec.js || echo "clean"
@@ -597,7 +597,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 - [ ] **Step 1: Vendor the pinned ag-Grid 14.2.0 assets (hermetic, version-pinned)**
 
 ```bash
-cd /Users/msabir/development/projects/design-system-starter
+cd <repo>
 mkdir -p examples/aggrid/vendor/ag-grid-14.2.0
 for f in ag-grid.js styles/ag-grid.css styles/theme-fresh.css; do
   out="examples/aggrid/vendor/ag-grid-14.2.0/$(basename $f)"
